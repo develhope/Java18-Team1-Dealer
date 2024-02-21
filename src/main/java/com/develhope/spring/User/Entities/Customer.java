@@ -1,4 +1,11 @@
 package com.develhope.spring.User.Entities;
 
-public class Customer {
+import jakarta.persistence.*;
+
+@Entity
+@Table
+public class Customer extends User{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 }

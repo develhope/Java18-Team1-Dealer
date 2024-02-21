@@ -1,4 +1,11 @@
 package com.develhope.spring.User.Entities;
 
-public class Admin {
+import jakarta.persistence.*;
+
+@Entity
+@Table
+public class Admin extends User{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 }

@@ -1,17 +1,20 @@
 package com.develhope.spring.Vehicle.Entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jdk.jfr.Description;
-import jdk.jshell.Snippet;
+import com.develhope.spring.Vehicle.Entities.Enums.FuelType;
+import com.develhope.spring.Vehicle.Entities.Enums.StatusType;
+import com.develhope.spring.Vehicle.Entities.Enums.VehiclesType;
+import com.develhope.spring.Vehicle.Entities.Enums.TransmissionType;
+import com.develhope.spring.Vehicle.Entities.Enums.EmissionType;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Entity
-@Table
+@MappedSuperclass
 public class Vehicle {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column(nullable = false, columnDefinition = "Tipo di veicolo")
     private VehiclesType vehiclesType;
     @Column(nullable = false, columnDefinition = "Brand del veicolo")
@@ -27,11 +30,11 @@ public class Vehicle {
     @Column(nullable = false, columnDefinition = "Kilowat del veicolo")
     private Double kW;
     @Column(nullable = false, columnDefinition = "Trasmissione del veicolo")
-    private String transmission;
+    private TransmissionType transmissionType;
     @Column(nullable = false, columnDefinition = "Anno di registrazione del veicolo")
     private LocalDate registrationYear;
-    @Column(nullable = false, columnDefinition = "Alimentazione del veicolo")
-    private String powerSupply;
+    @Column(nullable = false, columnDefinition = "Tipo di carburante del veicolo")
+    private FuelType fuelType;
     @Column(nullable = false, columnDefinition = "Prezzo del veicolo")
     private BigDecimal price;
     @Column(nullable = true, columnDefinition = "Sconto sul prezzo del veicolo")
@@ -48,6 +51,45 @@ public class Vehicle {
     private String currentLocation;
     @Column(nullable = false, columnDefinition = "Disponibilità al noleggio del veicolo")
     private Boolean availableRental;
+    @Column(nullable = false, columnDefinition = "Tipo di classe emissione del veicolo")
+    private EmissionType EmissionType;
+    @Column(nullable = false, columnDefinition = "Numero passeggeri del veicolo")
+    private Integer passengerNumber;
+
+    public Vehicle(Long id, VehiclesType vehiclesType, String brand, String model, Double cubiCapacity, String colour, Integer hP, Double kW, TransmissionType transmissionType, LocalDate registrationYear, FuelType fuelType, BigDecimal price, Double tradeDiscount, Boolean newVehicle, Double mileage, Integer ageLimit, StatusType statusType, String currentLocation, Boolean availableRental, com.develhope.spring.Vehicle.Entities.Enums.EmissionType emissionType, Integer passengerNumber) {
+        this.id = id;
+        this.vehiclesType = vehiclesType;
+        this.brand = brand;
+        this.model = model;
+        this.cubiCapacity = cubiCapacity;
+        this.colour = colour;
+        this.hP = hP;
+        this.kW = kW;
+        this.transmissionType = transmissionType;
+        this.registrationYear = registrationYear;
+        this.fuelType = fuelType;
+        this.price = price;
+        this.tradeDiscount = tradeDiscount;
+        this.newVehicle = newVehicle;
+        this.mileage = mileage;
+        this.ageLimit = ageLimit;
+        this.statusType = statusType;
+        this.currentLocation = currentLocation;
+        this.availableRental = availableRental;
+        EmissionType = emissionType;
+        this.passengerNumber = passengerNumber;
+    }
+
+    public Vehicle() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public VehiclesType getVehiclesType() {
         return vehiclesType;
@@ -105,12 +147,12 @@ public class Vehicle {
         this.kW = kW;
     }
 
-    public String getTransmission() {
-        return transmission;
+    public TransmissionType getTransmissionType() {
+        return transmissionType;
     }
 
-    public void setTransmission(String transmission) {
-        this.transmission = transmission;
+    public void setTransmissionType(TransmissionType transmissionType) {
+        this.transmissionType = transmissionType;
     }
 
     public LocalDate getRegistrationYear() {
@@ -121,12 +163,12 @@ public class Vehicle {
         this.registrationYear = registrationYear;
     }
 
-    public String getPowerSupply() {
-        return powerSupply;
+    public FuelType getFuelType() {
+        return fuelType;
     }
 
-    public void setPowerSupply(String powerSupply) {
-        this.powerSupply = powerSupply;
+    public void setFuelType(FuelType fuelType) {
+        this.fuelType = fuelType;
     }
 
     public BigDecimal getPrice() {
@@ -193,43 +235,36 @@ public class Vehicle {
         this.availableRental = availableRental;
     }
 
-    public Vehicle(VehiclesType vehiclesType, String brand, String model, Double cubiCapacity, String colour, Integer hP, Double kW, String transmission, LocalDate registrationYear, String powerSupply, BigDecimal price, Double tradeDiscount, Boolean newVehicle, Double mileage, Integer ageLimit, StatusType statusType, String currentLocation, Boolean availableRental) {
-        this.vehiclesType = vehiclesType;
-        this.brand = brand;
-        this.model = model;
-        this.cubiCapacity = cubiCapacity;
-        this.colour = colour;
-        this.hP = hP;
-        this.kW = kW;
-        this.transmission = transmission;
-        this.registrationYear = registrationYear;
-        this.powerSupply = powerSupply;
-        this.price = price;
-        this.tradeDiscount = tradeDiscount;
-        this.newVehicle = newVehicle;
-        this.mileage = mileage;
-        this.ageLimit = ageLimit;
-        this.statusType = statusType;
-        this.currentLocation = currentLocation;
-        this.availableRental = availableRental;
+    public com.develhope.spring.Vehicle.Entities.Enums.EmissionType getEmissionType() {
+        return EmissionType;
     }
 
-    public Vehicle() {
+    public void setEmissionType(com.develhope.spring.Vehicle.Entities.Enums.EmissionType emissionType) {
+        EmissionType = emissionType;
+    }
+
+    public Integer getPassengerNumber() {
+        return passengerNumber;
+    }
+
+    public void setPassengerNumber(Integer passengerNumber) {
+        this.passengerNumber = passengerNumber;
     }
 
     @Override
     public String toString() {
         return "Vehicle{" +
-                "vehiclesType=" + vehiclesType +
+                "id=" + id +
+                ", vehiclesType=" + vehiclesType +
                 ", brand='" + brand + '\'' +
                 ", model='" + model + '\'' +
                 ", cubiCapacity=" + cubiCapacity +
                 ", colour='" + colour + '\'' +
                 ", hP=" + hP +
                 ", kW=" + kW +
-                ", transmission='" + transmission + '\'' +
+                ", transmissionType=" + transmissionType +
                 ", registrationYear=" + registrationYear +
-                ", powerSupply='" + powerSupply + '\'' +
+                ", fuelType=" + fuelType +
                 ", price=" + price +
                 ", tradeDiscount=" + tradeDiscount +
                 ", newVehicle=" + newVehicle +
@@ -238,6 +273,8 @@ public class Vehicle {
                 ", statusType=" + statusType +
                 ", currentLocation='" + currentLocation + '\'' +
                 ", availableRental=" + availableRental +
+                ", EmissionType=" + EmissionType +
+                ", passengerNumber=" + passengerNumber +
                 '}';
     }
 }

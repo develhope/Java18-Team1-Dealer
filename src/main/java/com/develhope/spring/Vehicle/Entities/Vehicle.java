@@ -4,6 +4,8 @@ import com.develhope.spring.Vehicle.Entities.Enums.FuelType;
 import com.develhope.spring.Vehicle.Entities.Enums.StatusType;
 import com.develhope.spring.Vehicle.Entities.Enums.VehiclesType;
 import com.develhope.spring.Vehicle.Entities.Enums.TransmissionType;
+import com.develhope.spring.Vehicle.Entities.Enums.EmissionType;
+
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -50,7 +52,37 @@ public class Vehicle {
     private String currentLocation;
     @Column(nullable = false, columnDefinition = "Disponibilità al noleggio del veicolo")
     private Boolean availableRental;
+    @Column(nullable = false, columnDefinition = "Tipo di classe emissione del veicolo")
+    private EmissionType EmissionType;
+    @Column(nullable = false, columnDefinition = "Numero passeggeri del veicolo")
+    private Integer passengerNumber;
 
+    public Vehicle(Long id, VehiclesType vehiclesType, String brand, String model, Double cubiCapacity, String colour, Integer hP, Double kW, TransmissionType transmissionType, LocalDate registrationYear, FuelType fuelType, BigDecimal price, Double tradeDiscount, Boolean newVehicle, Double mileage, Integer ageLimit, StatusType statusType, String currentLocation, Boolean availableRental, EmissionType emissionType, Integer passengerNumber) {
+        this.id = id;
+        this.vehiclesType = vehiclesType;
+        this.brand = brand;
+        this.model = model;
+        this.cubiCapacity = cubiCapacity;
+        this.colour = colour;
+        this.hP = hP;
+        this.kW = kW;
+        this.transmissionType = transmissionType;
+        this.registrationYear = registrationYear;
+        this.fuelType = fuelType;
+        this.price = price;
+        this.tradeDiscount = tradeDiscount;
+        this.newVehicle = newVehicle;
+        this.mileage = mileage;
+        this.ageLimit = ageLimit;
+        this.statusType = statusType;
+        this.currentLocation = currentLocation;
+        this.availableRental = availableRental;
+        this.emissionType = emissionType;
+        this.passengerNumber = passengerNumber;
+    }
+
+    public Vehicle() {
+    }
 
     public Long getId() {
         return id;
@@ -204,29 +236,20 @@ public class Vehicle {
         this.availableRental = availableRental;
     }
 
-    public Vehicle(Long id, VehiclesType vehiclesType, String brand, String model, Double cubiCapacity, String colour, Integer hP, Double kW, TransmissionType transmissionType, LocalDate registrationYear, FuelType fuelType, BigDecimal price, Double tradeDiscount, Boolean newVehicle, Double mileage, Integer ageLimit, StatusType statusType, String currentLocation, Boolean availableRental) {
-        this.id = id;
-        this.vehiclesType = vehiclesType;
-        this.brand = brand;
-        this.model = model;
-        this.cubiCapacity = cubiCapacity;
-        this.colour = colour;
-        this.hP = hP;
-        this.kW = kW;
-        this.transmissionType = transmissionType;
-        this.registrationYear = registrationYear;
-        this.fuelType = fuelType;
-        this.price = price;
-        this.tradeDiscount = tradeDiscount;
-        this.newVehicle = newVehicle;
-        this.mileage = mileage;
-        this.ageLimit = ageLimit;
-        this.statusType = statusType;
-        this.currentLocation = currentLocation;
-        this.availableRental = availableRental;
+    public EmissionType getEmissionType() {
+        return EmissionType;
     }
 
-    public Vehicle() {
+    public void setEmissionType(EmissionType emissionType) {
+        this.emissionType = emissionType;
+    }
+
+    public Integer getPassengerNumber() {
+        return passengerNumber;
+    }
+
+    public void setPassengerNumber(Integer passengerNumber) {
+        this.passengerNumber = passengerNumber;
     }
 
     @Override
@@ -251,6 +274,8 @@ public class Vehicle {
                 ", statusType=" + statusType +
                 ", currentLocation='" + currentLocation + '\'' +
                 ", availableRental=" + availableRental +
+                ", emissionType=" + emissionType +
+                ", passengerNumber=" + passengerNumber +
                 '}';
     }
 }

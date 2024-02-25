@@ -5,6 +5,7 @@ import com.develhope.spring.Vehicle.Entities.Enums.StatusType;
 import com.develhope.spring.Vehicle.Entities.Enums.VehiclesType;
 import com.develhope.spring.Vehicle.Entities.Enums.TransmissionType;
 import com.develhope.spring.Vehicle.Entities.Enums.EmissionType;
+
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -56,7 +57,7 @@ public class Vehicle {
     @Column(nullable = false, columnDefinition = "Numero passeggeri del veicolo")
     private Integer passengerNumber;
 
-    public Vehicle(Long id, VehiclesType vehiclesType, String brand, String model, Double cubiCapacity, String colour, Integer hP, Double kW, TransmissionType transmissionType, LocalDate registrationYear, FuelType fuelType, BigDecimal price, Double tradeDiscount, Boolean newVehicle, Double mileage, Integer ageLimit, StatusType statusType, String currentLocation, Boolean availableRental, com.develhope.spring.Vehicle.Entities.Enums.EmissionType emissionType, Integer passengerNumber) {
+    public Vehicle(Long id, VehiclesType vehiclesType, String brand, String model, Double cubiCapacity, String colour, Integer hP, Double kW, TransmissionType transmissionType, LocalDate registrationYear, FuelType fuelType, BigDecimal price, Double tradeDiscount, Boolean newVehicle, Double mileage, Integer ageLimit, StatusType statusType, String currentLocation, Boolean availableRental, EmissionType emissionType, Integer passengerNumber) {
         this.id = id;
         this.vehiclesType = vehiclesType;
         this.brand = brand;
@@ -76,7 +77,7 @@ public class Vehicle {
         this.statusType = statusType;
         this.currentLocation = currentLocation;
         this.availableRental = availableRental;
-        EmissionType = emissionType;
+        this.emissionType = emissionType;
         this.passengerNumber = passengerNumber;
     }
 
@@ -235,12 +236,12 @@ public class Vehicle {
         this.availableRental = availableRental;
     }
 
-    public com.develhope.spring.Vehicle.Entities.Enums.EmissionType getEmissionType() {
+    public EmissionType getEmissionType() {
         return EmissionType;
     }
 
-    public void setEmissionType(com.develhope.spring.Vehicle.Entities.Enums.EmissionType emissionType) {
-        EmissionType = emissionType;
+    public void setEmissionType(EmissionType emissionType) {
+        this.emissionType = emissionType;
     }
 
     public Integer getPassengerNumber() {
@@ -273,7 +274,7 @@ public class Vehicle {
                 ", statusType=" + statusType +
                 ", currentLocation='" + currentLocation + '\'' +
                 ", availableRental=" + availableRental +
-                ", EmissionType=" + EmissionType +
+                ", emissionType=" + emissionType +
                 ", passengerNumber=" + passengerNumber +
                 '}';
     }

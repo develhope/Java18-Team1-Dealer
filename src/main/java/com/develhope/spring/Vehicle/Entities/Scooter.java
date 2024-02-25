@@ -1,9 +1,6 @@
 package com.develhope.spring.Vehicle.Entities;
 
-import com.develhope.spring.Vehicle.Entities.Enums.FuelType;
-import com.develhope.spring.Vehicle.Entities.Enums.StatusType;
-import com.develhope.spring.Vehicle.Entities.Enums.TransmissionType;
-import com.develhope.spring.Vehicle.Entities.Enums.VehiclesType;
+import com.develhope.spring.Vehicle.Entities.Enums.*;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -21,8 +18,8 @@ public class Scooter extends Vehicle{
     @Column(nullable = false, columnDefinition = "Presenza maniglie riscaldate")
     private Boolean heatedGrips;
 
-    public Scooter(Long id, VehiclesType vehiclesType, String brand, String model, Double cubiCapacity, String colour, Integer hP, Double kW, TransmissionType transmissionType, LocalDate registrationYear, FuelType fuelType, BigDecimal price, Double tradeDiscount, Boolean newVehicle, Double mileage, Integer ageLimit, StatusType statusType, String currentLocation, Boolean availableRental, Boolean windShield, Boolean tailBag, Boolean passengerBackrest, Boolean heatedGrips) {
-        super(id, vehiclesType, brand, model, cubiCapacity, colour, hP, kW, transmissionType, registrationYear, fuelType, price, tradeDiscount, newVehicle, mileage, ageLimit, statusType, currentLocation, availableRental);
+    public Scooter(Long id, VehiclesType vehiclesType, String brand, String model, Double cubiCapacity, String colour, Integer hP, Double kW, TransmissionType transmissionType, LocalDate registrationYear, FuelType fuelType, BigDecimal price, Double tradeDiscount, Boolean newVehicle, Double mileage, Integer ageLimit, StatusType statusType, String currentLocation, Boolean availableRental, EmissionType emissionType, Integer passengerNumber, Boolean windShield, Boolean tailBag, Boolean passengerBackrest, Boolean heatedGrips) {
+        super(id, vehiclesType, brand, model, cubiCapacity, colour, hP, kW, transmissionType, registrationYear, fuelType, price, tradeDiscount, newVehicle, mileage, ageLimit, statusType, currentLocation, availableRental, emissionType, passengerNumber);
         this.windShield = windShield;
         this.tailBag = tailBag;
         this.passengerBackrest = passengerBackrest;

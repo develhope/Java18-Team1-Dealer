@@ -53,7 +53,7 @@ public class Vehicle {
     @Column(nullable = false, columnDefinition = "Disponibilità al noleggio del veicolo")
     private Boolean availableRental;
     @Column(nullable = false, columnDefinition = "Tipo di classe emissione del veicolo")
-    private EmissionType EmissionType;
+    private EmissionType emissionType;
     @Column(nullable = false, columnDefinition = "Numero passeggeri del veicolo")
     private Integer passengerNumber;
 
@@ -237,7 +237,7 @@ public class Vehicle {
     }
 
     public EmissionType getEmissionType() {
-        return EmissionType;
+        return emissionType;
     }
 
     public void setEmissionType(EmissionType emissionType) {

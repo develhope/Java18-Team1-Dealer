@@ -20,8 +20,8 @@ public class Motorbike extends Vehicle{
     @Column(nullable = false, columnDefinition = "Presenza maniglie riscaldate")
     private Boolean heatedGrips;
 
-    public Motorbike(Long id, VehiclesType vehiclesType, String brand, String model, Double cubiCapacity, String colour, Integer hP, Double kW, TransmissionType transmissionType, LocalDate registrationYear, FuelType fuelType, BigDecimal price, Double tradeDiscount, Boolean newVehicle, Double mileage, Integer ageLimit, StatusType statusType, String currentLocation, Boolean availableRental, MotorbikeType motorbikeType, Boolean windShield, Boolean tailBag, Boolean passengerBackrest, Boolean heatedGrips) {
-        super(id, vehiclesType, brand, model, cubiCapacity, colour, hP, kW, transmissionType, registrationYear, fuelType, price, tradeDiscount, newVehicle, mileage, ageLimit, statusType, currentLocation, availableRental);
+    public Motorbike(Long id, VehiclesType vehiclesType, String brand, String model, Double cubiCapacity, String colour, Integer hP, Double kW, TransmissionType transmissionType, LocalDate registrationYear, FuelType fuelType, BigDecimal price, Double tradeDiscount, Boolean newVehicle, Double mileage, Integer ageLimit, StatusType statusType, String currentLocation, Boolean availableRental, EmissionType emissionType, Integer passengerNumber, MotorbikeType motorbikeType, Boolean windShield, Boolean tailBag, Boolean passengerBackrest, Boolean heatedGrips) {
+        super(id, vehiclesType, brand, model, cubiCapacity, colour, hP, kW, transmissionType, registrationYear, fuelType, price, tradeDiscount, newVehicle, mileage, ageLimit, statusType, currentLocation, availableRental, emissionType, passengerNumber);
         this.motorbikeType = motorbikeType;
         this.windShield = windShield;
         this.tailBag = tailBag;

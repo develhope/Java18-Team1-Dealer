@@ -9,13 +9,13 @@ import java.time.LocalDate;
 @Entity(name = "Scooter")
 @Table(name = "scooter")
 public class Scooter extends Vehicle{
-    @Column(nullable = false, columnDefinition = "Presenza di paravento")
+    @Column(nullable = false)
     private Boolean windShield;
-    @Column(nullable = false, columnDefinition = "Presenza borsa posteriore")
+    @Column(nullable = false)
     private Boolean tailBag;
-    @Column(nullable = false, columnDefinition = "Presenza schienale passeggero")
+    @Column(nullable = false)
     private Boolean passengerBackrest;
-    @Column(nullable = false, columnDefinition = "Presenza maniglie riscaldate")
+    @Column(nullable = false)
     private Boolean heatedGrips;
 
     public Scooter(Long id, VehiclesType vehiclesType, String brand, String model, Double cubiCapacity, String colour, Integer hP, Double kW, TransmissionType transmissionType, LocalDate registrationYear, FuelType fuelType, BigDecimal price, Double tradeDiscount, Boolean newVehicle, Double mileage, Integer ageLimit, StatusType statusType, String currentLocation, Boolean availableRental, EmissionType emissionType, Integer passengerNumber, Boolean windShield, Boolean tailBag, Boolean passengerBackrest, Boolean heatedGrips) {

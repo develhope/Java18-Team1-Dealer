@@ -16,45 +16,45 @@ public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, columnDefinition = "Tipo di veicolo")
+    @Column(nullable = false)
     private VehiclesType vehiclesType;
-    @Column(nullable = false, columnDefinition = "Brand del veicolo")
+    @Column(nullable = false)
     private String brand;
-    @Column(nullable = false, columnDefinition = "Modello del veicolo")
+    @Column(nullable = false)
     private String model;
-    @Column(nullable = false, columnDefinition = "Cilindrata del veicolo")
+    @Column(nullable = false)
     private Double cubiCapacity;
-    @Column(nullable = false, columnDefinition = "Colore del veicolo")
+    @Column(nullable = false)
     private String colour;
-    @Column(nullable = false, columnDefinition = "Cavalli del veicolo")
+    @Column(nullable = false)
     private Integer hP;
-    @Column(nullable = false, columnDefinition = "Kilowat del veicolo")
+    @Column(nullable = false)
     private Double kW;
-    @Column(nullable = false, columnDefinition = "Trasmissione del veicolo")
+    @Column(nullable = false)
     private TransmissionType transmissionType;
-    @Column(nullable = false, columnDefinition = "Anno di registrazione del veicolo")
+    @Column(nullable = false)
     private LocalDate registrationYear;
-    @Column(nullable = false, columnDefinition = "Tipo di carburante del veicolo")
+    @Column(nullable = false)
     private FuelType fuelType;
-    @Column(nullable = false, columnDefinition = "Prezzo del veicolo")
+    @Column(nullable = false)
     private BigDecimal price;
-    @Column(nullable = true, columnDefinition = "Sconto sul prezzo del veicolo")
+    @Column(nullable = true)
     private Double tradeDiscount;
-    @Column(nullable = false, columnDefinition = "Il veicolo è nuovo o usato")
+    @Column(nullable = false)
     private Boolean newVehicle;
-    @Column(nullable = true, columnDefinition = "Kilometri percorsi")
+    @Column(nullable = true)
     private Double mileage;
-    @Column(nullable = false, columnDefinition = "Età minima per acquistare/prenotare il veicolo")
+    @Column(nullable = false)
     private Integer ageLimit;
-    @Column(nullable = false, columnDefinition = "Flag 'ordinabile,acquistabile,non disponibile' del veicolo")
+    @Column(nullable = false)
     private StatusType statusType;
-    @Column(nullable = false, columnDefinition = "Locazione attuale del veicolo")
+    @Column(nullable = false)
     private String currentLocation;
-    @Column(nullable = false, columnDefinition = "Disponibilità al noleggio del veicolo")
+    @Column(nullable = false)
     private Boolean availableRental;
-    @Column(nullable = false, columnDefinition = "Tipo di classe emissione del veicolo")
+    @Column(nullable = false)
     private EmissionType emissionType;
-    @Column(nullable = false, columnDefinition = "Numero passeggeri del veicolo")
+    @Column(nullable = false)
     private Integer passengerNumber;
 
     public Vehicle(Long id, VehiclesType vehiclesType, String brand, String model, Double cubiCapacity, String colour, Integer hP, Double kW, TransmissionType transmissionType, LocalDate registrationYear, FuelType fuelType, BigDecimal price, Double tradeDiscount, Boolean newVehicle, Double mileage, Integer ageLimit, StatusType statusType, String currentLocation, Boolean availableRental, EmissionType emissionType, Integer passengerNumber) {

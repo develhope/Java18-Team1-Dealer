@@ -9,29 +9,29 @@ import java.time.LocalDate;
 @Entity(name = "Car")
 @Table(name= "car")
 public class Car extends Vehicle{
-    @Column(nullable = false, columnDefinition = "Tipo di auto")
+    @Column(nullable = false)
     private CarType carType;
-    @Column(nullable = false, columnDefinition = "Tipo di trazione")
+    @Column(nullable = false)
     private TractionType tractionType;
-    @Column(nullable = false, columnDefinition = "4x4 inseribile")
+    @Column(nullable = false)
     private Boolean optionFullTraction;
-    @Column(nullable = false, columnDefinition = "Numero di porte")
+    @Column(nullable = false)
     private Integer doors;
-    @Column(nullable = false, columnDefinition = "Presenza di chiusura centralizzata")
+    @Column(nullable = false)
     private Boolean centralizedClosing;
-    @Column(nullable = false, columnDefinition = "Presenza di aria condizionata")
+    @Column(nullable = false)
     private Boolean airConditioning;
-    @Column(nullable = false, columnDefinition = "Presenza del bluetooth")
+    @Column(nullable = false)
     private Boolean bluetooth;
-    @Column(nullable = false, columnDefinition = "Presenza del navigatore satellitare")
+    @Column(nullable = false)
     private Boolean satNav;
-    @Column(nullable = false, columnDefinition = "Presenza del tettuccio apribile")
+    @Column(nullable = false)
     private Boolean eletricRoof;
-    @Column(nullable = false, columnDefinition = "Presenza dell'assistenza al parcheggio")
+    @Column(nullable = false)
     private Boolean parkAssist;
-    @Column(nullable = false, columnDefinition = "Presenza ruota di scorta")
+    @Column(nullable = false)
     private Boolean spareTire;
-    @Column(nullable = false, columnDefinition = "Presenza del sistema antifurto")
+    @Column(nullable = false)
     private Boolean antiTheft;
 
     public Car(Long id, VehiclesType vehiclesType, String brand, String model, Double cubiCapacity, String colour, Integer hP, Double kW, TransmissionType transmissionType, LocalDate registrationYear, FuelType fuelType, BigDecimal price, Double tradeDiscount, Boolean newVehicle, Double mileage, Integer ageLimit, StatusType statusType, String currentLocation, Boolean availableRental, EmissionType emissionType, Integer passengerNumber, CarType carType, TractionType tractionType, Boolean optionFullTraction, Integer doors, Boolean centralizedClosing, Boolean airConditioning, Boolean bluetooth, Boolean satNav, Boolean eletricRoof, Boolean parkAssist, Boolean spareTire, Boolean antiTheft) {

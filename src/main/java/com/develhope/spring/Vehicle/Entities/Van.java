@@ -9,31 +9,31 @@ import java.time.LocalDate;
 @Entity(name = "Van")
 @Table(name = "van")
 public class Van extends Vehicle{
-    @Column(nullable = false, columnDefinition = "Tipo di trazione")
+    @Column(nullable = false)
     private TractionType tractionType;
-    @Column(nullable = false, columnDefinition = "4x4 inseribile")
+    @Column(nullable = false)
     private Boolean optionFullTraction;
-    @Column(nullable = false, columnDefinition = "Numero di porte")
+    @Column(nullable = false)
     private Integer doors;
-    @Column(nullable = false, columnDefinition = "Presenza di chiusura centralizzata")
+    @Column(nullable = false)
     private Boolean centralizedClosing;
-    @Column(nullable = false, columnDefinition = "Presenza di aria condizionata")
+    @Column(nullable = false)
     private Boolean airConditioning;
-    @Column(nullable = false, columnDefinition = "Presenza del bluetooth")
+    @Column(nullable = false)
     private Boolean bluetooth;
-    @Column(nullable = false, columnDefinition = "Presenza del navigatore satellitare")
+    @Column(nullable = false)
     private Boolean satNav;
-    @Column(nullable = false, columnDefinition = "Presenza ruota di scorta")
+    @Column(nullable = false)
     private Boolean spareTire;
-    @Column(nullable = false, columnDefinition = "Presenza del sistema antifurto")
+    @Column(nullable = false)
     private Boolean antiTheft;
-    @Column(nullable = false, columnDefinition = "Presenza porta posteriore finestrata")
+    @Column(nullable = false)
     private Boolean windowedBackDoor;
-    @Column(nullable = false, columnDefinition = "Presenza porta laterale scorrevole")
+    @Column(nullable = false)
     private Boolean slideSideDoor;
-    @Column(nullable = false, columnDefinition = "Presenza navigatore con retrocamera")
+    @Column(nullable = false)
     private Boolean reversingCam;
-    @Column(nullable = false, columnDefinition = "Presenza del sistema anticollisione")
+    @Column(nullable = false)
     private Boolean antiCollisionSystem;
 
     public Van(Long id, VehiclesType vehiclesType, String brand, String model, Double cubiCapacity, String colour, Integer hP, Double kW, TransmissionType transmissionType, LocalDate registrationYear, FuelType fuelType, BigDecimal price, Double tradeDiscount, Boolean newVehicle, Double mileage, Integer ageLimit, StatusType statusType, String currentLocation, Boolean availableRental, EmissionType emissionType, Integer passengerNumber, TractionType tractionType, Boolean optionFullTraction, Integer doors, Boolean centralizedClosing, Boolean airConditioning, Boolean bluetooth, Boolean satNav, Boolean spareTire, Boolean antiTheft, Boolean windowedBackDoor, Boolean slideSideDoor, Boolean reversingCam, Boolean antiCollisionSystem) {

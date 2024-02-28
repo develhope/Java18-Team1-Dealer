@@ -39,11 +39,10 @@ public class Vehicle {
     @Column(nullable = false)
     private String colour;
     @Column(nullable = false)
+    //cc lo mettiamo qui?
     private Integer hP;
-    //qui o nelle figlie? Assieme a cc
     @Column(nullable = false)
     private Double kW;
-    //qui o nelle figlie? Assieme a cc
     @Column(nullable = false)
     private LocalDate registrationYear;
     @Column(nullable = false)

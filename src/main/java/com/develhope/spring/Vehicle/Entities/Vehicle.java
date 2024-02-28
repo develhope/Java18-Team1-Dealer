@@ -9,16 +9,23 @@ import com.develhope.spring.Vehicle.Entities.Enums.EmissionType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
+
+import java.lang.annotation.Inherited;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+
 @Entity
 @Table
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@SuperBuilder
+
 public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,4 +68,6 @@ public class Vehicle {
     private EmissionType emissionType;
     @Column(nullable = false)
     private Integer passengerNumber;
+
+
 }

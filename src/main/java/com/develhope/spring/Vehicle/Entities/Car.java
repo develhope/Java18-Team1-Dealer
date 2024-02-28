@@ -2,9 +2,8 @@ package com.develhope.spring.Vehicle.Entities;
 
 import com.develhope.spring.Vehicle.Entities.Enums.*;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,7 +11,6 @@ import java.time.LocalDate;
 @Entity
 @Table
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class Car extends Vehicle{
     @Column(nullable = false)
@@ -43,4 +41,22 @@ public class Car extends Vehicle{
     private Boolean spareTire;
     @Column(nullable = false)
     private Boolean antiTheft;
+
+    public Car(Long id, VehiclesType vehiclesType, String brand, String model, String colour, Integer hP, Double kW, LocalDate registrationYear, FuelType fuelType, BigDecimal price, Double tradeDiscount, Boolean newVehicle, Double mileage, Integer ageLimit, StatusType statusType, String currentLocation, Boolean availableRental, EmissionType emissionType, Integer passengerNumber, CarType carType, TransmissionType transmissionType, Double cubiCapacity, TractionType tractionType, Boolean optionFullTraction, Integer doors, Boolean centralizedClosing, Boolean airConditioning, Boolean bluetooth, Boolean satNav, Boolean eletricRoof, Boolean parkAssist, Boolean spareTire, Boolean antiTheft) {
+        super(id, vehiclesType, brand, model, colour, hP, kW, registrationYear, fuelType, price, tradeDiscount, newVehicle, mileage, ageLimit, statusType, currentLocation, availableRental, emissionType, passengerNumber);
+        this.carType = carType;
+        this.transmissionType = transmissionType;
+        this.cubiCapacity = cubiCapacity;
+        this.tractionType = tractionType;
+        this.optionFullTraction = optionFullTraction;
+        this.doors = doors;
+        this.centralizedClosing = centralizedClosing;
+        this.airConditioning = airConditioning;
+        this.bluetooth = bluetooth;
+        this.satNav = satNav;
+        this.eletricRoof = eletricRoof;
+        this.parkAssist = parkAssist;
+        this.spareTire = spareTire;
+        this.antiTheft = antiTheft;
+    }
 }

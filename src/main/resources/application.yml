@@ -15,7 +15,7 @@ spring:
 environment: test
 spring:
   datasource:
-    url: jdbc:h2:mem:dbtest
+    url: jdbc:h2:mem:testdb
     username: test
     password: test
   jpa:

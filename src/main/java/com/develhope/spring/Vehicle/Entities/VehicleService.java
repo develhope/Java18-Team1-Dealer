@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 public class VehicleService {
     @Autowired
     private VehicleRepository vehicleRepository;
+
     public Vehicle createVehicle(VehiclesType vehiclesType, Vehicle vehicle){
         if(vehiclesType.equals(VehiclesType.SCOOTER)){
             Scooter scooter = new Scooter();

@@ -1,5 +1,9 @@
 package com.develhope.spring.Vehicle.Entities;
 
+import com.develhope.spring.Purchase.Entities.Purchase;
+import com.develhope.spring.Rent.Entities.Rent;
+import com.develhope.spring.User.Entities.Customer;
+import com.develhope.spring.User.Entities.Salesman;
 import com.develhope.spring.Vehicle.Entities.Enums.FuelType;
 import com.develhope.spring.Vehicle.Entities.Enums.StatusType;
 import com.develhope.spring.Vehicle.Entities.Enums.VehiclesType;
@@ -12,6 +16,9 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.boot.autoconfigure.integration.IntegrationProperties;
+import org.springframework.boot.autoconfigure.pulsar.PulsarProperties;
+import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerProperties;
 
 
 import java.lang.annotation.Inherited;
@@ -39,7 +46,8 @@ public class Vehicle {
     @Column(nullable = false)
     private String colour;
     @Column(nullable = false)
-    //cc lo mettiamo qui?
+    private Double cubiCapacity;
+    @Column(nullable = false)
     private Integer hP;
     @Column(nullable = false)
     private Double kW;
@@ -68,5 +76,12 @@ public class Vehicle {
     @Column(nullable = false)
     private Integer passengerNumber;
 
-
+    @OneToOne
+    Customer customer;
+    @OneToOne
+    Salesman salesman;
+    @OneToOne
+    Purchase purchase;
+    @OneToOne
+    Rent rent;
 }

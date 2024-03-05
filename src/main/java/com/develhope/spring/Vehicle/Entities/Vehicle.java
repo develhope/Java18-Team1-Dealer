@@ -2,37 +2,22 @@ package com.develhope.spring.Vehicle.Entities;
 
 import com.develhope.spring.Purchase.Entities.Purchase;
 import com.develhope.spring.Rent.Entities.Rent;
-import com.develhope.spring.User.Entities.Customer;
-import com.develhope.spring.User.Entities.Salesman;
-import com.develhope.spring.Vehicle.Entities.Enums.FuelType;
-import com.develhope.spring.Vehicle.Entities.Enums.StatusType;
-import com.develhope.spring.Vehicle.Entities.Enums.VehiclesType;
-import com.develhope.spring.Vehicle.Entities.Enums.TransmissionType;
-import com.develhope.spring.Vehicle.Entities.Enums.EmissionType;
+import com.develhope.spring.Vehicle.Entities.Enums.*;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
-import org.springframework.boot.autoconfigure.integration.IntegrationProperties;
-import org.springframework.boot.autoconfigure.pulsar.PulsarProperties;
-import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerProperties;
 
-
-import java.lang.annotation.Inherited;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
+import java.util.List;
 
 @Entity
 @Table
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder
-
 public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,11 +42,11 @@ public class Vehicle {
     private FuelType fuelType;
     @Column(nullable = false)
     private BigDecimal price;
-    @Column(nullable = true)
+    @Column
     private Double tradeDiscount;
     @Column(nullable = false)
     private Boolean newVehicle;
-    @Column(nullable = true)
+    @Column
     private Double mileage;
     @Column(nullable = false)
     private Integer ageLimit;
@@ -76,12 +61,59 @@ public class Vehicle {
     @Column(nullable = false)
     private Integer passengerNumber;
 
-    @OneToOne
-    Customer customer;
-    @OneToOne
-    Salesman salesman;
-    @OneToOne
-    Purchase purchase;
-    @OneToOne
-    Rent rent;
+    //solo scooter e moto
+    @Column
+    private Boolean windShield;
+    @Column
+    private Boolean tailBag;
+    @Column
+    private Boolean passengerBackrest;
+
+    //motor, car e van
+    @Column
+    private TransmissionType transmissionType;
+
+    //solo car
+    @Column
+    private CarType carType;
+
+    //car e van
+    @Column
+    private TractionType tractionType;
+    @Column
+    private Boolean optionFullTraction;
+    @Column
+    private Integer doors;
+    @Column
+    private Boolean centralizedClosing;
+    @Column
+    private Boolean airConditioning;
+    @Column
+    private Boolean bluetooth;
+    @Column
+    private Boolean satNav;
+    @Column
+    private Boolean electricRoof;
+    @Column
+    private Boolean parkAssist;
+    @Column
+    private Boolean spareTire;
+    @Column
+    private Boolean antiTheft;
+
+    //solo van
+    @Column
+    private Boolean passengerTransport;
+    @Column
+    private Boolean windowedBackDoor;
+    @Column
+    private Boolean slideSideDoor;
+    @Column
+    private Boolean antiCollisionSystem;
+
+
+    @OneToMany(mappedBy = "purchase")
+    private List<Purchase> purchase;
+    @OneToMany(mappedBy = "purchase")
+    private List<Rent> rents;
 }

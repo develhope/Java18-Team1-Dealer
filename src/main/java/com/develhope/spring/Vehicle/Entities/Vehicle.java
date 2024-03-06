@@ -112,6 +112,8 @@ public class Vehicle {
     private Boolean antiCollisionSystem;
 
 
+
+
     @OneToMany(mappedBy = "purchase")
     private List<Purchase> purchase;
     @OneToMany(mappedBy = "purchase")

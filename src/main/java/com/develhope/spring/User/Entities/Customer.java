@@ -28,5 +28,6 @@ public class Customer extends Users {
     @Column(nullable = false, unique = true, updatable = false)
     private String taxId;
 
+
     //TODO: definire onetomany o manytoone.
 }

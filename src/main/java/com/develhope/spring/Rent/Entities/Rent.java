@@ -1,5 +1,8 @@
 package com.develhope.spring.Rent.Entities;
 
+import com.develhope.spring.User.Entities.Customer;
+import com.develhope.spring.User.Entities.Salesman;
+import com.develhope.spring.Vehicle.Entities.Vehicle;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,4 +39,10 @@ public class Rent {
     private String deliveryPlace;
     @Column(nullable = false)
     private Boolean isPaid;
+    @ManyToOne
+    private Salesman salesman;
+    @ManyToOne
+    private Customer customer;
+    @OneToOne
+    private Vehicle vehicle;
 }

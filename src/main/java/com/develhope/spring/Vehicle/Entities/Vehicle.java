@@ -114,8 +114,8 @@ public class Vehicle {
 
 
 
-    @OneToMany(mappedBy = "purchase")
-    private List<Purchase> purchase;
-    @OneToMany(mappedBy = "purchase")
-    private List<Rent> rents;
+    @OneToOne
+    private Purchase purchase;
+    @OneToOne
+    private  Rent rent;
 }

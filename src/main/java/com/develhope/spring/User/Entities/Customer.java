@@ -1,15 +1,19 @@
 package com.develhope.spring.User.Entities;
 
+import com.develhope.spring.Purchase.Entities.Purchase;
+import com.develhope.spring.Rent.Entities.Rent;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class Customer extends Users {
 
     @Id
@@ -28,6 +32,9 @@ public class Customer extends Users {
     @Column(nullable = false, unique = true, updatable = false)
     private String taxId;
 
+    @OneToMany
+    private List<Purchase> purchase;
+    @OneToMany
+    private List<Rent> rent;
 
-    //TODO: definire onetomany o manytoone.
 }

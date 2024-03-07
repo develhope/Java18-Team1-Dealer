@@ -1,11 +1,15 @@
 package com.develhope.spring.Purchase.Entities;
 
+import com.develhope.spring.User.Entities.Customer;
+import com.develhope.spring.User.Entities.Salesman;
+import com.develhope.spring.Vehicle.Entities.Vehicle;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table
@@ -25,5 +29,12 @@ public class Purchase {
 
     @Column(nullable = false)
     private String orderStatus;
+
+    @ManyToOne
+    private Salesman salesman;
+    @ManyToOne
+    private Customer customer;
+    @OneToOne
+    private Vehicle vehicle;
 
 }

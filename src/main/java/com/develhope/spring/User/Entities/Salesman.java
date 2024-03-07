@@ -12,8 +12,8 @@ import java.util.List;
 @Entity
 @Table
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class Salesman extends Users {
 
     @Id
@@ -30,9 +30,9 @@ public class Salesman extends Users {
     private Integer salesNumber;
 
     @OneToMany
-    private List<Rent> idRentSalesman;
+    private List<Rent> rent;
 
     @OneToMany
-    private List<Purchase> idPurchaseSalesman;
+    private List<Purchase> purchase;
 
 }

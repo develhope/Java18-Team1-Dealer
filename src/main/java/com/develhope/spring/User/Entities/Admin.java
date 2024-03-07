@@ -1,14 +1,20 @@
 package com.develhope.spring.User.Entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 @Entity
 @Table
-public class Admin extends User{
-    public Admin(Long id, String firstName, String lastName, String email, String password) {
-        super(id, firstName, lastName, email, password);
-    }
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Admin extends Users {
 
-    public Admin() {
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
 }

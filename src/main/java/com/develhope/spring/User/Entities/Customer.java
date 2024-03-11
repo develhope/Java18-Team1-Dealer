@@ -21,13 +21,13 @@ public class Customer extends Users {
     private Long id;
 
     @Column(nullable = false)
-    private Integer phone;
+    private Long phone;
 
     @Column(nullable = false)
     private String address;
 
     @Column(nullable = false)
-    private Integer creditCard;
+    private Long creditCard;
 
     @Column(nullable = false, unique = true, updatable = false)
     private String taxId;

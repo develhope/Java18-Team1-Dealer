@@ -26,7 +26,7 @@ public class AdminService {
             purchase.setVehicle(vehicle);
             purchase.setCustomer(customer);
             purchase.setAdvancePayment(price);
-            purchase.setPaid(true);
+            purchase.setIsPaid(true);
 
             vehicle.setStatusType(StatusType.SOLD);
             vehicleRepository.save(vehicle);

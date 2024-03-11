@@ -1,5 +1,6 @@
 package com.develhope.spring.Purchase.Entities;
 
+import com.develhope.spring.Purchase.Entities.Enums.VehicleStatus;
 import com.develhope.spring.User.Entities.Customer;
 import com.develhope.spring.User.Entities.Salesman;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
@@ -29,6 +30,9 @@ public class Purchase {
 
     @Column(nullable = false)
     private String orderStatus;
+
+    @Column(nullable = false)
+    private VehicleStatus veichleStatus;
 
     @ManyToOne
     private Salesman salesman;

@@ -29,6 +29,7 @@ public class CustomerService {
             purchase.setVehicle(vehicle);
             purchase.setCustomer(customer);
             purchase.setAdvancePayment(price);
+            purchase.setPaid(true);
 
             vehicle.setStatusType(StatusType.SOLD);
             vehicleRepository.save(vehicle);

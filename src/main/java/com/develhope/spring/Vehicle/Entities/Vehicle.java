@@ -52,7 +52,7 @@ public class Vehicle {
     private Integer ageLimit;
     @Column(nullable = false)
     private StatusType statusType;
-    @Column(nullable = false)
+    @Column
     private String currentLocation;
     @Column(nullable = false)
     private Boolean availableRental;

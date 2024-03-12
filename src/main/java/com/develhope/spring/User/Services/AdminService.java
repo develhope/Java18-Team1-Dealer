@@ -14,7 +14,6 @@ import com.develhope.spring.Purchase.Repositories.PurchaseRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Iterator;
 import java.util.List;
@@ -37,9 +36,10 @@ public class AdminService {
     @Autowired
     private PurchaseRepository purchaseRepository;
   
+    //get lista salesman
+    public List<Salesman> getSalesmenList(){return salesmanRepository.findAll();}
 
-    public List<Salesman> salesmenList(){return salesmanRepository.findAll();}
-
+    //cancella account salesman
     public Salesman deleteASalesman(Long id){
 
         return salesmanRepository.findById(id)
@@ -50,6 +50,7 @@ public class AdminService {
                 );
     }
 
+    //modifica account salesman
     public Salesman modifySalesman(Long id,
                                    String newName,
                                    String newSurname,
@@ -62,13 +63,15 @@ public class AdminService {
         salesman.setFirstName(newName);
         salesman.setLastName(newSurname);
         salesman.setAddress(newAddress);
-        salesman.setPhone(newPhoneNumber);
+        salesman.setPhone(String.valueOf(newPhoneNumber));
 
         return salesman;
     }
 
-    public List<Customer> customersList(){return customerRepository.findAll();}
+    //get lista customer
+    public List<Customer> getCustomersList(){return customerRepository.findAll();}
 
+    //cancella account customer
     public Customer deleteACustomer(Long id){
 
         return customerRepository.findById(id)
@@ -79,6 +82,7 @@ public class AdminService {
                 );
     }
 
+    //modifica account customer
     public Customer modifyCustomer(Long id,
                                    String newName,
                                    String newSurname,
@@ -91,7 +95,7 @@ public class AdminService {
         customer.setFirstName(newName);
         customer.setLastName(newSurname);
         customer.setAddress(newAddress);
-        customer.setPhone(newPhoneNumber);
+        customer.setPhone(String.valueOf(newPhoneNumber));
 
         return customer;
     }

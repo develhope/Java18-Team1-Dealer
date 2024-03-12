@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Table
@@ -23,7 +22,7 @@ public class Vehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private VehiclesType vehiclesType;
+    private VehiclesTypeEnum vehiclesTypeEnum;
     @Column(nullable = false)
     private String brand;
     @Column(nullable = false)
@@ -39,7 +38,7 @@ public class Vehicle {
     @Column(nullable = false)
     private LocalDate registrationYear;
     @Column(nullable = false)
-    private FuelType fuelType;
+    private FuelTypeEnum fuelTypeEnum;
     @Column(nullable = false)
     private BigDecimal price;
     @Column
@@ -51,13 +50,13 @@ public class Vehicle {
     @Column(nullable = false)
     private Integer ageLimit;
     @Column(nullable = false)
-    private StatusType statusType;
-    @Column(nullable = false)
+    private StatusTypeEnum statusTypeEnum;
+    @Column
     private String currentLocation;
     @Column(nullable = false)
     private Boolean availableRental;
     @Column(nullable = false)
-    private EmissionType emissionType;
+    private EmissionTypeEnum emissionTypeEnum;
     @Column(nullable = false)
     private Integer passengerNumber;
 
@@ -71,15 +70,15 @@ public class Vehicle {
 
     //motor, car e van
     @Column
-    private TransmissionType transmissionType;
+    private TransmissionTypeEnum transmissionTypeEnum;
 
     //solo car
     @Column
-    private CarType carType;
+    private CarTypeEnum carTypeEnum;
 
     //car e van
     @Column
-    private TractionType tractionType;
+    private TractionTypeEnum tractionTypeEnum;
     @Column
     private Boolean optionFullTraction;
     @Column

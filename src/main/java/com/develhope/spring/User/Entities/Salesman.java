@@ -21,7 +21,7 @@ public class Salesman extends Users {
     private Long id;
 
     @Column(nullable = false)
-    private Integer phone;
+    private String phone;
 
     @Column(nullable = false)
     private  String address;

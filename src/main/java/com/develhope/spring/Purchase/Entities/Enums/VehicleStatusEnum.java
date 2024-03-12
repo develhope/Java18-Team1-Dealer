@@ -1,6 +1,6 @@
 package com.develhope.spring.Purchase.Entities.Enums;
 
-public enum VehicleStatus {
+public enum VehicleStatusEnum {
     ORDERED,
     PURCHASED
 }

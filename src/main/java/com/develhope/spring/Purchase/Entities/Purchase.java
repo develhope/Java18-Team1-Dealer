@@ -1,6 +1,7 @@
 package com.develhope.spring.Purchase.Entities;
 
-import com.develhope.spring.Purchase.Entities.Enums.VehicleStatus;
+import com.develhope.spring.Purchase.Entities.Enums.OrderStatusEnum;
+import com.develhope.spring.Purchase.Entities.Enums.VehicleStatusEnum;
 import com.develhope.spring.User.Entities.Customer;
 import com.develhope.spring.User.Entities.Salesman;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
@@ -10,7 +11,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Entity
 @Table
@@ -29,10 +29,10 @@ public class Purchase {
     private Boolean isPaid;
 
     @Column(nullable = false)
-    private String orderStatus;
+    private OrderStatusEnum orderStatusEnum;
 
     @Column(nullable = false)
-    private VehicleStatus veichleStatus;
+    private VehicleStatusEnum veichleStatusEnum;
 
     @ManyToOne
     private Salesman salesman;

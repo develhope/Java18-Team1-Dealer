@@ -11,9 +11,9 @@ import java.util.List;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
-    @Query(value = "SELECT * FROM PURCHASE WHERE ID=(//ID DI ACCESSO DEL CLIENTE) AND  VEHICLESTATUS=PURCHASED", nativeQuery = true)
+    @Query(value = "SELECT * FROM PURCHASE WHERE ID=(//ID DI ACCESSO DEL CLIENTE) AND  VEHICLESTATUSENUM=PURCHASED", nativeQuery = true)
     List<Purchase> purchaseList();
-    @Query(value = "SELECT * FROM PURCHASE WHERE ID=(//ID DI ACCESSO DEL CLIENTE) AND VEHICLESTATUS=ORDERED", nativeQuery = true)
+    @Query(value = "SELECT * FROM PURCHASE WHERE ID=(//ID DI ACCESSO DEL CLIENTE) AND VEHICLESTATUSENUM=ORDERED", nativeQuery = true)
     List<Purchase> orderList();
 
     @Query(value = "SELECT * FROM RENT WHERE ID=(//ID DI ACCESSO DEL CLIENTE)", nativeQuery = true)

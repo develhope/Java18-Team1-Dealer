@@ -1,6 +1,5 @@
 package com.develhope.spring.User.Services;
 
-
 import com.develhope.spring.User.Entities.Customer;
 import com.develhope.spring.User.Entities.Salesman;
 import com.develhope.spring.User.Repositories.AdminRepository;
@@ -23,16 +22,12 @@ public class AdminService {
 
     @Autowired
     AdminRepository adminRepository;
-
     @Autowired
     SalesmanRepository salesmanRepository;
-
     @Autowired
     CustomerRepository customerRepository;
-  
     @Autowired
     private VehicleRepository vehicleRepository;
-  
     @Autowired
     private PurchaseRepository purchaseRepository;
   
@@ -41,12 +36,8 @@ public class AdminService {
 
     //cancella account salesman
     public Salesman deleteASalesman(Long id){
-
         return salesmanRepository.findById(id)
-                .orElseThrow(
-
-                        () -> new EntityNotFoundException("Salesman not fund by id " + id)
-
+                .orElseThrow(() -> new EntityNotFoundException("Salesman not fund by id " + id)
                 );
     }
 
@@ -55,7 +46,7 @@ public class AdminService {
                                    String newName,
                                    String newSurname,
                                    String newAddress,
-                                   Integer newPhoneNumber){
+                                   String newPhoneNumber){
 
         Salesman salesman = salesmanRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Salesman not fund by id " + id));
@@ -63,7 +54,7 @@ public class AdminService {
         salesman.setFirstName(newName);
         salesman.setLastName(newSurname);
         salesman.setAddress(newAddress);
-        salesman.setPhone(String.valueOf(newPhoneNumber));
+        salesman.setPhone(newPhoneNumber);
 
         return salesman;
     }
@@ -76,9 +67,7 @@ public class AdminService {
 
         return customerRepository.findById(id)
                 .orElseThrow(
-
                         () -> new EntityNotFoundException("Customer not fund by id " + id)
-
                 );
     }
 
@@ -87,7 +76,7 @@ public class AdminService {
                                    String newName,
                                    String newSurname,
                                    String newAddress,
-                                   Integer newPhoneNumber){
+                                   String newPhoneNumber){
 
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Salesman not fund by id " + id));
@@ -95,37 +84,44 @@ public class AdminService {
         customer.setFirstName(newName);
         customer.setLastName(newSurname);
         customer.setAddress(newAddress);
-        customer.setPhone(String.valueOf(newPhoneNumber));
+        customer.setPhone(newPhoneNumber);
 
         return customer;
     }
 
-   
-
     //aggiungi veicolo
     public Vehicle newVehicle(Vehicle vehicle){
+
         return vehicleRepository.save(vehicle);
     }
 
     //cancella veicolo
     public Boolean deleteVehicle(Long id){
-        Vehicle vehicleDeleted = vehicleRepository.findById(id).orElse(null);
-        if (vehicleDeleted != null){
-            vehicleRepository.deleteById(id);
-            return true;
-        }else {
-            throw new RuntimeException("Veicolo da cancellare non presente nel Database");
-        }
+        Vehicle vehicleDeleted = vehicleRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Veicolo da cancellare non presente nel Database"));
+
+        vehicleRepository.deleteById(id);
+        return true;
+
     }
 
     //modifica veicolo
     public Vehicle updateVehicle(Long id, Vehicle vehicle){
-        Vehicle vehicleUpdated = vehicleRepository.findById(id).orElse(null);
-        if(vehicle != null){
+        Vehicle vehicleUpdated = vehicleRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Veicolo da aggiornare non presente nel Database"));
+        if(vehicleUpdated.getVehiclesTypeEnum() != null) {
             vehicleUpdated.setVehiclesTypeEnum(vehicle.getVehiclesTypeEnum());
+        }
+        if(vehicleUpdated.getBrand() != null && !vehicleUpdated.getBrand().isEmpty()){
             vehicleUpdated.setBrand(vehicleUpdated.getBrand());
+        }
+        if(vehicleUpdated.getModel() != null && !vehicleUpdated.getModel().isEmpty()) {
             vehicleUpdated.setModel(vehicleUpdated.getModel());
+        }
+        if(vehicleUpdated.getColour() != null && !vehicleUpdated.getColour().isEmpty()){
             vehicleUpdated.setColour(vehicleUpdated.getColour());
+        }
+        //TODO: da finire qui
             vehicleUpdated.setCubiCapacity(vehicleUpdated.getCubiCapacity());
             vehicleUpdated.setHP(vehicle.getHP());
             vehicleUpdated.setKW(vehicle.getKW());
@@ -161,28 +157,27 @@ public class AdminService {
             vehicleUpdated.setWindowedBackDoor(vehicle.getWindowedBackDoor());
             vehicleUpdated.setSlideSideDoor(vehicle.getSlideSideDoor());
             vehicleUpdated.setAntiCollisionSystem(vehicle.getAntiCollisionSystem());
-        }else {
-            throw new RuntimeException("Veicolo da aggiornare non presente nel Database");
-        }
-        return vehicleUpdated;
+
+        return vehicleRepository.save(vehicleUpdated);
     }
 
     //cambia STATUS di un veicolo
     public Vehicle updateStatusType(Long id, StatusTypeEnum statusTypeEnum){
-        Vehicle vehicleUpdated = vehicleRepository.findById(id).orElse(null);
-        if(vehicleUpdated != null){
-            vehicleUpdated.setStatusTypeEnum(statusTypeEnum);
-        }else {
-            throw new RuntimeException("Veicolo da aggiornare non presente nel Database");
-        }
-        return vehicleUpdated;
+        Vehicle vehicleUpdated = vehicleRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Veicolo da aggiornare non presente nel Database"));
+
+        vehicleUpdated.setStatusTypeEnum(statusTypeEnum);
+
+        return vehicleRepository.save(vehicleUpdated);
     }
 
-    //modifica ACQUISTO per un CUSTOMER (versione in cui è pure presente id Customer, controllare se necessario)
-    //no id updated, si salesman e customer
+    //modifica ACQUISTO per un CUSTOMER
     public List<Purchase> updatePurchaseById(Long idCustomer, Long idPurchase, Purchase purchaseUpdated){
         if(idCustomer != null && idPurchase != null) {
+
             List<Purchase> purchaseListByCustomer = purchaseRepository.purchasesByCustomer(idCustomer);
+
+            //TODO: finire qui
             for (Purchase purchase : purchaseListByCustomer){
                 if (purchase.getId() == idPurchase){
                     purchase.setAdvancePayment(purchaseUpdated.getAdvancePayment());
@@ -199,9 +194,7 @@ public class AdminService {
         }
     }
 
-
     //cancella ACQUISTO per un CUSTOMER
-    //scriverlo in vehicleRepo
     public Boolean deletePurchaseById(Long idCustomer, Long idPurchase){
         if(idCustomer != null && idPurchase != null) {
             Iterator<Purchase> iterator = purchaseRepository.purchasesByCustomer(idCustomer).listIterator();
@@ -221,8 +214,10 @@ public class AdminService {
 
     //ottieni VEICOLI filtrandoli per STATUSTYPE
     public List<Vehicle> vehiclesByStatusType(StatusTypeEnum statusTypeEnum){
+
         if(statusTypeEnum != null){
-        return vehicleRepository.vehiclesByStatusType(statusTypeEnum);
+
+            return vehicleRepository.vehiclesByStatusType(statusTypeEnum);
         }else {
             throw new RuntimeException("Errore nell'inserimento dello stato dei veicoli da ricercare");
         }

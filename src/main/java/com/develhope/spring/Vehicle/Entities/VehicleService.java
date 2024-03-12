@@ -4,7 +4,7 @@ import com.develhope.spring.Vehicle.DTO.CarDTO;
 import com.develhope.spring.Vehicle.DTO.MotorBikeDTO;
 import com.develhope.spring.Vehicle.DTO.ScooterDTO;
 import com.develhope.spring.Vehicle.DTO.VanDTO;
-import com.develhope.spring.Vehicle.Entities.Enums.VehiclesType;
+import com.develhope.spring.Vehicle.Entities.Enums.VehiclesTypeEnum;
 import com.develhope.spring.Vehicle.Repositories.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,13 +25,13 @@ public class VehicleService {
     public List<Object> allVehiclesDTO(List<Vehicle> vehicles) throws Exception{
         List<Object> vehiclesDTO = new ArrayList<>();
         for(Vehicle vehicle : vehicles){
-            if(vehicle.getVehiclesType().equals(VehiclesType.SCOOTER)){
+            if(vehicle.getVehiclesTypeEnum().equals(VehiclesTypeEnum.SCOOTER)){
                 vehiclesDTO.add(getScooterDTO(vehicle));
-            } else if (vehicle.getVehiclesType().equals(VehiclesType.MOTORBIKE)) {
+            } else if (vehicle.getVehiclesTypeEnum().equals(VehiclesTypeEnum.MOTORBIKE)) {
                 vehiclesDTO.add(getMotorBikeDTO(vehicle));
-            } else if (vehicle.getVehiclesType().equals(VehiclesType.CAR)) {
+            } else if (vehicle.getVehiclesTypeEnum().equals(VehiclesTypeEnum.CAR)) {
                 vehiclesDTO.add(getCarDTO(vehicle));
-            } else if (vehicle.getVehiclesType().equals(VehiclesType.VAN)) {
+            } else if (vehicle.getVehiclesTypeEnum().equals(VehiclesTypeEnum.VAN)) {
                 vehiclesDTO.add(getVanDTO(vehicle));
             }
         }
@@ -47,13 +47,13 @@ public class VehicleService {
         scooterDTO.sethP(vehicle.getHP());
         scooterDTO.setkW(vehicle.getKW());
         scooterDTO.setRegistrationYear(vehicle.getRegistrationYear());
-        scooterDTO.setFuelType(vehicle.getFuelType());
+        scooterDTO.setFuelType(vehicle.getFuelTypeEnum());
         scooterDTO.setPrice(vehicle.getPrice());
         scooterDTO.setNewVehicle(vehicle.getNewVehicle());
         scooterDTO.setMileage(vehicle.getMileage());
-        scooterDTO.setStatusType(vehicle.getStatusType());
+        scooterDTO.setStatusType(vehicle.getStatusTypeEnum());
         scooterDTO.setCurrentLocation(vehicle.getCurrentLocation());
-        scooterDTO.setEmissionType(vehicle.getEmissionType());
+        scooterDTO.setEmissionType(vehicle.getEmissionTypeEnum());
         scooterDTO.setPassengerNumber(vehicle.getPassengerNumber());
         scooterDTO.setWindShield(vehicle.getWindShield());
         scooterDTO.setTailBag(vehicle.getTailBag());
@@ -70,15 +70,15 @@ public class VehicleService {
         motorBikeDTO.setCubiCapacity(vehicle.getCubiCapacity());
         motorBikeDTO.sethP(vehicle.getHP());
         motorBikeDTO.setkW(vehicle.getKW());
-        motorBikeDTO.setTransmissionType(vehicle.getTransmissionType());
+        motorBikeDTO.setTransmissionType(vehicle.getTransmissionTypeEnum());
         motorBikeDTO.setRegistrationYear(vehicle.getRegistrationYear());
-        motorBikeDTO.setFuelType(vehicle.getFuelType());
+        motorBikeDTO.setFuelType(vehicle.getFuelTypeEnum());
         motorBikeDTO.setPrice(vehicle.getPrice());
         motorBikeDTO.setNewVehicle(vehicle.getNewVehicle());
         motorBikeDTO.setMileage(vehicle.getMileage());
-        motorBikeDTO.setStatusType(vehicle.getStatusType());
+        motorBikeDTO.setStatusType(vehicle.getStatusTypeEnum());
         motorBikeDTO.setCurrentLocation(vehicle.getCurrentLocation());
-        motorBikeDTO.setEmissionType(vehicle.getEmissionType());
+        motorBikeDTO.setEmissionType(vehicle.getEmissionTypeEnum());
         motorBikeDTO.setPassengerNumber(vehicle.getPassengerNumber());
         motorBikeDTO.setWindShield(vehicle.getWindShield());
         motorBikeDTO.setTailBag(vehicle.getTailBag());
@@ -96,16 +96,16 @@ public class VehicleService {
         carDTO.sethP(vehicle.getHP());
         carDTO.setkW(vehicle.getKW());
         carDTO.setRegistrationYear(vehicle.getRegistrationYear());
-        carDTO.setFuelType(vehicle.getFuelType());
+        carDTO.setFuelType(vehicle.getFuelTypeEnum());
         carDTO.setPrice(vehicle.getPrice());
         carDTO.setNewVehicle(vehicle.getNewVehicle());
         carDTO.setMileage(vehicle.getMileage());
-        carDTO.setEmissionType(vehicle.getEmissionType());
+        carDTO.setEmissionType(vehicle.getEmissionTypeEnum());
         carDTO.setPassengerNumber(vehicle.getPassengerNumber());
-        carDTO.setTransmissionType(vehicle.getTransmissionType());
-        carDTO.setStatusType(vehicle.getStatusType());
-        carDTO.setCarType(vehicle.getCarType());
-        carDTO.setTractionType(vehicle.getTractionType());
+        carDTO.setTransmissionType(vehicle.getTransmissionTypeEnum());
+        carDTO.setStatusType(vehicle.getStatusTypeEnum());
+        carDTO.setCarType(vehicle.getCarTypeEnum());
+        carDTO.setTractionType(vehicle.getTractionTypeEnum());
         carDTO.setOptionFullTraction(vehicle.getOptionFullTraction());
         carDTO.setDoors(vehicle.getDoors());
         carDTO.setCentralizedClosing(vehicle.getCentralizedClosing());
@@ -129,15 +129,15 @@ public class VehicleService {
         vanDTO.setCubiCapacity(vehicle.getCubiCapacity());
         vanDTO.sethP(vehicle.getHP());
         vanDTO.setkW(vehicle.getKW());
-        vanDTO.setTransmissionType(vehicle.getTransmissionType());
+        vanDTO.setTransmissionType(vehicle.getTransmissionTypeEnum());
         vanDTO.setRegistrationYear(vehicle.getRegistrationYear());
-        vanDTO.setFuelType(vehicle.getFuelType());
+        vanDTO.setFuelType(vehicle.getFuelTypeEnum());
         vanDTO.setPrice(vehicle.getPrice());
         vanDTO.setNewVehicle(vehicle.getNewVehicle());
         vanDTO.setMileage(vehicle.getMileage());
-        vanDTO.setEmissionType(vehicle.getEmissionType());
+        vanDTO.setEmissionType(vehicle.getEmissionTypeEnum());
         vanDTO.setPassengerNumber(vehicle.getPassengerNumber());
-        vanDTO.setTractionType(vehicle.getTractionType());
+        vanDTO.setTractionType(vehicle.getTractionTypeEnum());
         vanDTO.setOptionFullTraction(vehicle.getOptionFullTraction());
         vanDTO.setDoors(vehicle.getDoors());
         vanDTO.setCentralizedClosing(vehicle.getCentralizedClosing());
@@ -152,7 +152,7 @@ public class VehicleService {
         vanDTO.setWindowedBackDoor(vehicle.getWindowedBackDoor());
         vanDTO.setSlideSideDoor(vehicle.getSlideSideDoor());
         vanDTO.setAntiCollisionSystem(vehicle.getAntiCollisionSystem());
-        vanDTO.setStatusType(vehicle.getStatusType());
+        vanDTO.setStatusType(vehicle.getStatusTypeEnum());
         vanDTO.setCurrentLocation(vehicle.getCurrentLocation());
         vanDTO.setAvailableRental(vehicle.getAvailableRental());
         return vanDTO;

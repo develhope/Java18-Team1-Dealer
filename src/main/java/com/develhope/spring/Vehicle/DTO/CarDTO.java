@@ -1,7 +1,6 @@
 package com.develhope.spring.Vehicle.DTO;
 
 import com.develhope.spring.Vehicle.Entities.Enums.*;
-import jakarta.persistence.Column;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -15,15 +14,15 @@ public class CarDTO {
     private Integer hP;
     private Double kW;
     private LocalDate registrationYear;
-    private FuelType fuelType;
+    private FuelTypeEnum fuelTypeEnum;
     private BigDecimal price;
     private Boolean newVehicle;
     private Double mileage;
-    private EmissionType emissionType;
+    private EmissionTypeEnum emissionTypeEnum;
     private Integer passengerNumber;
-    private TransmissionType transmissionType;
-    private CarType carType;
-    private TractionType tractionType;
+    private TransmissionTypeEnum transmissionTypeEnum;
+    private CarTypeEnum carTypeEnum;
+    private TractionTypeEnum tractionTypeEnum;
     private Boolean optionFullTraction;
     private Integer doors;
     private Boolean centralizedClosing;
@@ -34,11 +33,11 @@ public class CarDTO {
     private Boolean parkAssist;
     private Boolean spareTire;
     private Boolean antiTheft;
-    private StatusType statusType;
+    private StatusTypeEnum statusTypeEnum;
     private String currentLocation;
     private Boolean availableRental;
 
-    public CarDTO(Long id, String brand, String model, String colour, Double cubiCapacity, Integer hP, Double kW, LocalDate registrationYear, FuelType fuelType, BigDecimal price, Boolean newVehicle, Double mileage, EmissionType emissionType, Integer passengerNumber, TransmissionType transmissionType, CarType carType, TractionType tractionType, Boolean optionFullTraction, Integer doors, Boolean centralizedClosing, Boolean airConditioning, Boolean bluetooth, Boolean satNav, Boolean electricRoof, Boolean parkAssist, Boolean spareTire, Boolean antiTheft, StatusType statusType, String currentLocation, Boolean availableRental) {
+    public CarDTO(Long id, String brand, String model, String colour, Double cubiCapacity, Integer hP, Double kW, LocalDate registrationYear, FuelTypeEnum fuelTypeEnum, BigDecimal price, Boolean newVehicle, Double mileage, EmissionTypeEnum emissionTypeEnum, Integer passengerNumber, TransmissionTypeEnum transmissionTypeEnum, CarTypeEnum carTypeEnum, TractionTypeEnum tractionTypeEnum, Boolean optionFullTraction, Integer doors, Boolean centralizedClosing, Boolean airConditioning, Boolean bluetooth, Boolean satNav, Boolean electricRoof, Boolean parkAssist, Boolean spareTire, Boolean antiTheft, StatusTypeEnum statusTypeEnum, String currentLocation, Boolean availableRental) {
         this.id = id;
         this.brand = brand;
         this.model = model;
@@ -47,15 +46,15 @@ public class CarDTO {
         this.hP = hP;
         this.kW = kW;
         this.registrationYear = registrationYear;
-        this.fuelType = fuelType;
+        this.fuelTypeEnum = fuelTypeEnum;
         this.price = price;
         this.newVehicle = newVehicle;
         this.mileage = mileage;
-        this.emissionType = emissionType;
+        this.emissionTypeEnum = emissionTypeEnum;
         this.passengerNumber = passengerNumber;
-        this.transmissionType = transmissionType;
-        this.carType = carType;
-        this.tractionType = tractionType;
+        this.transmissionTypeEnum = transmissionTypeEnum;
+        this.carTypeEnum = carTypeEnum;
+        this.tractionTypeEnum = tractionTypeEnum;
         this.optionFullTraction = optionFullTraction;
         this.doors = doors;
         this.centralizedClosing = centralizedClosing;
@@ -66,7 +65,7 @@ public class CarDTO {
         this.parkAssist = parkAssist;
         this.spareTire = spareTire;
         this.antiTheft = antiTheft;
-        this.statusType = statusType;
+        this.statusTypeEnum = statusTypeEnum;
         this.currentLocation = currentLocation;
         this.availableRental = availableRental;
     }
@@ -138,12 +137,12 @@ public class CarDTO {
         this.registrationYear = registrationYear;
     }
 
-    public FuelType getFuelType() {
-        return fuelType;
+    public FuelTypeEnum getFuelType() {
+        return fuelTypeEnum;
     }
 
-    public void setFuelType(FuelType fuelType) {
-        this.fuelType = fuelType;
+    public void setFuelType(FuelTypeEnum fuelTypeEnum) {
+        this.fuelTypeEnum = fuelTypeEnum;
     }
 
     public BigDecimal getPrice() {
@@ -170,12 +169,12 @@ public class CarDTO {
         this.mileage = mileage;
     }
 
-    public EmissionType getEmissionType() {
-        return emissionType;
+    public EmissionTypeEnum getEmissionType() {
+        return emissionTypeEnum;
     }
 
-    public void setEmissionType(EmissionType emissionType) {
-        this.emissionType = emissionType;
+    public void setEmissionType(EmissionTypeEnum emissionTypeEnum) {
+        this.emissionTypeEnum = emissionTypeEnum;
     }
 
     public Integer getPassengerNumber() {
@@ -186,28 +185,28 @@ public class CarDTO {
         this.passengerNumber = passengerNumber;
     }
 
-    public TransmissionType getTransmissionType() {
-        return transmissionType;
+    public TransmissionTypeEnum getTransmissionType() {
+        return transmissionTypeEnum;
     }
 
-    public void setTransmissionType(TransmissionType transmissionType) {
-        this.transmissionType = transmissionType;
+    public void setTransmissionType(TransmissionTypeEnum transmissionTypeEnum) {
+        this.transmissionTypeEnum = transmissionTypeEnum;
     }
 
-    public CarType getCarType() {
-        return carType;
+    public CarTypeEnum getCarType() {
+        return carTypeEnum;
     }
 
-    public void setCarType(CarType carType) {
-        this.carType = carType;
+    public void setCarType(CarTypeEnum carTypeEnum) {
+        this.carTypeEnum = carTypeEnum;
     }
 
-    public TractionType getTractionType() {
-        return tractionType;
+    public TractionTypeEnum getTractionType() {
+        return tractionTypeEnum;
     }
 
-    public void setTractionType(TractionType tractionType) {
-        this.tractionType = tractionType;
+    public void setTractionType(TractionTypeEnum tractionTypeEnum) {
+        this.tractionTypeEnum = tractionTypeEnum;
     }
 
     public Boolean getOptionFullTraction() {
@@ -290,12 +289,12 @@ public class CarDTO {
         this.antiTheft = antiTheft;
     }
 
-    public StatusType getStatusType() {
-        return statusType;
+    public StatusTypeEnum getStatusType() {
+        return statusTypeEnum;
     }
 
-    public void setStatusType(StatusType statusType) {
-        this.statusType = statusType;
+    public void setStatusType(StatusTypeEnum statusTypeEnum) {
+        this.statusTypeEnum = statusTypeEnum;
     }
 
     public String getCurrentLocation() {
@@ -325,15 +324,15 @@ public class CarDTO {
                 ", hP=" + hP +
                 ", kW=" + kW +
                 ", registrationYear=" + registrationYear +
-                ", fuelType=" + fuelType +
+                ", fuelType=" + fuelTypeEnum +
                 ", price=" + price +
                 ", newVehicle=" + newVehicle +
                 ", mileage=" + mileage +
-                ", emissionType=" + emissionType +
+                ", emissionType=" + emissionTypeEnum +
                 ", passengerNumber=" + passengerNumber +
-                ", transmissionType=" + transmissionType +
-                ", carType=" + carType +
-                ", tractionType=" + tractionType +
+                ", transmissionType=" + transmissionTypeEnum +
+                ", carType=" + carTypeEnum +
+                ", tractionType=" + tractionTypeEnum +
                 ", optionFullTraction=" + optionFullTraction +
                 ", doors=" + doors +
                 ", centralizedClosing=" + centralizedClosing +
@@ -344,7 +343,7 @@ public class CarDTO {
                 ", parkAssist=" + parkAssist +
                 ", spareTire=" + spareTire +
                 ", antiTheft=" + antiTheft +
-                ", statusType=" + statusType +
+                ", statusType=" + statusTypeEnum +
                 ", currentLocation='" + currentLocation + '\'' +
                 ", availableRental=" + availableRental +
                 '}';

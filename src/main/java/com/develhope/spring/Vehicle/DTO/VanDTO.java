@@ -1,7 +1,6 @@
 package com.develhope.spring.Vehicle.DTO;
 
 import com.develhope.spring.Vehicle.Entities.Enums.*;
-import jakarta.persistence.Column;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,15 +13,15 @@ public class VanDTO {
     private Double cubiCapacity;
     private Integer hP;
     private Double kW;
-    private TransmissionType transmissionType;
+    private TransmissionTypeEnum transmissionTypeEnum;
     private LocalDate registrationYear;
-    private FuelType fuelType;
+    private FuelTypeEnum fuelTypeEnum;
     private BigDecimal price;
     private Boolean newVehicle;
     private Double mileage;
-    private EmissionType emissionType;
+    private EmissionTypeEnum emissionTypeEnum;
     private Integer passengerNumber;
-    private TractionType tractionType;
+    private TractionTypeEnum tractionTypeEnum;
     private Boolean optionFullTraction;
     private Integer doors;
     private Boolean centralizedClosing;
@@ -37,11 +36,11 @@ public class VanDTO {
     private Boolean windowedBackDoor;
     private Boolean slideSideDoor;
     private Boolean antiCollisionSystem;
-    private StatusType statusType;
+    private StatusTypeEnum statusTypeEnum;
     private String currentLocation;
     private Boolean availableRental;
 
-    public VanDTO(Long id, String brand, String model, String colour, Double cubiCapacity, Integer hP, Double kW, TransmissionType transmissionType, LocalDate registrationYear, FuelType fuelType, BigDecimal price, Boolean newVehicle, Double mileage, EmissionType emissionType, Integer passengerNumber, TractionType tractionType, Boolean optionFullTraction, Integer doors, Boolean centralizedClosing, Boolean airConditioning, Boolean bluetooth, Boolean satNav, Boolean electricRoof, Boolean parkAssist, Boolean spareTire, Boolean antiTheft, Boolean passengerTransport, Boolean windowedBackDoor, Boolean slideSideDoor, Boolean antiCollisionSystem, StatusType statusType, String currentLocation, Boolean availableRental) {
+    public VanDTO(Long id, String brand, String model, String colour, Double cubiCapacity, Integer hP, Double kW, TransmissionTypeEnum transmissionTypeEnum, LocalDate registrationYear, FuelTypeEnum fuelTypeEnum, BigDecimal price, Boolean newVehicle, Double mileage, EmissionTypeEnum emissionTypeEnum, Integer passengerNumber, TractionTypeEnum tractionTypeEnum, Boolean optionFullTraction, Integer doors, Boolean centralizedClosing, Boolean airConditioning, Boolean bluetooth, Boolean satNav, Boolean electricRoof, Boolean parkAssist, Boolean spareTire, Boolean antiTheft, Boolean passengerTransport, Boolean windowedBackDoor, Boolean slideSideDoor, Boolean antiCollisionSystem, StatusTypeEnum statusTypeEnum, String currentLocation, Boolean availableRental) {
         this.id = id;
         this.brand = brand;
         this.model = model;
@@ -49,15 +48,15 @@ public class VanDTO {
         this.cubiCapacity = cubiCapacity;
         this.hP = hP;
         this.kW = kW;
-        this.transmissionType = transmissionType;
+        this.transmissionTypeEnum = transmissionTypeEnum;
         this.registrationYear = registrationYear;
-        this.fuelType = fuelType;
+        this.fuelTypeEnum = fuelTypeEnum;
         this.price = price;
         this.newVehicle = newVehicle;
         this.mileage = mileage;
-        this.emissionType = emissionType;
+        this.emissionTypeEnum = emissionTypeEnum;
         this.passengerNumber = passengerNumber;
-        this.tractionType = tractionType;
+        this.tractionTypeEnum = tractionTypeEnum;
         this.optionFullTraction = optionFullTraction;
         this.doors = doors;
         this.centralizedClosing = centralizedClosing;
@@ -72,7 +71,7 @@ public class VanDTO {
         this.windowedBackDoor = windowedBackDoor;
         this.slideSideDoor = slideSideDoor;
         this.antiCollisionSystem = antiCollisionSystem;
-        this.statusType = statusType;
+        this.statusTypeEnum = statusTypeEnum;
         this.currentLocation = currentLocation;
         this.availableRental = availableRental;
     }
@@ -136,12 +135,12 @@ public class VanDTO {
         this.kW = kW;
     }
 
-    public TransmissionType getTransmissionType() {
-        return transmissionType;
+    public TransmissionTypeEnum getTransmissionType() {
+        return transmissionTypeEnum;
     }
 
-    public void setTransmissionType(TransmissionType transmissionType) {
-        this.transmissionType = transmissionType;
+    public void setTransmissionType(TransmissionTypeEnum transmissionTypeEnum) {
+        this.transmissionTypeEnum = transmissionTypeEnum;
     }
 
     public LocalDate getRegistrationYear() {
@@ -152,12 +151,12 @@ public class VanDTO {
         this.registrationYear = registrationYear;
     }
 
-    public FuelType getFuelType() {
-        return fuelType;
+    public FuelTypeEnum getFuelType() {
+        return fuelTypeEnum;
     }
 
-    public void setFuelType(FuelType fuelType) {
-        this.fuelType = fuelType;
+    public void setFuelType(FuelTypeEnum fuelTypeEnum) {
+        this.fuelTypeEnum = fuelTypeEnum;
     }
 
     public BigDecimal getPrice() {
@@ -184,12 +183,12 @@ public class VanDTO {
         this.mileage = mileage;
     }
 
-    public EmissionType getEmissionType() {
-        return emissionType;
+    public EmissionTypeEnum getEmissionType() {
+        return emissionTypeEnum;
     }
 
-    public void setEmissionType(EmissionType emissionType) {
-        this.emissionType = emissionType;
+    public void setEmissionType(EmissionTypeEnum emissionTypeEnum) {
+        this.emissionTypeEnum = emissionTypeEnum;
     }
 
     public Integer getPassengerNumber() {
@@ -200,12 +199,12 @@ public class VanDTO {
         this.passengerNumber = passengerNumber;
     }
 
-    public TractionType getTractionType() {
-        return tractionType;
+    public TractionTypeEnum getTractionType() {
+        return tractionTypeEnum;
     }
 
-    public void setTractionType(TractionType tractionType) {
-        this.tractionType = tractionType;
+    public void setTractionType(TractionTypeEnum tractionTypeEnum) {
+        this.tractionTypeEnum = tractionTypeEnum;
     }
 
     public Boolean getOptionFullTraction() {
@@ -320,12 +319,12 @@ public class VanDTO {
         this.antiCollisionSystem = antiCollisionSystem;
     }
 
-    public StatusType getStatusType() {
-        return statusType;
+    public StatusTypeEnum getStatusType() {
+        return statusTypeEnum;
     }
 
-    public void setStatusType(StatusType statusType) {
-        this.statusType = statusType;
+    public void setStatusType(StatusTypeEnum statusTypeEnum) {
+        this.statusTypeEnum = statusTypeEnum;
     }
 
     public String getCurrentLocation() {
@@ -354,15 +353,15 @@ public class VanDTO {
                 ", cubiCapacity=" + cubiCapacity +
                 ", hP=" + hP +
                 ", kW=" + kW +
-                ", transmissionType=" + transmissionType +
+                ", transmissionType=" + transmissionTypeEnum +
                 ", registrationYear=" + registrationYear +
-                ", fuelType=" + fuelType +
+                ", fuelType=" + fuelTypeEnum +
                 ", price=" + price +
                 ", newVehicle=" + newVehicle +
                 ", mileage=" + mileage +
-                ", emissionType=" + emissionType +
+                ", emissionType=" + emissionTypeEnum +
                 ", passengerNumber=" + passengerNumber +
-                ", tractionType=" + tractionType +
+                ", tractionType=" + tractionTypeEnum +
                 ", optionFullTraction=" + optionFullTraction +
                 ", doors=" + doors +
                 ", centralizedClosing=" + centralizedClosing +
@@ -377,7 +376,7 @@ public class VanDTO {
                 ", windowedBackDoor=" + windowedBackDoor +
                 ", slideSideDoor=" + slideSideDoor +
                 ", antiCollisionSystem=" + antiCollisionSystem +
-                ", statusType=" + statusType +
+                ", statusType=" + statusTypeEnum +
                 ", currentLocation='" + currentLocation + '\'' +
                 ", availableRental=" + availableRental +
                 '}';

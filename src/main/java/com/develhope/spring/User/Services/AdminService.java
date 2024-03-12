@@ -2,7 +2,7 @@ package com.develhope.spring.User.Services;
 
 import com.develhope.spring.Purchase.Entities.Purchase;
 import com.develhope.spring.Purchase.Repositories.PurchaseRepository;
-import com.develhope.spring.Vehicle.Entities.Enums.StatusType;
+import com.develhope.spring.Vehicle.Entities.Enums.StatusTypeEnum;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
 import com.develhope.spring.Vehicle.Repositories.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class AdminService {
     public Vehicle updateVehicle(Long id, Vehicle vehicle){
         Vehicle vehicleUpdated = vehicleRepository.findById(id).orElse(null);
         if(vehicle != null){
-            vehicleUpdated.setVehiclesType(vehicle.getVehiclesType());
+            vehicleUpdated.setVehiclesTypeEnum(vehicle.getVehiclesTypeEnum());
             vehicleUpdated.setBrand(vehicleUpdated.getBrand());
             vehicleUpdated.setModel(vehicleUpdated.getModel());
             vehicleUpdated.setColour(vehicleUpdated.getColour());
@@ -44,23 +44,23 @@ public class AdminService {
             vehicleUpdated.setHP(vehicle.getHP());
             vehicleUpdated.setKW(vehicle.getKW());
             vehicleUpdated.setRegistrationYear(vehicle.getRegistrationYear());
-            vehicleUpdated.setFuelType(vehicle.getFuelType());
+            vehicleUpdated.setFuelTypeEnum(vehicle.getFuelTypeEnum());
             vehicleUpdated.setPrice(vehicle.getPrice());
             vehicleUpdated.setTradeDiscount(vehicle.getTradeDiscount());
             vehicleUpdated.setNewVehicle(vehicle.getNewVehicle());
             vehicleUpdated.setMileage(vehicleUpdated.getMileage());
             vehicleUpdated.setAgeLimit(vehicle.getAgeLimit());
-            vehicleUpdated.setStatusType(vehicle.getStatusType());
+            vehicleUpdated.setStatusTypeEnum(vehicle.getStatusTypeEnum());
             vehicleUpdated.setCurrentLocation(vehicle.getCurrentLocation());
             vehicleUpdated.setAvailableRental(vehicle.getAvailableRental());
-            vehicleUpdated.setEmissionType(vehicle.getEmissionType());
+            vehicleUpdated.setEmissionTypeEnum(vehicle.getEmissionTypeEnum());
             vehicleUpdated.setPassengerNumber(vehicle.getPassengerNumber());
             vehicleUpdated.setWindShield(vehicle.getWindShield());
             vehicleUpdated.setTailBag(vehicle.getTailBag());
             vehicleUpdated.setPassengerBackrest(vehicle.getPassengerBackrest());
-            vehicleUpdated.setTransmissionType(vehicle.getTransmissionType());
-            vehicleUpdated.setCarType(vehicle.getCarType());
-            vehicleUpdated.setTractionType(vehicle.getTractionType());
+            vehicleUpdated.setTransmissionTypeEnum(vehicle.getTransmissionTypeEnum());
+            vehicleUpdated.setCarTypeEnum(vehicle.getCarTypeEnum());
+            vehicleUpdated.setTractionTypeEnum(vehicle.getTractionTypeEnum());
             vehicleUpdated.setOptionFullTraction(vehicle.getOptionFullTraction());
             vehicleUpdated.setDoors(vehicle.getDoors());
             vehicleUpdated.setCentralizedClosing(vehicle.getCentralizedClosing());
@@ -82,10 +82,10 @@ public class AdminService {
     }
 
     //cambia STATUS di un veicolo
-    public Vehicle updateStatusType(Long id, StatusType statusType){
+    public Vehicle updateStatusType(Long id, StatusTypeEnum statusTypeEnum){
         Vehicle vehicleUpdated = vehicleRepository.findById(id).orElse(null);
         if(vehicleUpdated != null){
-            vehicleUpdated.setStatusType(statusType);
+            vehicleUpdated.setStatusTypeEnum(statusTypeEnum);
         }else {
             throw new RuntimeException("Veicolo da aggiornare non presente nel Database");
         }
@@ -105,6 +105,7 @@ public class AdminService {
                     purchase.setCustomer(purchaseUpdated.getCustomer());
                     purchase.setSalesman(purchaseUpdated.getSalesman());
                 }
+                purchaseRepository.save(purchase);
             }
             return purchaseListByCustomer;
         }else{
@@ -133,9 +134,9 @@ public class AdminService {
 
 
     //ottieni VEICOLI filtrandoli per STATUSTYPE
-    public List<Vehicle> vehiclesByStatusType(StatusType statusType){
-        if(statusType != null){
-        return vehicleRepository.vehiclesByStatusType(statusType);
+    public List<Vehicle> vehiclesByStatusType(StatusTypeEnum statusTypeEnum){
+        if(statusTypeEnum != null){
+        return vehicleRepository.vehiclesByStatusType(statusTypeEnum);
         }else {
             throw new RuntimeException("Errore nell'inserimento dello stato dei veicoli da ricercare");
         }

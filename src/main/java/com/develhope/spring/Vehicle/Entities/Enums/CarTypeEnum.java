@@ -1,6 +1,6 @@
 package com.develhope.spring.Vehicle.Entities.Enums;
 
-public enum CarType {
+public enum CarTypeEnum {
     SEDAN,
     COUPE,
     WAGON,

@@ -1,8 +1,8 @@
 package com.develhope.spring.Vehicle.DTO;
 
-import com.develhope.spring.Vehicle.Entities.Enums.EmissionType;
-import com.develhope.spring.Vehicle.Entities.Enums.FuelType;
-import com.develhope.spring.Vehicle.Entities.Enums.StatusType;
+import com.develhope.spring.Vehicle.Entities.Enums.EmissionTypeEnum;
+import com.develhope.spring.Vehicle.Entities.Enums.FuelTypeEnum;
+import com.develhope.spring.Vehicle.Entities.Enums.StatusTypeEnum;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -16,20 +16,20 @@ public class ScooterDTO {
     private Integer hP;
     private Double kW;
     private LocalDate registrationYear;
-    private FuelType fuelType;
+    private FuelTypeEnum fuelTypeEnum;
     private BigDecimal price;
     private Boolean newVehicle;
     private Double mileage;
-    private StatusType statusType;
+    private StatusTypeEnum statusTypeEnum;
     private String currentLocation;
-    private EmissionType emissionType;
+    private EmissionTypeEnum emissionTypeEnum;
     private Integer passengerNumber;
     private Boolean windShield;
     private Boolean tailBag;
     private Boolean passengerBackrest;
     private Boolean availableRental;
 
-    public ScooterDTO(Long id, String brand, String model, String colour, Double cubiCapacity, Integer hP, Double kW, LocalDate registrationYear, FuelType fuelType, BigDecimal price, Boolean newVehicle, Double mileage, StatusType statusType, String currentLocation, EmissionType emissionType, Integer passengerNumber, Boolean windShield, Boolean tailBag, Boolean passengerBackrest, Boolean availableRental) {
+    public ScooterDTO(Long id, String brand, String model, String colour, Double cubiCapacity, Integer hP, Double kW, LocalDate registrationYear, FuelTypeEnum fuelTypeEnum, BigDecimal price, Boolean newVehicle, Double mileage, StatusTypeEnum statusTypeEnum, String currentLocation, EmissionTypeEnum emissionTypeEnum, Integer passengerNumber, Boolean windShield, Boolean tailBag, Boolean passengerBackrest, Boolean availableRental) {
         this.id = id;
         this.brand = brand;
         this.model = model;
@@ -38,13 +38,13 @@ public class ScooterDTO {
         this.hP = hP;
         this.kW = kW;
         this.registrationYear = registrationYear;
-        this.fuelType = fuelType;
+        this.fuelTypeEnum = fuelTypeEnum;
         this.price = price;
         this.newVehicle = newVehicle;
         this.mileage = mileage;
-        this.statusType = statusType;
+        this.statusTypeEnum = statusTypeEnum;
         this.currentLocation = currentLocation;
-        this.emissionType = emissionType;
+        this.emissionTypeEnum = emissionTypeEnum;
         this.passengerNumber = passengerNumber;
         this.windShield = windShield;
         this.tailBag = tailBag;
@@ -119,12 +119,12 @@ public class ScooterDTO {
         this.registrationYear = registrationYear;
     }
 
-    public FuelType getFuelType() {
-        return fuelType;
+    public FuelTypeEnum getFuelType() {
+        return fuelTypeEnum;
     }
 
-    public void setFuelType(FuelType fuelType) {
-        this.fuelType = fuelType;
+    public void setFuelType(FuelTypeEnum fuelTypeEnum) {
+        this.fuelTypeEnum = fuelTypeEnum;
     }
 
     public BigDecimal getPrice() {
@@ -151,12 +151,12 @@ public class ScooterDTO {
         this.mileage = mileage;
     }
 
-    public StatusType getStatusType() {
-        return statusType;
+    public StatusTypeEnum getStatusType() {
+        return statusTypeEnum;
     }
 
-    public void setStatusType(StatusType statusType) {
-        this.statusType = statusType;
+    public void setStatusType(StatusTypeEnum statusTypeEnum) {
+        this.statusTypeEnum = statusTypeEnum;
     }
 
     public String getCurrentLocation() {
@@ -167,12 +167,12 @@ public class ScooterDTO {
         this.currentLocation = currentLocation;
     }
 
-    public EmissionType getEmissionType() {
-        return emissionType;
+    public EmissionTypeEnum getEmissionType() {
+        return emissionTypeEnum;
     }
 
-    public void setEmissionType(EmissionType emissionType) {
-        this.emissionType = emissionType;
+    public void setEmissionType(EmissionTypeEnum emissionTypeEnum) {
+        this.emissionTypeEnum = emissionTypeEnum;
     }
 
     public Integer getPassengerNumber() {
@@ -226,13 +226,13 @@ public class ScooterDTO {
                 ", hP=" + hP +
                 ", kW=" + kW +
                 ", registrationYear=" + registrationYear +
-                ", fuelType=" + fuelType +
+                ", fuelType=" + fuelTypeEnum +
                 ", price=" + price +
                 ", newVehicle=" + newVehicle +
                 ", mileage=" + mileage +
-                ", statusType=" + statusType +
+                ", statusType=" + statusTypeEnum +
                 ", currentLocation='" + currentLocation + '\'' +
-                ", emissionType=" + emissionType +
+                ", emissionType=" + emissionTypeEnum +
                 ", passengerNumber=" + passengerNumber +
                 ", windShield=" + windShield +
                 ", tailBag=" + tailBag +

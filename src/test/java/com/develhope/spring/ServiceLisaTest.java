@@ -2,10 +2,10 @@ package com.develhope.spring;
 
 import com.develhope.spring.User.Services.AdminService;
 import com.develhope.spring.Vehicle.DTO.ScooterDTO;
-import com.develhope.spring.Vehicle.Entities.Enums.EmissionType;
-import com.develhope.spring.Vehicle.Entities.Enums.FuelType;
-import com.develhope.spring.Vehicle.Entities.Enums.StatusType;
-import com.develhope.spring.Vehicle.Entities.Enums.VehiclesType;
+import com.develhope.spring.Vehicle.Entities.Enums.EmissionTypeEnum;
+import com.develhope.spring.Vehicle.Entities.Enums.FuelTypeEnum;
+import com.develhope.spring.Vehicle.Entities.Enums.StatusTypeEnum;
+import com.develhope.spring.Vehicle.Entities.Enums.VehiclesTypeEnum;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
 import com.develhope.spring.Vehicle.Entities.VehicleService;
 import com.develhope.spring.Vehicle.Repositories.VehicleRepository;
@@ -35,7 +35,7 @@ class ServiceLisaTest {
 	private Vehicle fakeVehicle(){
 		Vehicle vehicle = new Vehicle();
 		vehicle.setId(1l);
-		vehicle.setVehiclesType(VehiclesType.SCOOTER);
+		vehicle.setVehiclesTypeEnum(VehiclesTypeEnum.SCOOTER);
 		vehicle.setBrand("rfgsrf");
 		vehicle.setModel("fdsgdrfsg");
 		vehicle.setColour("fews");
@@ -43,16 +43,16 @@ class ServiceLisaTest {
 		vehicle.setHP(324);
 		vehicle.setKW(123.44);
 		vehicle.setRegistrationYear(LocalDate.ofEpochDay(2024/4/4));
-		vehicle.setFuelType(FuelType.GASOLINE);
+		vehicle.setFuelTypeEnum(FuelTypeEnum.GASOLINE);
 		vehicle.setPrice(BigDecimal.valueOf(4888));
 		vehicle.setTradeDiscount(5.0);
 		vehicle.setNewVehicle(false);
 		vehicle.setMileage(1000.90);
 		vehicle.setAgeLimit(17);
-		vehicle.setStatusType(StatusType.PURCHASABLE);
+		vehicle.setStatusTypeEnum(StatusTypeEnum.PURCHASABLE);
 		vehicle.setCurrentLocation("Palermo");
 		vehicle.setAvailableRental(true);
-		vehicle.setEmissionType(EmissionType.EURO4);
+		vehicle.setEmissionTypeEnum(EmissionTypeEnum.EURO4);
 		vehicle.setPassengerNumber(1);
 		vehicle.setWindShield(false);
 		vehicle.setTailBag(false);
@@ -62,7 +62,7 @@ class ServiceLisaTest {
 	private Vehicle fakeVehicle2(){
 		Vehicle vehicle = new Vehicle();
 		vehicle.setId(2l);
-		vehicle.setVehiclesType(VehiclesType.SCOOTER);
+		vehicle.setVehiclesTypeEnum(VehiclesTypeEnum.SCOOTER);
 		vehicle.setBrand("rfgsrf");
 		vehicle.setModel("fdsgdrfsg");
 		vehicle.setColour("fews");
@@ -70,16 +70,16 @@ class ServiceLisaTest {
 		vehicle.setHP(324);
 		vehicle.setKW(123.44);
 		vehicle.setRegistrationYear(LocalDate.ofEpochDay(2024/4/4));
-		vehicle.setFuelType(FuelType.GASOLINE);
+		vehicle.setFuelTypeEnum(FuelTypeEnum.GASOLINE);
 		vehicle.setPrice(BigDecimal.valueOf(4888));
 		vehicle.setTradeDiscount(5.0);
 		vehicle.setNewVehicle(false);
 		vehicle.setMileage(1000.90);
 		vehicle.setAgeLimit(17);
-		vehicle.setStatusType(StatusType.PURCHASABLE);
+		vehicle.setStatusTypeEnum(StatusTypeEnum.PURCHASABLE);
 		vehicle.setCurrentLocation("Palermo");
 		vehicle.setAvailableRental(true);
-		vehicle.setEmissionType(EmissionType.EURO4);
+		vehicle.setEmissionTypeEnum(EmissionTypeEnum.EURO4);
 		vehicle.setPassengerNumber(1);
 		vehicle.setWindShield(false);
 		vehicle.setTailBag(false);
@@ -104,8 +104,8 @@ class ServiceLisaTest {
 		allFullVehicles.add(fullVehicle2);
 
 		ScooterDTO scooter = new ScooterDTO(1l, "rfgsrf", "fdsgdrfsg", "fews", 123.0,
-				324, 123.44, LocalDate.ofEpochDay(2024/4/4), FuelType.GASOLINE, BigDecimal.valueOf(4888),
-				false, 1000.90, StatusType.PURCHASABLE, "Palermo", EmissionType.EURO4,
+				324, 123.44, LocalDate.ofEpochDay(2024/4/4), FuelTypeEnum.GASOLINE, BigDecimal.valueOf(4888),
+				false, 1000.90, StatusTypeEnum.PURCHASABLE, "Palermo", EmissionTypeEnum.EURO4,
 				1, false, false, false, true);
 		List<Object> result = vehicleService.allVehiclesDTO(allFullVehicles);
 

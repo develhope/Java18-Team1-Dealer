@@ -37,7 +37,7 @@ public class AdminService {
     //cancella account salesman
     public Salesman deleteASalesman(Long id){
         return salesmanRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Salesman not fund by id " + id)
+                .orElseThrow(() -> new EntityNotFoundException("Salesman not found by id " + id)
                 );
     }
 
@@ -49,7 +49,7 @@ public class AdminService {
                                    String newPhoneNumber){
 
         Salesman salesman = salesmanRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Salesman not fund by id " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Salesman not found by id " + id));
 
         salesman.setFirstName(newName);
         salesman.setLastName(newSurname);
@@ -66,9 +66,7 @@ public class AdminService {
     public Customer deleteACustomer(Long id){
 
         return customerRepository.findById(id)
-                .orElseThrow(
-                        () -> new EntityNotFoundException("Customer not fund by id " + id)
-                );
+                .orElseThrow(() -> new EntityNotFoundException("Customer not found by id " + id));
     }
 
     //modifica account customer
@@ -79,7 +77,7 @@ public class AdminService {
                                    String newPhoneNumber){
 
         Customer customer = customerRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Salesman not fund by id " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Salesman not found by id " + id));
 
         customer.setFirstName(newName);
         customer.setLastName(newSurname);
@@ -98,7 +96,7 @@ public class AdminService {
     //cancella veicolo
     public Boolean deleteVehicle(Long id){
         Vehicle vehicleDeleted = vehicleRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Veicolo da cancellare non presente nel Database"));
+                .orElseThrow(() -> new EntityNotFoundException("Vehicle id " + id + " to delete not found"));
 
         vehicleRepository.deleteById(id);
         return true;
@@ -108,7 +106,7 @@ public class AdminService {
     //modifica veicolo
     public Vehicle updateVehicle(Long id, Vehicle vehicle){
         Vehicle vehicleUpdated = vehicleRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Veicolo da aggiornare non presente nel Database"));
+                .orElseThrow(() -> new EntityNotFoundException("Vehicle id " + id + " to update not found"));
         if(vehicleUpdated.getVehiclesTypeEnum() != null) {
             vehicleUpdated.setVehiclesTypeEnum(vehicle.getVehiclesTypeEnum());
         }
@@ -164,7 +162,7 @@ public class AdminService {
     //cambia STATUS di un veicolo
     public Vehicle updateStatusType(Long id, StatusTypeEnum statusTypeEnum){
         Vehicle vehicleUpdated = vehicleRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Veicolo da aggiornare non presente nel Database"));
+                .orElseThrow(() -> new EntityNotFoundException("Vehicle id " + id + " to update not found"));
 
         vehicleUpdated.setStatusTypeEnum(statusTypeEnum);
 
@@ -190,7 +188,7 @@ public class AdminService {
             }
             return purchaseListByCustomer;
         }else{
-            throw new RuntimeException("Acquisto del cliente id " + idCustomer + " non aggiornato correttamente");
+            throw new RuntimeException("Something went wrong");
         }
     }
 
@@ -207,7 +205,7 @@ public class AdminService {
             }
             return true;
         }else{
-            throw new RuntimeException("Operazione non riuscita");
+            throw new RuntimeException("Something went wrong");
         }
     }
 
@@ -219,7 +217,7 @@ public class AdminService {
 
             return vehicleRepository.vehiclesByStatusType(statusTypeEnum);
         }else {
-            throw new RuntimeException("Errore nell'inserimento dello stato dei veicoli da ricercare");
+            throw new RuntimeException("Vehicle status " + statusTypeEnum + " not found");
         }
     }
 }

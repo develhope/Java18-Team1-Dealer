@@ -18,9 +18,6 @@ public class VehicleService {
     @Autowired
     private VehicleRepository vehicleRepository;
 
-
-    //Usare SOLO con COSTUMER per mostrargli i veicoli. Escludere dalla lista i veicoli VENDUTI e NON DISPONIBILI
-    //clienti vedono solo ORDINABILE o DISPONIBILE
     //NB scooter e moto SOLO elettrici o benzina
     public List<Object> allVehiclesDTO(List<Vehicle> vehicles) throws Exception{
         List<Object> vehiclesDTO = new ArrayList<>();
@@ -157,5 +154,4 @@ public class VehicleService {
         vanDTO.setAvailableRental(vehicle.getAvailableRental());
         return vanDTO;
     }
-
 }

@@ -61,6 +61,7 @@ public class Vehicle {
     @Column(nullable = false)
     private Integer passengerNumber;
 
+
     //solo scooter e moto
     @Column
     private Boolean windShield;

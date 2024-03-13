@@ -14,16 +14,16 @@ import java.util.NoSuchElementException;
 public class CustomerService {
     @Autowired
     CustomerRepository customerRepository;
-    public List<Purchase> myPurchase(){
-        return customerRepository.purchaseList();
+    public List<Purchase> myPurchase(Long id){
+        return customerRepository.purchaseList(id);
     }
 
-    public List<Purchase> myOrder(){
-        return customerRepository.orderList();
+    public List<Purchase> myOrder(Long id){
+        return customerRepository.orderList(id);
     }
 
-    public List<Rent> myRent(){
-        return customerRepository.rentList();
+    public List<Rent> myRent(Long id){
+        return customerRepository.rentList(id);
     }
 
     public void deleteAccount(Long id){ //id di accesso del cliente

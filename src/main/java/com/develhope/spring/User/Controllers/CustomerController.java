@@ -1,5 +1,6 @@
 package com.develhope.spring.User.Controllers;
 
+import com.develhope.spring.Purchase.Entities.DTO.CustomerPurchaseCreationDTO;
 import com.develhope.spring.Purchase.Entities.Purchase;
 import com.develhope.spring.User.Entities.Customer;
 import com.develhope.spring.User.Services.CustomerService;
@@ -20,7 +21,7 @@ public class CustomerController {
         return customerService.getVehicleInfoByid(id);
     }
     @PostMapping("/post/purchase")
-    public Purchase createNewPurchase(@RequestParam Long idVehicle, @RequestBody Customer customer, @RequestParam BigDecimal price){
-        return customerService.createNewPurchase(idVehicle,customer,price);
+    public Purchase createNewPurchase(@RequestBody CustomerPurchaseCreationDTO purchaseCreation){
+        return customerService.createNewPurchase(purchaseCreation);
     }
 }

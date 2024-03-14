@@ -1,5 +1,7 @@
 package com.develhope.spring.Purchase.Entities;
 
+import com.develhope.spring.Purchase.Entities.Enums.OrderStatusEnum;
+import com.develhope.spring.Purchase.Entities.Enums.VehicleStatusEnum;
 import com.develhope.spring.User.Entities.Customer;
 import com.develhope.spring.User.Entities.Salesman;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
@@ -26,7 +28,9 @@ public class Purchase {
     private Boolean isPaid;
 
     @Column(nullable = false)
-    private String orderStatus;
+    private OrderStatusEnum orderStatusEnum;
+    @Column(nullable = false)
+    private VehicleStatusEnum vehicleStatusEnum;
 
     @ManyToOne
     private Salesman salesman;

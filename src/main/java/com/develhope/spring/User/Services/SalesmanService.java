@@ -1,10 +1,13 @@
 package com.develhope.spring.User.Services;
 
+import com.develhope.spring.Purchase.Entities.Enums.OrderStatusEnum;
 import com.develhope.spring.Purchase.Entities.Purchase;
 import com.develhope.spring.Purchase.Repositories.PurchaseRepository;
+import com.develhope.spring.User.Entities.Salesman;
 import com.develhope.spring.User.Repositories.SalesmanRepository;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
 import com.develhope.spring.Vehicle.Repositories.VehicleRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,16 +27,20 @@ public class SalesmanService {
         return vehicleRepository.findById(idVehicle).orElseThrow(() -> new NoSuchElementException("Veicolo con id " + idVehicle + " non trovato"));
     }
 
-    public String checkOrderStatus(Long idPurchase){
+    public OrderStatusEnum checkOrderStatus(Long idPurchase){
         Purchase purchase = purchaseRepository.findById(idPurchase).orElseThrow(() -> new NoSuchElementException("Ordine con id " + idPurchase + " non trovato"));
-        return purchase.getOrderStatus();
+        return purchase.getOrderStatusEnum();
     }
-    public String updateOrderStatus(Long idPurchase, String orderStatus){
+    public OrderStatusEnum updateOrderStatus(Long idPurchase, OrderStatusEnum orderStatus){
         Purchase purchase = purchaseRepository.findById(idPurchase).orElseThrow(() -> new NoSuchElementException("Ordine con id " + idPurchase + " non trovato"));
-        purchase.setOrderStatus(orderStatus);
-        return purchase.getOrderStatus();
+        purchase.setOrderStatusEnum(orderStatus);
+        purchaseRepository.save(purchase);
+        return purchase.getOrderStatusEnum();
     }
-    public List<Purchase> checkOrdersListByStatus(String orderStatus){
-        return salesmanRepository.findOrdersByOrderStatus(orderStatus);
+    public List<Purchase> checkOrdersListByStatus(OrderStatusEnum orderStatus){
+        return purchaseRepository.findOrdersByOrderStatus(orderStatus);
+    }
+    public Salesman updateSalesmanInfo(Long idSalesman,Salesman salesman){
+
     }
 }

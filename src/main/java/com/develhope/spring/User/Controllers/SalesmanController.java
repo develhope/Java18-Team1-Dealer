@@ -1,5 +1,6 @@
 package com.develhope.spring.User.Controllers;
 
+import com.develhope.spring.Purchase.Entities.Enums.OrderStatusEnum;
 import com.develhope.spring.Purchase.Entities.Purchase;
 import com.develhope.spring.User.Services.SalesmanService;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
@@ -20,15 +21,15 @@ public class SalesmanController {
         return salesmanService.getVehicleInfoByid(id);
     }
     @GetMapping("/get/orderstatus/{id}")
-    public String checkOrderStatusById(@PathVariable Long id){
+    public OrderStatusEnum checkOrderStatusById(@PathVariable Long id){
         return salesmanService.checkOrderStatus(id);
     }
     @PatchMapping("/patch/orderstatus/{id}")
-    public String updateOrderStatus(@PathVariable Long id, @RequestParam String orderStatus){
+    public OrderStatusEnum updateOrderStatus(@PathVariable Long id, @RequestParam OrderStatusEnum orderStatus){
         return salesmanService.updateOrderStatus(id,orderStatus);
     }
     @GetMapping("/get/orderslist/{orderStatus}")
-    public List<Purchase> checkOrdersListByOrderStatus(@PathVariable String orderStatus){
+    public List<Purchase> checkOrdersListByOrderStatus(@PathVariable OrderStatusEnum orderStatus){
         return salesmanService.checkOrdersListByStatus(orderStatus);
     }
 }

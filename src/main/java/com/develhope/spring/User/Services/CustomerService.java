@@ -1,5 +1,6 @@
 package com.develhope.spring.User.Services;
 
+import com.develhope.spring.Purchase.Entities.DTO.CustomerPurchaseCreationDTO;
 import com.develhope.spring.Purchase.Entities.Purchase;
 import com.develhope.spring.Purchase.Repositories.PurchaseRepository;
 import com.develhope.spring.User.Entities.Customer;
@@ -22,14 +23,13 @@ public class CustomerService {
     public Vehicle getVehicleInfoByid(Long idVehicle){
         return vehicleRepository.findById(idVehicle).orElseThrow(() -> new NoSuchElementException("Veicolo con id " + idVehicle + " non trovato"));
     }
-    public Purchase createNewPurchase(Long idVehicle, Customer customer, BigDecimal price){
-        Vehicle vehicle = vehicleRepository.findById(idVehicle).orElseThrow(() -> new NoSuchElementException("Veicolo con id " + idVehicle + " non trovato"));
+    public Purchase createNewPurchase(CustomerPurchaseCreationDTO dto){
+        Vehicle vehicle = vehicleRepository.findById(dto.getIdVehicle()).orElseThrow(() -> new NoSuchElementException("Veicolo con id " + dto.getIdVehicle() + " non trovato"));
         if(vehicle.getStatusType().equals(StatusType.PURCHASABLE)){
             Purchase purchase = new Purchase();
             purchase.setVehicle(vehicle);
-            purchase.setCustomer(customer);
-            purchase.setAdvancePayment(price);
-            purchase.setIsPaid(true);
+            purchase.setCustomer(dto.getCustomer());
+            purchase.setIsPaid(false);
 
             vehicle.setStatusType(StatusType.SOLD);
             vehicleRepository.save(vehicle);

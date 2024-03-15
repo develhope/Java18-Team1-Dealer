@@ -41,6 +41,39 @@ public class SalesmanService {
     }
     public Salesman updateSalesmanInfo(Long idSalesman,Salesman updateSalesman){
         Salesman salesman = salesmanRepository.findById(idSalesman).orElseThrow(() -> new NoSuchElementException("Venditore con id " + idSalesman + " non trovato"));
+        boolean isSalesManUpdated = false;
+
+        if(updateSalesman.getFirstName() != null && !updateSalesman.getFirstName().isEmpty()){
+            salesman.setFirstName(updateSalesman.getFirstName());
+            isSalesManUpdated = true;
+        }
+        if(updateSalesman.getLastName() != null && !updateSalesman.getLastName().isEmpty()){
+            salesman.setLastName(updateSalesman.getLastName());
+            isSalesManUpdated = true;
+        }
+        if(updateSalesman.getEmail() != null && !updateSalesman.getEmail().isEmpty()){
+            salesman.setEmail(updateSalesman.getEmail());
+            isSalesManUpdated = true;
+        }
+        if(updateSalesman.getPassword() != null && !updateSalesman.getPassword().isEmpty()){
+            salesman.setPassword(updateSalesman.getPassword());
+            isSalesManUpdated = true;
+        }
+        if(updateSalesman.getPhone() != null && !updateSalesman.getPhone().isEmpty()){
+            salesman.setPhone(updateSalesman.getPhone());
+            isSalesManUpdated = true;
+        }
+        if(updateSalesman.getAddress() != null && !updateSalesman.getAddress().isEmpty()){
+            salesman.setAddress(updateSalesman.getAddress());
+            isSalesManUpdated = true;
+        }
+        if(updateSalesman.getSalesNumber() != null){
+            salesman.setSalesNumber(updateSalesman.getSalesNumber());
+            isSalesManUpdated = true;
+        }
+        if(isSalesManUpdated){
+            salesman = salesmanRepository.save(salesman);
+        }
 
     }
 }

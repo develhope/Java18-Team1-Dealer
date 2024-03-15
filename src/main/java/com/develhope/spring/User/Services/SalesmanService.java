@@ -7,7 +7,6 @@ import com.develhope.spring.User.Entities.Salesman;
 import com.develhope.spring.User.Repositories.SalesmanRepository;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
 import com.develhope.spring.Vehicle.Repositories.VehicleRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +39,8 @@ public class SalesmanService {
     public List<Purchase> checkOrdersListByStatus(OrderStatusEnum orderStatus){
         return purchaseRepository.findOrdersByOrderStatus(orderStatus);
     }
-    public Salesman updateSalesmanInfo(Long idSalesman,Salesman salesman){
+    public Salesman updateSalesmanInfo(Long idSalesman,Salesman updateSalesman){
+        Salesman salesman = salesmanRepository.findById(idSalesman).orElseThrow(() -> new NoSuchElementException("Venditore con id " + idSalesman + " non trovato"));
 
     }
 }

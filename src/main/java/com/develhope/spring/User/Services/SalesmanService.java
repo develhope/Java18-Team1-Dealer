@@ -74,6 +74,7 @@ public class SalesmanService {
         if(isSalesManUpdated){
             salesman = salesmanRepository.save(salesman);
         }
+        return salesman;
 
     }
 }

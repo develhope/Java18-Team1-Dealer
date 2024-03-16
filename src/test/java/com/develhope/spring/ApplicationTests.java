@@ -421,7 +421,6 @@ class ApplicationTests {
         assertThrows(NoSuchElementException.class, () -> {
             customerService.createNewPurchase(customerPurchase);
         });
-
     }
     @Transactional
     @Test

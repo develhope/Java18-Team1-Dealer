@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class SalesmanService {
@@ -36,8 +37,13 @@ public class SalesmanService {
         purchaseRepository.save(purchase);
         return purchase.getOrderStatusEnum();
     }
-    public List<Purchase> checkOrdersListByStatus(OrderStatusEnum orderStatus){
-        return purchaseRepository.findOrdersByOrderStatus(orderStatus);
+    public List<Purchase> checkOrdersListByStatus(OrderStatusEnum orderStatus) throws NoSuchElementException{
+        Optional<List<Purchase>> optionalPurchases = purchaseRepository.findOrdersByOrderStatus(orderStatus);
+        if(optionalPurchases.isPresent()) {
+            return optionalPurchases.get();
+        } else {
+            throw new NoSuchElementException("Ordini con stato " + orderStatus + " non trovati");
+        }
     }
     public Salesman updateSalesmanInfo(Long idSalesman,Salesman updateSalesman){
         Salesman salesman = salesmanRepository.findById(idSalesman).orElseThrow(() -> new NoSuchElementException("Venditore con id " + idSalesman + " non trovato"));

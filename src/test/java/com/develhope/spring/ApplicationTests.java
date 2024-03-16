@@ -1,13 +1,17 @@
 package com.develhope.spring;
 
+import com.develhope.spring.Purchase.Entities.DTO.AdminPurchaseCreationDTO;
+import com.develhope.spring.Purchase.Entities.DTO.CustomerPurchaseCreationDTO;
 import com.develhope.spring.Purchase.Entities.Enums.OrderStatusEnum;
 import com.develhope.spring.Purchase.Entities.Enums.VehicleStatusEnum;
 import com.develhope.spring.Purchase.Entities.Purchase;
 import com.develhope.spring.Purchase.Repositories.PurchaseRepository;
 import com.develhope.spring.User.Entities.Customer;
 import com.develhope.spring.User.Entities.Salesman;
+import com.develhope.spring.User.Repositories.AdminRepository;
 import com.develhope.spring.User.Repositories.CustomerRepository;
 import com.develhope.spring.User.Repositories.SalesmanRepository;
+import com.develhope.spring.User.Services.AdminService;
 import com.develhope.spring.User.Services.CustomerService;
 import com.develhope.spring.User.Services.SalesmanService;
 import com.develhope.spring.Vehicle.Entities.Enums.EmissionType;
@@ -30,7 +34,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Random;
@@ -49,8 +52,12 @@ class ApplicationTests {
     private SalesmanRepository salesmanRepository;
     @Autowired
     private CustomerService customerService;
-	@Autowired
+    @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private AdminRepository adminRepository;
+    @Autowired
+    private AdminService adminService;
     @Autowired
     private PurchaseRepository purchaseRepository;
 
@@ -116,13 +123,15 @@ class ApplicationTests {
         purchase.setCustomer(createACustomer());
         return purchaseRepository.save(purchase);
     }
-    private String getRandomString(){
+
+    private String getRandomString() {
         Random random = new Random();
-        return  random.ints(97,122)
+        return random.ints(97, 122)
                 .limit(10)
-                .collect(StringBuilder::new, StringBuilder::appendCodePoint,StringBuilder::append)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
     }
+
     @Transactional
     @Test
     void createVehicle() throws Exception {
@@ -154,9 +163,10 @@ class ApplicationTests {
 
         assertThat(newVehicle.getId()).isEqualTo(vehicle.getId());
     }
+
     @Transactional
     @Test
-    void checkIfVehicleExist() throws Exception {
+    void checkIfVehicleExistForSalesman() throws Exception {
         Vehicle vehicle = createAVehicle();
 
         Vehicle vehicleFromService = salesmanService.getVehicleInfoByid(vehicle.getId());
@@ -184,26 +194,41 @@ class ApplicationTests {
         assertEquals(vehicleFromService.getWindShield(), vehicle.getWindShield());
         assertEquals(vehicleFromService.getTailBag(), vehicle.getTailBag());
     }
+
     @Transactional
     @Test
-    void checkIfVehicleIdIsWrong() throws Exception {
+    void checkIfVehicleIdIsWrongForSalesman() throws Exception {
         Vehicle vehicle = createAVehicle();
+        assertThat(vehicle).isNotNull();
         Long id = 2L;
         assertThrows(NoSuchElementException.class, () -> {
             salesmanService.getVehicleInfoByid(id);
         });
     }
+
     @Transactional
     @Test
-    void checkIfOrderStatusIsCorrect() throws Exception{
+    void checkIfOrderStatusIsCorrect() throws Exception {
         Purchase purchase = createAPurchase();
         assertThat(purchase).isNotNull();
         assertThat(purchase.getOrderStatusEnum()).isEqualTo(salesmanService.checkOrderStatus(purchase.getId()));
 
     }
+
     @Transactional
     @Test
-    void checkIfUpdatedOrderStatusIsCorrect() throws Exception{
+    void checkIfOrderIdIsWrong() throws Exception {
+        Purchase purchase = createAPurchase();
+        assertThat(purchase).isNotNull();
+        Long id = 2L;
+        assertThrows(NoSuchElementException.class, () -> {
+            salesmanService.checkOrderStatus(id);
+        });
+    }
+
+    @Transactional
+    @Test
+    void checkIfUpdatedOrderStatusIsCorrect() throws Exception {
         Purchase purchase = createAPurchase();
         assertThat(purchase).isNotNull();
         OrderStatusEnum updateStatus = salesmanService.updateOrderStatus(purchase.getId(), OrderStatusEnum.IN_PROGRESS);
@@ -213,7 +238,17 @@ class ApplicationTests {
     }
     @Transactional
     @Test
-    void checkIfTheListContainsCorrectOrdersByStatus() throws Exception{
+    void checkIfUpdatedOrderIdIsWrong() throws Exception{
+        Purchase purchase = createAPurchase();
+        assertThat(purchase).isNotNull();
+        Long id = 3L;
+        assertThrows(NoSuchElementException.class, () -> {
+            salesmanService.updateOrderStatus(id,OrderStatusEnum.IN_PROGRESS);
+        });
+    }
+    @Transactional
+    @Test
+    void checkIfTheListContainsCorrectOrdersByStatus() throws Exception {
         Purchase purchaseCompleted = createAPurchase();
         Purchase purchase1 = createAPurchase();
         Purchase purchase2 = createAPurchase();
@@ -234,5 +269,171 @@ class ApplicationTests {
         assertThat(inProgressOrders).size().isEqualTo(1);
         List<Purchase> failedOrders = salesmanService.checkOrdersListByStatus(OrderStatusEnum.FAILED);
         assertThat(failedOrders).size().isEqualTo(1);
+    }
+//    @Transactional
+//    @Test
+//    void checkIfOrdersListWithSpecifyStatusIsEmpty() throws NoSuchElementException {
+//        assertThrows(NoSuchElementException.class, () -> {
+//            salesmanService.checkOrdersListByStatus(OrderStatusEnum.IN_PROGRESS);
+//        });
+//    }
+
+    @Transactional
+    @Test
+    void checkIfChangeSalesman() throws Exception {
+        Salesman salesman = createASalesman();
+        assertThat(salesman).isNotNull();
+        salesman.setPhone("1731639");
+        salesman.setAddress("183jdhkjasdja");
+        salesman.setSalesNumber(4);
+        salesman.setFirstName("jsdjkscb");
+        salesman.setLastName("bubu");
+        salesman.setEmail("jakjdasdlsa");
+        salesman.setPassword("aaalallsjkk");
+        Salesman updateSalesman = salesmanService.updateSalesmanInfo(salesman.getId(), salesman);
+        assertThat(updateSalesman.getFirstName()).isEqualTo("jsdjkscb");
+        assertThat(updateSalesman.getLastName()).isEqualTo("bubu");
+        assertThat(updateSalesman.getPhone()).isEqualTo("1731639");
+        assertThat(updateSalesman.getAddress()).isEqualTo("183jdhkjasdja");
+        assertThat(updateSalesman.getSalesNumber()).isEqualTo(4);
+        assertThat(updateSalesman.getEmail()).isEqualTo("jakjdasdlsa");
+        assertThat(updateSalesman.getPassword()).isEqualTo("aaalallsjkk");
+    }
+
+    @Transactional
+    @Test
+    void checkIfSalesmanIdIsWrong() throws Exception {
+        Salesman salesman = createASalesman();
+        assertThat(salesman).isNotNull();
+        Long id = 2L;
+        assertThrows(NoSuchElementException.class, () -> {
+            salesmanService.updateSalesmanInfo(id, salesman);
+        });
+    }
+    @Transactional
+    @Test
+    void checkIfPurchaseIsCreatedByAdmin() throws Exception {
+        Vehicle vehicle = createAVehicle();
+        AdminPurchaseCreationDTO adminPurchase = new AdminPurchaseCreationDTO();
+        adminPurchase.setIdVehicle(vehicle.getId());
+        adminPurchase.setSalesman(createASalesman());
+        adminPurchase.setCustomer(createACustomer());
+        adminPurchase.setVehicleStatus(VehicleStatusEnum.PURCHASED);
+        Purchase purchase = adminService.createNewPurchase(adminPurchase);
+        assertThat(purchase).isNotNull();
+        assertThat(purchase.getVehicle()).isEqualTo(vehicle);
+        assertThat(purchase.getSalesman()).isEqualTo(adminPurchase.getSalesman());
+        assertThat(purchase.getCustomer()).isEqualTo(adminPurchase.getCustomer());
+        assertThat(purchase.getIsPaid()).isFalse();
+        assertThat(purchase.getVehicleStatusEnum()).isEqualTo(adminPurchase.getVehicleStatus());
+    }
+    @Transactional
+    @Test
+    void checkIfPurchaseIsCreatedByAdminForNotExistingVehicle() throws Exception {
+        Long id = 2L;
+        AdminPurchaseCreationDTO adminPurchase = new AdminPurchaseCreationDTO();
+        adminPurchase.setIdVehicle(id);
+        adminPurchase.setSalesman(createASalesman());
+        adminPurchase.setCustomer(createACustomer());
+        adminPurchase.setVehicleStatus(VehicleStatusEnum.PURCHASED);
+        assertThrows(NoSuchElementException.class, () -> {
+            adminService.createNewPurchase(adminPurchase);
+        });
+    }
+    @Transactional
+    @Test
+    void checkIfPurchaseIsCreatedByAdminForExistingVehicleButNotPurchasable() throws Exception {
+        Vehicle vehicle = createAVehicle();
+        vehicle.setStatusType(StatusType.NOTAVAILABLE);
+        vehicleRepository.save(vehicle);
+        AdminPurchaseCreationDTO adminPurchase = new AdminPurchaseCreationDTO();
+        adminPurchase.setIdVehicle(vehicle.getId());
+        adminPurchase.setSalesman(createASalesman());
+        adminPurchase.setCustomer(createACustomer());
+        adminPurchase.setVehicleStatus(VehicleStatusEnum.PURCHASED);
+        assertThrows(IllegalStateException.class, () -> {
+            adminService.createNewPurchase(adminPurchase);
+        });
+    }
+    @Transactional
+    @Test
+    void checkIfVehicleExistForCustomer() throws Exception {
+        Vehicle vehicle = createAVehicle();
+
+        Vehicle vehicleFromService = customerService.getVehicleInfoByid(vehicle.getId());
+        assertThat(vehicleFromService).isNotNull();
+        assertEquals(vehicleFromService.getId(), vehicle.getId());
+        assertEquals(vehicleFromService.getVehiclesType(), vehicle.getVehiclesType());
+        assertEquals(vehicleFromService.getBrand(), vehicle.getBrand());
+        assertEquals(vehicleFromService.getModel(), vehicle.getModel());
+        assertEquals(vehicleFromService.getColour(), vehicle.getColour());
+        assertEquals(vehicleFromService.getCubiCapacity(), vehicle.getCubiCapacity());
+        assertEquals(vehicleFromService.getHP(), vehicle.getHP());
+        assertEquals(vehicleFromService.getKW(), vehicle.getKW());
+        assertEquals(vehicleFromService.getRegistrationYear(), vehicle.getRegistrationYear());
+        assertEquals(vehicleFromService.getFuelType(), vehicle.getFuelType());
+        assertEquals(0, vehicleFromService.getPrice().compareTo(vehicle.getPrice()));
+        assertEquals(vehicleFromService.getTradeDiscount(), vehicle.getTradeDiscount());
+        assertEquals(vehicleFromService.getNewVehicle(), vehicle.getNewVehicle());
+        assertEquals(vehicleFromService.getMileage(), vehicle.getMileage());
+        assertEquals(vehicleFromService.getAgeLimit(), vehicle.getAgeLimit());
+        assertEquals(vehicleFromService.getStatusType(), vehicle.getStatusType());
+        assertEquals(vehicleFromService.getCurrentLocation(), vehicle.getCurrentLocation());
+        assertEquals(vehicleFromService.getAvailableRental(), vehicle.getAvailableRental());
+        assertEquals(vehicleFromService.getEmissionType(), vehicle.getEmissionType());
+        assertEquals(vehicleFromService.getPassengerNumber(), vehicle.getPassengerNumber());
+        assertEquals(vehicleFromService.getWindShield(), vehicle.getWindShield());
+        assertEquals(vehicleFromService.getTailBag(), vehicle.getTailBag());
+    }
+    @Transactional
+    @Test
+    void checkIfVehicleIdIsWrongForCustomer() throws Exception {
+        Vehicle vehicle = createAVehicle();
+        assertThat(vehicle).isNotNull();
+        Long id = 2L;
+        assertThrows(NoSuchElementException.class, () -> {
+            customerService.getVehicleInfoByid(id);
+        });
+    }
+    @Transactional
+    @Test
+    void checkIfPurchaseIsCreatedByCustomer() throws Exception {
+        Vehicle vehicle = createAVehicle();
+        CustomerPurchaseCreationDTO customerPurchase = new CustomerPurchaseCreationDTO();
+        customerPurchase.setIdVehicle(vehicle.getId());
+        customerPurchase.setCustomer(createACustomer());
+        customerPurchase.setVehicleStatus(VehicleStatusEnum.PURCHASED);
+        Purchase purchase = customerService.createNewPurchase(customerPurchase);
+        assertThat(purchase).isNotNull();
+        assertThat(purchase.getVehicle()).isEqualTo(vehicle);
+        assertThat(purchase.getCustomer()).isEqualTo(customerPurchase.getCustomer());
+        assertThat(purchase.getIsPaid()).isFalse();
+        assertThat(purchase.getVehicleStatusEnum()).isEqualTo(customerPurchase.getVehicleStatus());
+    }
+    @Transactional
+    @Test
+    void checkIfPurchaseIsCreatedByCustomerForNotExistingVehicle() throws Exception {
+        Long id = 2L;
+        CustomerPurchaseCreationDTO customerPurchase = new CustomerPurchaseCreationDTO();
+        customerPurchase.setIdVehicle(id);
+        customerPurchase.setCustomer(createACustomer());
+        customerPurchase.setVehicleStatus(VehicleStatusEnum.PURCHASED);
+        assertThrows(NoSuchElementException.class, () -> {
+            customerService.createNewPurchase(customerPurchase);
+        });
+    }
+    @Transactional
+    @Test
+    void checkIfPurchaseIsCreatedByCustomerForExistingVehicleButNotPurchasable() throws Exception {
+        Vehicle vehicle = createAVehicle();
+        vehicle.setStatusType(StatusType.NOTAVAILABLE);
+        vehicleRepository.save(vehicle);
+        CustomerPurchaseCreationDTO customerPurchase = new CustomerPurchaseCreationDTO();
+        customerPurchase.setIdVehicle(vehicle.getId());
+        customerPurchase.setCustomer(createACustomer());
+        customerPurchase.setVehicleStatus(VehicleStatusEnum.PURCHASED);
+        assertThrows(IllegalStateException.class, () -> {
+            customerService.createNewPurchase(customerPurchase);
+        });
     }
 }

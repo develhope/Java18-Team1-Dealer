@@ -27,7 +27,7 @@ public class Purchase {
     @Column(nullable = false)
     private Boolean isPaid;
 
-    @Column(nullable = false)
+    @Column
     private OrderStatusEnum orderStatusEnum;
     @Column(nullable = false)
     private VehicleStatusEnum vehicleStatusEnum;

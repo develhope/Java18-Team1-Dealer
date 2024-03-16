@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
@@ -16,6 +15,5 @@ public class AdminPurchaseCreationDTO {
     private Long idVehicle;
     private Salesman salesman;
     private Customer customer;
-    private BigDecimal price;
     private VehicleStatusEnum vehicleStatus;
 }

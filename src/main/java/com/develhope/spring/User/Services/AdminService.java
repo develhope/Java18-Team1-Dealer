@@ -25,7 +25,7 @@ public class AdminService {
             purchase.setVehicle(vehicle);
             purchase.setSalesman(dto.getSalesman());
             purchase.setCustomer(dto.getCustomer());
-            purchase.setAdvancePayment(dto.getPrice());
+            purchase.setAdvancePayment(vehicle.getPrice());
             purchase.setIsPaid(false);
             purchase.setVehicleStatusEnum(dto.getVehicleStatus());
 

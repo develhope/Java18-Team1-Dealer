@@ -111,6 +111,6 @@ class ControllerTests {
                 .andExpect(jsonPath("$.vehicle").exists())
                 .andExpect(jsonPath("$.salesman").value(adminPurchase.getSalesman()))
                 .andExpect(jsonPath("$.customer").value(adminPurchase.getCustomer()))
-                .andExpect(jsonPath("$.vehicleStatusEnum").value(adminPurchase.getVehicleStatus()));
+                .andExpect(jsonPath("$.vehicleStatusEnum").value(adminPurchase.getVehicleStatus().toString()));
     }
 }

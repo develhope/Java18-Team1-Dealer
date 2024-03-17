@@ -14,8 +14,8 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-    @PostMapping("/post/purchase")
-    public Purchase createNewPurchase(@RequestBody AdminPurchaseCreationDTO purchaseCreation){
+    @PostMapping("/post")
+    public @ResponseBody Purchase createNewPurchase(@RequestBody AdminPurchaseCreationDTO purchaseCreation){
         return adminService.createNewPurchase(purchaseCreation);
     }
 }

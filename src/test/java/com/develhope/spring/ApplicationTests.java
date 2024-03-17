@@ -29,8 +29,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -270,13 +269,12 @@ class ApplicationTests {
         List<Purchase> failedOrders = salesmanService.checkOrdersListByStatus(OrderStatusEnum.FAILED);
         assertThat(failedOrders).size().isEqualTo(1);
     }
-//    @Transactional
-//    @Test
-//    void checkIfOrdersListWithSpecifyStatusIsEmpty() throws NoSuchElementException {
-//        assertThrows(NoSuchElementException.class, () -> {
-//            salesmanService.checkOrdersListByStatus(OrderStatusEnum.IN_PROGRESS);
-//        });
-//    }
+    @Transactional
+    @Test
+    void checkIfOrdersListWithSpecifyStatusIsEmpty() {
+        List<Purchase> orders = salesmanService.checkOrdersListByStatus(OrderStatusEnum.IN_PROGRESS);
+        assertTrue(orders.isEmpty());
+    }
 
     @Transactional
     @Test

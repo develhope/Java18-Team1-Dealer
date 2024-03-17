@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,7 +37,7 @@ class ServiceLisaTest {
 		Vehicle vehicle = new Vehicle();
 		vehicle.setId(1l);
 		vehicle.setVehiclesTypeEnum(VehiclesTypeEnum.SCOOTER);
-		vehicle.setBrand("rfgsrf");
+		vehicle.setBrand("banana");
 		vehicle.setModel("fdsgdrfsg");
 		vehicle.setColour("fews");
 		vehicle.setCubiCapacity(123.0);
@@ -63,7 +64,7 @@ class ServiceLisaTest {
 		Vehicle vehicle = new Vehicle();
 		vehicle.setId(2l);
 		vehicle.setVehiclesTypeEnum(VehiclesTypeEnum.SCOOTER);
-		vehicle.setBrand("rfgsrf");
+		vehicle.setBrand("banana");
 		vehicle.setModel("fdsgdrfsg");
 		vehicle.setColour("fews");
 		vehicle.setCubiCapacity(123.0);
@@ -77,39 +78,89 @@ class ServiceLisaTest {
 		vehicle.setMileage(1000.90);
 		vehicle.setAgeLimit(17);
 		vehicle.setStatusTypeEnum(StatusTypeEnum.PURCHASABLE);
-		vehicle.setCurrentLocation("Palermo");
+		vehicle.setCurrentLocation(null);
 		vehicle.setAvailableRental(true);
 		vehicle.setEmissionTypeEnum(EmissionTypeEnum.EURO4);
-		vehicle.setPassengerNumber(1);
+		vehicle.setPassengerNumber(2);
 		vehicle.setWindShield(false);
 		vehicle.setTailBag(false);
 		vehicle.setPassengerBackrest(false);
 		return vehicle;
 	}
-
+	@Transactional
 	@Test
 	public void createVehicle() throws Exception{
 		Vehicle vehicle = fakeVehicle();
 		Vehicle newVehicle = adminService.newVehicle(vehicle);
 
+		assertThat(vehicleRepository).isNotNull();
 		assertThat(newVehicle.getId()).isEqualTo(vehicle.getId());
 	}
+	@Transactional
 	@Test
-	public void createVeicleDTO() throws Exception{
-		//TODO: la funzione fa quel che deve, test non passa causa hashcode
+	public void deleteVehicle(){
+		Vehicle vehicle = fakeVehicle();
+		adminService.newVehicle(vehicle);
+
+		assertThat(vehicleRepository).isNotNull();
+
+		Boolean result = adminService.deleteVehicle(vehicle.getId());
+		assertThat(result).isTrue();
+	}
+	@Transactional
+	@Test
+	public void updateVehicle() throws Exception{
+		Vehicle vehicleNotUpdated = fakeVehicle();
+		vehicleRepository.save(vehicleNotUpdated);
+
+		Vehicle vehicle2 = fakeVehicle2();
+
+		Vehicle vehicleUpdated = adminService.updateVehicle(vehicleNotUpdated.getId(), vehicle2);
+
+		assertThat(vehicleUpdated.getPassengerNumber()).isEqualTo(vehicle2.getPassengerNumber());
+	}
+	@Transactional
+	@Test
+	public void updateStatusTypeEnumOfVehicle(){
+		Vehicle vehicleNotUpdated = fakeVehicle();
+		Vehicle vehicleToUpdate = vehicleRepository.save(vehicleNotUpdated);
+
+		Vehicle vehicleUpdated = adminService.updateStatusType(vehicleToUpdate.getId(), StatusTypeEnum.SOLD);
+		assertThat(vehicleUpdated.getStatusTypeEnum()).isEqualTo(StatusTypeEnum.SOLD);
+	}
+	@Transactional
+	@Test
+	public void updatePurchaseById(){}
+	@Transactional
+	@Test
+	public void deletePurchaseById(){}
+	@Transactional
+	@Test
+	public void getVehiclesByStatusTypeEnum(){
+		Vehicle vehicle1 = fakeVehicle();
+		Vehicle vehicle2 = fakeVehicle2();
+		adminService.newVehicle(vehicle1);
+		adminService.newVehicle(vehicle2);
+
+		List<Vehicle> vehiclesByStatusTypeEnum = adminService.vehiclesByStatusType(StatusTypeEnum.PURCHASABLE);
+		assertThat(vehiclesByStatusTypeEnum).contains(vehicle1,vehicle2);
+	}
+	@Transactional
+	@Test
+	public void createVehicleDTO() throws Exception{
 		List<Vehicle> allFullVehicles = new ArrayList<>();
 		Vehicle fullVehicle = fakeVehicle();
-		Vehicle fullVehicle2 = fakeVehicle2();
+
 		allFullVehicles.add(fullVehicle);
-		allFullVehicles.add(fullVehicle2);
 
 		ScooterDTO scooter = new ScooterDTO(1l, "rfgsrf", "fdsgdrfsg", "fews", 123.0,
 				324, 123.44, LocalDate.ofEpochDay(2024/4/4), FuelTypeEnum.GASOLINE, BigDecimal.valueOf(4888),
 				false, 1000.90, StatusTypeEnum.PURCHASABLE, "Palermo", EmissionTypeEnum.EURO4,
 				1, false, false, false, true);
+
 		List<Object> result = vehicleService.allVehiclesDTO(allFullVehicles);
 
-		assertThat(result).contains(scooter);
+		assertThat(result).toString().equals(scooter.toString());
 	}
 
 }

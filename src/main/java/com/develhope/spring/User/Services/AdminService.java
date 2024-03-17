@@ -5,7 +5,7 @@ import com.develhope.spring.User.Entities.Salesman;
 import com.develhope.spring.User.Repositories.AdminRepository;
 import com.develhope.spring.User.Repositories.CustomerRepository;
 import com.develhope.spring.User.Repositories.SalesmanRepository;
-import com.develhope.spring.Vehicle.Entities.Enums.StatusTypeEnum;
+import com.develhope.spring.Vehicle.Entities.Enums.*;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
 import com.develhope.spring.Vehicle.Repositories.VehicleRepository;
 import com.develhope.spring.Purchase.Entities.Purchase;
@@ -14,8 +14,11 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
+
 
 @Service
 public class AdminService {
@@ -100,89 +103,148 @@ public class AdminService {
 
         vehicleRepository.deleteById(id);
         return true;
-
     }
 
     //modifica veicolo
-    public Vehicle updateVehicle(Long id, Vehicle vehicle){
+        public Vehicle updateVehicle(Long id, Vehicle vehicle){
         Vehicle vehicleUpdated = vehicleRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Vehicle id " + id + " to update not found"));
-        if(vehicleUpdated.getVehiclesTypeEnum() != null) {
+
+        if(vehicle.getVehiclesTypeEnum() != null && Arrays.asList(VehiclesTypeEnum.values()).contains(vehicle.getVehiclesTypeEnum())){
             vehicleUpdated.setVehiclesTypeEnum(vehicle.getVehiclesTypeEnum());
         }
-        if(vehicleUpdated.getBrand() != null && !vehicleUpdated.getBrand().isEmpty()){
-            vehicleUpdated.setBrand(vehicleUpdated.getBrand());
+        if(vehicle.getBrand() != null && !vehicle.getBrand().isEmpty()){
+            vehicleUpdated.setBrand(vehicle.getBrand());
         }
-        if(vehicleUpdated.getModel() != null && !vehicleUpdated.getModel().isEmpty()) {
-            vehicleUpdated.setModel(vehicleUpdated.getModel());
+        if(vehicle.getModel() != null && !vehicle.getModel().isEmpty()){
+            vehicleUpdated.setModel(vehicle.getModel());
         }
-        if(vehicleUpdated.getColour() != null && !vehicleUpdated.getColour().isEmpty()){
-            vehicleUpdated.setColour(vehicleUpdated.getColour());
+        if(vehicle.getColour() != null && !vehicle.getColour().isEmpty()){
+            vehicleUpdated.setColour(vehicle.getColour());
         }
-        //TODO: da finire qui
-            vehicleUpdated.setCubiCapacity(vehicleUpdated.getCubiCapacity());
+        if(vehicle.getCubiCapacity() != null){
+            vehicleUpdated.setCubiCapacity(vehicle.getCubiCapacity());
+        }
+        if(vehicle.getHP() != null){
             vehicleUpdated.setHP(vehicle.getHP());
+        }
+        if(vehicle.getKW() != null){
             vehicleUpdated.setKW(vehicle.getKW());
+        }
+        if(vehicle.getRegistrationYear() != null){
             vehicleUpdated.setRegistrationYear(vehicle.getRegistrationYear());
+        }
+        if(vehicle.getFuelTypeEnum() != null && Arrays.asList(FuelTypeEnum.values()).contains(vehicle.getFuelTypeEnum())){
             vehicleUpdated.setFuelTypeEnum(vehicle.getFuelTypeEnum());
+        }
+        if(vehicle.getPrice() != null){
             vehicleUpdated.setPrice(vehicle.getPrice());
-            vehicleUpdated.setTradeDiscount(vehicle.getTradeDiscount());
+        }
+        //nullable column
+        vehicleUpdated.setTradeDiscount(vehicle.getTradeDiscount());
+
+        if(vehicle.getNewVehicle() != null){
             vehicleUpdated.setNewVehicle(vehicle.getNewVehicle());
-            vehicleUpdated.setMileage(vehicleUpdated.getMileage());
+        }
+        //nullable column
+        vehicleUpdated.setMileage(vehicle.getMileage());
+
+        if(vehicle.getAgeLimit() != null){
             vehicleUpdated.setAgeLimit(vehicle.getAgeLimit());
+        }
+        if(vehicle.getStatusTypeEnum() != null && Arrays.asList(StatusTypeEnum.values()).contains(vehicle.getStatusTypeEnum())){
             vehicleUpdated.setStatusTypeEnum(vehicle.getStatusTypeEnum());
-            vehicleUpdated.setCurrentLocation(vehicle.getCurrentLocation());
+        }
+        //nullable column
+        vehicleUpdated.setCurrentLocation(vehicle.getCurrentLocation());
+
+        if(vehicle.getAvailableRental() != null){
             vehicleUpdated.setAvailableRental(vehicle.getAvailableRental());
+        }
+        if(vehicle.getEmissionTypeEnum() != null && Arrays.asList(EmissionTypeEnum.values()).contains(vehicle.getEmissionTypeEnum())){
             vehicleUpdated.setEmissionTypeEnum(vehicle.getEmissionTypeEnum());
+        }
+        if(vehicle.getPassengerNumber() != null){
             vehicleUpdated.setPassengerNumber(vehicle.getPassengerNumber());
-            vehicleUpdated.setWindShield(vehicle.getWindShield());
-            vehicleUpdated.setTailBag(vehicle.getTailBag());
-            vehicleUpdated.setPassengerBackrest(vehicle.getPassengerBackrest());
-            vehicleUpdated.setTransmissionTypeEnum(vehicle.getTransmissionTypeEnum());
-            vehicleUpdated.setCarTypeEnum(vehicle.getCarTypeEnum());
-            vehicleUpdated.setTractionTypeEnum(vehicle.getTractionTypeEnum());
-            vehicleUpdated.setOptionFullTraction(vehicle.getOptionFullTraction());
-            vehicleUpdated.setDoors(vehicle.getDoors());
-            vehicleUpdated.setCentralizedClosing(vehicle.getCentralizedClosing());
-            vehicleUpdated.setAirConditioning(vehicle.getAirConditioning());
-            vehicleUpdated.setBluetooth(vehicle.getBluetooth());
-            vehicleUpdated.setSatNav(vehicle.getSatNav());
-            vehicleUpdated.setElectricRoof(vehicle.getElectricRoof());
-            vehicleUpdated.setParkAssist(vehicle.getParkAssist());
-            vehicleUpdated.setSpareTire(vehicle.getSpareTire());
-            vehicleUpdated.setAntiTheft(vehicle.getAntiTheft());
-            vehicleUpdated.setPassengerTransport(vehicle.getPassengerTransport());
-            vehicleUpdated.setWindowedBackDoor(vehicle.getWindowedBackDoor());
-            vehicleUpdated.setSlideSideDoor(vehicle.getSlideSideDoor());
-            vehicleUpdated.setAntiCollisionSystem(vehicle.getAntiCollisionSystem());
+        }
+        //nullable column
+        vehicleUpdated.setWindShield(vehicle.getWindShield());
+
+        vehicleUpdated.setTailBag(vehicle.getTailBag());
+
+        vehicleUpdated.setPassengerBackrest(vehicle.getPassengerBackrest());
+
+        vehicleUpdated.setTransmissionTypeEnum(vehicle.getTransmissionTypeEnum());
+
+        vehicleUpdated.setCarTypeEnum(vehicle.getCarTypeEnum());
+
+        vehicleUpdated.setTractionTypeEnum(vehicle.getTractionTypeEnum());
+
+        vehicleUpdated.setOptionFullTraction(vehicle.getOptionFullTraction());
+
+        vehicleUpdated.setDoors(vehicle.getDoors());
+
+        vehicleUpdated.setCentralizedClosing(vehicle.getCentralizedClosing());
+
+        vehicleUpdated.setAirConditioning(vehicle.getAirConditioning());
+
+        vehicleUpdated.setBluetooth(vehicle.getBluetooth());
+
+        vehicleUpdated.setSatNav(vehicle.getSatNav());
+
+        vehicleUpdated.setElectricRoof(vehicle.getElectricRoof());
+
+        vehicleUpdated.setParkAssist(vehicle.getParkAssist());
+
+        vehicleUpdated.setSpareTire(vehicle.getSpareTire());
+
+        vehicleUpdated.setAntiTheft(vehicle.getAntiTheft());
+
+        vehicleUpdated.setPassengerTransport(vehicle.getPassengerTransport());
+
+        vehicleUpdated.setWindowedBackDoor(vehicle.getWindowedBackDoor());
+
+        vehicleUpdated.setSlideSideDoor(vehicle.getSlideSideDoor());
+
+        vehicleUpdated.setAntiCollisionSystem(vehicle.getAntiCollisionSystem());
 
         return vehicleRepository.save(vehicleUpdated);
     }
 
     //cambia STATUS di un veicolo
-    public Vehicle updateStatusType(Long id, StatusTypeEnum statusTypeEnum){
+    public Vehicle updateStatusType(Long id, StatusTypeEnum statusType){
         Vehicle vehicleUpdated = vehicleRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Vehicle id " + id + " to update not found"));
 
-        vehicleUpdated.setStatusTypeEnum(statusTypeEnum);
-
-        return vehicleRepository.save(vehicleUpdated);
+        if(statusType != null && Arrays.asList(StatusTypeEnum.values()).contains(statusType)) {
+            vehicleUpdated.setStatusTypeEnum(statusType);
+            return vehicleRepository.save(vehicleUpdated);
+        }else{
+            throw new EntityNotFoundException("Status type of vehicle not correct");
+        }
     }
 
     //modifica ACQUISTO per un CUSTOMER
     public List<Purchase> updatePurchaseById(Long idCustomer, Long idPurchase, Purchase purchaseUpdated){
-        if(idCustomer != null && idPurchase != null) {
+        if(idCustomer != null && idPurchase != null && customerRepository.findById(idCustomer).isPresent()
+                && purchaseRepository.findById(idPurchase).isPresent()) {
 
             List<Purchase> purchaseListByCustomer = purchaseRepository.purchasesByCustomer(idCustomer);
 
-            //TODO: finire qui
             for (Purchase purchase : purchaseListByCustomer){
-                if (purchase.getId() == idPurchase){
-                    purchase.setAdvancePayment(purchaseUpdated.getAdvancePayment());
-                    purchase.setIsPaid(purchaseUpdated.getIsPaid());
-                    purchase.setOrderStatus(purchaseUpdated.getOrderStatus());
-                    purchase.setCustomer(purchaseUpdated.getCustomer());
-                    purchase.setSalesman(purchaseUpdated.getSalesman());
+                if (Objects.equals(purchase.getId(), idPurchase)){
+                    if(purchaseUpdated.getAdvancePayment() != null) {
+                        purchase.setAdvancePayment(purchaseUpdated.getAdvancePayment());
+                    }
+                    if(purchaseUpdated.getIsPaid() != null){
+                        purchase.setIsPaid(purchaseUpdated.getIsPaid());
+                    }
+                    if(purchaseUpdated.getOrderStatus() != null){
+                        purchase.setOrderStatus(purchaseUpdated.getOrderStatus());
+                    }
+                    if(purchaseUpdated.getSalesman() != null){
+                        purchase.setSalesman(purchaseUpdated.getSalesman());
+                    }
                 }
                 purchaseRepository.save(purchase);
             }
@@ -194,7 +256,8 @@ public class AdminService {
 
     //cancella ACQUISTO per un CUSTOMER
     public Boolean deletePurchaseById(Long idCustomer, Long idPurchase){
-        if(idCustomer != null && idPurchase != null) {
+        if(idCustomer != null && idPurchase != null && customerRepository.findById(idCustomer).isPresent()
+                && purchaseRepository.findById(idPurchase).isPresent()) {
             Iterator<Purchase> iterator = purchaseRepository.purchasesByCustomer(idCustomer).listIterator();
             while (iterator.hasNext()){
                 Purchase purchase = iterator.next();
@@ -211,13 +274,13 @@ public class AdminService {
 
 
     //ottieni VEICOLI filtrandoli per STATUSTYPE
-    public List<Vehicle> vehiclesByStatusType(StatusTypeEnum statusTypeEnum){
+    public List<Vehicle> vehiclesByStatusType(StatusTypeEnum statusType){
 
-        if(statusTypeEnum != null){
+        if(statusType != null && Arrays.asList(StatusTypeEnum.values()).contains(statusType)) {
 
-            return vehicleRepository.vehiclesByStatusType(statusTypeEnum);
+            return vehicleRepository.vehiclesByStatusType(statusType);
         }else {
-            throw new RuntimeException("Vehicle status " + statusTypeEnum + " not found");
+            throw new RuntimeException("Vehicle status " + statusType + " not found");
         }
     }
 }

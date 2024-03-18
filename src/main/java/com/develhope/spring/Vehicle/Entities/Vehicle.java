@@ -117,4 +117,6 @@ public class Vehicle {
     private Purchase purchase;
     @OneToOne
     private  Rent rent;
+
+
 }

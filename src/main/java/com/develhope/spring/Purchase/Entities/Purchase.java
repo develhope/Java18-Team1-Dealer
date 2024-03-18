@@ -1,15 +1,14 @@
 package com.develhope.spring.Purchase.Entities;
 
+import com.develhope.spring.Purchase.Entities.Enums.OrderStatusEnum;
+import com.develhope.spring.Purchase.Entities.Enums.VehicleStatusEnum;
 import com.develhope.spring.User.Entities.Customer;
 import com.develhope.spring.User.Entities.Salesman;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Entity
 @Table
@@ -27,8 +26,10 @@ public class Purchase {
     @Column(nullable = false)
     private Boolean isPaid;
 
+    @Column
+    private OrderStatusEnum orderStatusEnum;
     @Column(nullable = false)
-    private String orderStatus;
+    private VehicleStatusEnum vehicleStatusEnum;
 
     @ManyToOne
     private Salesman salesman;
@@ -36,5 +37,5 @@ public class Purchase {
     private Customer customer;
     @OneToOne
     private Vehicle vehicle;
-
+    
 }

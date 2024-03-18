@@ -8,6 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.develhope.spring.Purchase.Entities.DTO.AdminPurchaseCreationDTO;
+import com.develhope.spring.Purchase.Entities.Purchase;
+import com.develhope.spring.User.Services.AdminService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -58,5 +63,11 @@ public class AdminController {
             return ResponseEntity.notFound().build();
         }
     }
+    @Autowired
+    private AdminService adminService;
 
+    @PostMapping("/post")
+    public @ResponseBody Purchase createNewPurchase(@RequestBody AdminPurchaseCreationDTO purchaseCreation){
+        return adminService.createNewPurchase(purchaseCreation);
+    }
 }

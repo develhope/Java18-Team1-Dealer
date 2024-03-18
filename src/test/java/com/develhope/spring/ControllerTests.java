@@ -1,13 +1,17 @@
 package com.develhope.spring;
 
 import com.develhope.spring.Purchase.Entities.DTO.AdminPurchaseCreationDTO;
+import com.develhope.spring.Purchase.Entities.Enums.OrderStatusEnum;
 import com.develhope.spring.Purchase.Entities.Enums.VehicleStatusEnum;
 import com.develhope.spring.Purchase.Entities.Purchase;
+import com.develhope.spring.Purchase.Repositories.PurchaseRepository;
 import com.develhope.spring.User.Controllers.AdminController;
 import com.develhope.spring.User.Controllers.CustomerController;
 import com.develhope.spring.User.Controllers.SalesmanController;
 import com.develhope.spring.User.Entities.Customer;
 import com.develhope.spring.User.Entities.Salesman;
+import com.develhope.spring.User.Repositories.CustomerRepository;
+import com.develhope.spring.User.Repositories.SalesmanRepository;
 import com.develhope.spring.Vehicle.Entities.Enums.EmissionType;
 import com.develhope.spring.Vehicle.Entities.Enums.FuelType;
 import com.develhope.spring.Vehicle.Entities.Enums.StatusType;
@@ -27,13 +31,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -51,6 +54,13 @@ class ControllerTests {
     private ObjectMapper objectMapper;
     @Autowired
     private VehicleRepository vehicleRepository;
+    @Autowired
+    private SalesmanRepository salesmanRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
+    @Autowired
+    private PurchaseRepository purchaseRepository;
+
     private Vehicle createAVehicle() {
         Vehicle vehicle = new Vehicle();
         vehicle.setVehiclesType(VehiclesType.SCOOTER);
@@ -75,6 +85,49 @@ class ControllerTests {
         vehicle.setWindShield(false);
         vehicle.setTailBag(false);
         return vehicleRepository.save(vehicle);
+    }
+    private Salesman createASalesman() {
+        Salesman salesman = new Salesman();
+        salesman.setPhone("12111313");
+        salesman.setAddress("hdadjajdjka");
+        salesman.setSalesNumber(1);
+        salesman.setFirstName("djdjal");
+        salesman.setLastName("jhdjald");
+        salesman.setEmail(getRandomString());
+        salesman.setPassword("jkdkasjdkal");
+        return salesmanRepository.save(salesman);
+    }
+
+    private Customer createACustomer() {
+        Customer customer = new Customer();
+        customer.setFirstName("kadkaskldad");
+        customer.setLastName("jakdasldaslk");
+        customer.setEmail(getRandomString());
+        customer.setPassword("adlakdslak");
+        customer.setPhone("81839813");
+        customer.setAddress("jadjlkasda");
+        customer.setCreditCard("198239129389");
+        customer.setTaxId(getRandomString());
+        return customerRepository.save(customer);
+    }
+
+    private Purchase createAPurchase() {
+        Purchase purchase = new Purchase();
+        purchase.setAdvancePayment(BigDecimal.valueOf(4000));
+        purchase.setIsPaid(true);
+        purchase.setOrderStatusEnum(OrderStatusEnum.COMPLETED);
+        purchase.setVehicleStatusEnum(VehicleStatusEnum.PURCHASED);
+        purchase.setVehicle(createAVehicle());
+        purchase.setSalesman(createASalesman());
+        purchase.setCustomer(createACustomer());
+        return purchaseRepository.save(purchase);
+    }
+    private String getRandomString() {
+        Random random = new Random();
+        return random.ints(97, 122)
+                .limit(10)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
     }
 
     @Transactional
@@ -105,12 +158,111 @@ class ControllerTests {
 
 
         mockMvc.perform(post("/admin/post")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(adminPurchase)))
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(adminPurchase)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.vehicle").exists())
                 .andExpect(jsonPath("$.salesman").value(adminPurchase.getSalesman()))
                 .andExpect(jsonPath("$.customer").value(adminPurchase.getCustomer()))
                 .andExpect(jsonPath("$.vehicleStatusEnum").value(adminPurchase.getVehicleStatus().toString()));
+    }
+    @Transactional
+    @Test
+    void customerCheckIfVehicleExist() throws Exception {
+        Vehicle vehicle = createAVehicle();
+
+        mockMvc.perform(get("/customer/get/info/" + vehicle.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(vehicle)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").exists())
+                .andExpect(jsonPath("$.vehiclesType").value(vehicle.getVehiclesType().toString()))
+                .andExpect(jsonPath("$.brand").value(vehicle.getBrand()))
+                .andExpect(jsonPath("$.model").value(vehicle.getModel()))
+                .andExpect(jsonPath("$.colour").value(vehicle.getColour()))
+                .andExpect(jsonPath("$.cubiCapacity").value(vehicle.getCubiCapacity()))
+                .andExpect(jsonPath("$.hp").value(vehicle.getHP()))
+                .andExpect(jsonPath("$.kw").value(vehicle.getKW()))
+                .andExpect(jsonPath("$.registrationYear").value(vehicle.getRegistrationYear().toString()))
+                .andExpect(jsonPath("$.fuelType").value(vehicle.getFuelType().toString()))
+                .andExpect(jsonPath("$.price").value(vehicle.getPrice()))
+                .andExpect(jsonPath("$.tradeDiscount").value(vehicle.getTradeDiscount()))
+                .andExpect(jsonPath("$.newVehicle").value(vehicle.getNewVehicle()))
+                .andExpect(jsonPath("$.mileage").value(vehicle.getMileage()))
+                .andExpect(jsonPath("$.ageLimit").value(vehicle.getAgeLimit()))
+                .andExpect(jsonPath("$.statusType").value(vehicle.getStatusType().toString()))
+                .andExpect(jsonPath("$.currentLocation").value(vehicle.getCurrentLocation()))
+                .andExpect(jsonPath("$.availableRental").value(vehicle.getAvailableRental()))
+                .andExpect(jsonPath("$.emissionType").value(vehicle.getEmissionType().toString()))
+                .andExpect(jsonPath("$.passengerNumber").value(vehicle.getPassengerNumber()))
+                .andExpect(jsonPath("$.windShield").value(vehicle.getWindShield()))
+                .andExpect(jsonPath("$.tailBag").value(vehicle.getTailBag()));
+
+    }
+    @Transactional
+    @Test
+    void testCreateNewCustomerPurchase() throws Exception {
+        Vehicle vehicle = createAVehicle();
+        AdminPurchaseCreationDTO adminPurchase = new AdminPurchaseCreationDTO();
+        adminPurchase.setIdVehicle(vehicle.getId());
+        adminPurchase.setCustomer(new Customer(1L,"ufuegfugfe","ksdfksfks","264298","273823394",null,null));
+        adminPurchase.setVehicleStatus(VehicleStatusEnum.PURCHASED);
+
+
+        mockMvc.perform(post("/customer/post")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(adminPurchase)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.vehicle").exists())
+                .andExpect(jsonPath("$.customer").value(adminPurchase.getCustomer()))
+                .andExpect(jsonPath("$.vehicleStatusEnum").value(adminPurchase.getVehicleStatus().toString()));
+    }
+    @Transactional
+    @Test
+    void salesmanCheckIfVehicleExist() throws Exception {
+        Vehicle vehicle = createAVehicle();
+
+        mockMvc.perform(get("/salesman/get/info/" + vehicle.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vehicle)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").exists())
+                .andExpect(jsonPath("$.vehiclesType").value(vehicle.getVehiclesType().toString()))
+                .andExpect(jsonPath("$.brand").value(vehicle.getBrand()))
+                .andExpect(jsonPath("$.model").value(vehicle.getModel()))
+                .andExpect(jsonPath("$.colour").value(vehicle.getColour()))
+                .andExpect(jsonPath("$.cubiCapacity").value(vehicle.getCubiCapacity()))
+                .andExpect(jsonPath("$.hp").value(vehicle.getHP()))
+                .andExpect(jsonPath("$.kw").value(vehicle.getKW()))
+                .andExpect(jsonPath("$.registrationYear").value(vehicle.getRegistrationYear().toString()))
+                .andExpect(jsonPath("$.fuelType").value(vehicle.getFuelType().toString()))
+                .andExpect(jsonPath("$.price").value(vehicle.getPrice()))
+                .andExpect(jsonPath("$.tradeDiscount").value(vehicle.getTradeDiscount()))
+                .andExpect(jsonPath("$.newVehicle").value(vehicle.getNewVehicle()))
+                .andExpect(jsonPath("$.mileage").value(vehicle.getMileage()))
+                .andExpect(jsonPath("$.ageLimit").value(vehicle.getAgeLimit()))
+                .andExpect(jsonPath("$.statusType").value(vehicle.getStatusType().toString()))
+                .andExpect(jsonPath("$.currentLocation").value(vehicle.getCurrentLocation()))
+                .andExpect(jsonPath("$.availableRental").value(vehicle.getAvailableRental()))
+                .andExpect(jsonPath("$.emissionType").value(vehicle.getEmissionType().toString()))
+                .andExpect(jsonPath("$.passengerNumber").value(vehicle.getPassengerNumber()))
+                .andExpect(jsonPath("$.windShield").value(vehicle.getWindShield()))
+                .andExpect(jsonPath("$.tailBag").value(vehicle.getTailBag()));
+
+    }
+    @Transactional
+    @Test
+    void checkIfOrderStatusIsCorrect() throws Exception {
+        Purchase purchase = createAPurchase();
+
+        MvcResult result = mockMvc.perform(get("/salesman/get/orderstatus/" + purchase.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(purchase.getOrderStatusEnum())))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value(purchase.getOrderStatusEnum().toString()))
+                .andReturn();
+
+        String responseContent = result.getResponse().getContentAsString();
+        System.out.println("Response content: " + responseContent);
     }
 }

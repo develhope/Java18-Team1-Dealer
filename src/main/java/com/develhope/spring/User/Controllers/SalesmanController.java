@@ -24,12 +24,13 @@ public class SalesmanController {
     public OrderStatusEnum checkOrderStatusById(@PathVariable Long id){
         return salesmanService.checkOrderStatus(id);
     }
-    @PatchMapping("/patch/orderstatus/{id}")
-    public OrderStatusEnum updateOrderStatus(@PathVariable Long id, @RequestParam OrderStatusEnum orderStatus){
-        return salesmanService.updateOrderStatus(id,orderStatus);
-    }
     @GetMapping("/get/orderslist/{orderStatus}")
     public List<Purchase> checkOrdersListByOrderStatus(@PathVariable OrderStatusEnum orderStatus){
         return salesmanService.checkOrdersListByStatus(orderStatus);
     }
+    @PatchMapping("/patch/orderstatus/{id}")
+    public OrderStatusEnum updateOrderStatus(@PathVariable Long id, @RequestParam OrderStatusEnum orderStatus){
+        return salesmanService.updateOrderStatus(id,orderStatus);
+    }
+
 }

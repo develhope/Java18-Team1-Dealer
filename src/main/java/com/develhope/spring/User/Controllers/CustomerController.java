@@ -20,8 +20,8 @@ public class CustomerController {
     public Vehicle getInfoById(@PathVariable Long id) {
         return customerService.getVehicleInfoByid(id);
     }
-    @PostMapping("/post/purchase")
-    public Purchase createNewPurchase(@RequestBody CustomerPurchaseCreationDTO purchaseCreation){
+    @PostMapping("/post")
+    public @ResponseBody Purchase createNewPurchase(@RequestBody CustomerPurchaseCreationDTO purchaseCreation){
         return customerService.createNewPurchase(purchaseCreation);
     }
 }

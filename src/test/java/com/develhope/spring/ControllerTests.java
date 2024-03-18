@@ -31,10 +31,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -64,9 +65,9 @@ class ControllerTests {
     private Vehicle createAVehicle() {
         Vehicle vehicle = new Vehicle();
         vehicle.setVehiclesType(VehiclesType.SCOOTER);
-        vehicle.setBrand("rfgsrf");
-        vehicle.setModel("fdsgdrfsg");
-        vehicle.setColour("fews");
+        vehicle.setBrand("Audi");
+        vehicle.setModel("A8");
+        vehicle.setColour("Red");
         vehicle.setCubiCapacity(123.0);
         vehicle.setHP(324);
         vehicle.setKW(123.44);
@@ -89,23 +90,23 @@ class ControllerTests {
     private Salesman createASalesman() {
         Salesman salesman = new Salesman();
         salesman.setPhone("12111313");
-        salesman.setAddress("hdadjajdjka");
+        salesman.setAddress("99393");
         salesman.setSalesNumber(1);
-        salesman.setFirstName("djdjal");
-        salesman.setLastName("jhdjald");
+        salesman.setFirstName("Paolo");
+        salesman.setLastName("Bianchi");
         salesman.setEmail(getRandomString());
-        salesman.setPassword("jkdkasjdkal");
+        salesman.setPassword("9181");
         return salesmanRepository.save(salesman);
     }
 
     private Customer createACustomer() {
         Customer customer = new Customer();
-        customer.setFirstName("kadkaskldad");
-        customer.setLastName("jakdasldaslk");
+        customer.setFirstName("Giulio");
+        customer.setLastName("Marciante");
         customer.setEmail(getRandomString());
-        customer.setPassword("adlakdslak");
+        customer.setPassword("129391239");
         customer.setPhone("81839813");
-        customer.setAddress("jadjlkasda");
+        customer.setAddress("0100101");
         customer.setCreditCard("198239129389");
         customer.setTaxId(getRandomString());
         return customerRepository.save(customer);
@@ -152,8 +153,8 @@ class ControllerTests {
         Vehicle vehicle = createAVehicle();
         AdminPurchaseCreationDTO adminPurchase = new AdminPurchaseCreationDTO();
         adminPurchase.setIdVehicle(vehicle.getId());
-        adminPurchase.setSalesman(new Salesman(1L,"euqeuquuqw","fghfgwhjgf",2,null,null));
-        adminPurchase.setCustomer(new Customer(1L,"ufuegfugfe","ksdfksfks","264298","273823394",null,null));
+        adminPurchase.setSalesman(createASalesman());
+        adminPurchase.setCustomer(createACustomer());
         adminPurchase.setVehicleStatus(VehicleStatusEnum.PURCHASED);
 
 
@@ -205,7 +206,7 @@ class ControllerTests {
         Vehicle vehicle = createAVehicle();
         AdminPurchaseCreationDTO adminPurchase = new AdminPurchaseCreationDTO();
         adminPurchase.setIdVehicle(vehicle.getId());
-        adminPurchase.setCustomer(new Customer(1L,"ufuegfugfe","ksdfksfks","264298","273823394",null,null));
+        adminPurchase.setCustomer(createACustomer());
         adminPurchase.setVehicleStatus(VehicleStatusEnum.PURCHASED);
 
 
@@ -260,6 +261,48 @@ class ControllerTests {
                 .content(objectMapper.writeValueAsString(purchase.getOrderStatusEnum())))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(purchase.getOrderStatusEnum().toString()))
+                .andReturn();
+
+        String responseContent = result.getResponse().getContentAsString();
+        System.out.println("Response content: " + responseContent);
+    }
+    @Transactional
+    @Test
+    void checkIfOrderListIsPopulated() throws Exception {
+        Purchase purchase = createAPurchase();
+        Purchase purchase1 = createAPurchase();
+        purchase1.setOrderStatusEnum(OrderStatusEnum.SHIPPED);
+        List<Purchase> purchaseList = new ArrayList<>();
+        purchaseList.add(purchase);
+        purchaseList.add(purchase1);
+        purchaseRepository.saveAll(purchaseList);
+
+        OrderStatusEnum orderStatus = OrderStatusEnum.COMPLETED;
+
+        MvcResult result = mockMvc.perform(get("/salesman/get/orderslist/" + orderStatus)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(purchaseList)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String jsonResponse = result .getResponse().getContentAsString();
+        List<Purchase> responsePurchaseList = objectMapper.readValue(jsonResponse, List.class);
+
+        assertThat(responsePurchaseList).isNotNull();
+        assertThat(responsePurchaseList).isNotEmpty();
+        assertThat(responsePurchaseList.size()).isEqualTo(1);
+    }
+    @Transactional
+    @Test
+    void checkIfOrderStatusIsUpdated() throws Exception{
+        Purchase purchase = createAPurchase();
+        OrderStatusEnum orderStatusUpdated = OrderStatusEnum.FAILED;
+
+        MvcResult result = mockMvc.perform(patch("/salesman/patch/orderstatus/" + purchase.getId() + "?orderStatus=" + orderStatusUpdated)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(purchase.getOrderStatusEnum())))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value(orderStatusUpdated.toString()))
                 .andReturn();
 
         String responseContent = result.getResponse().getContentAsString();

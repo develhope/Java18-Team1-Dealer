@@ -2,13 +2,11 @@ package com.develhope.spring.User.Controllers;
 
 import com.develhope.spring.Purchase.Entities.DTO.CustomerPurchaseCreationDTO;
 import com.develhope.spring.Purchase.Entities.Purchase;
-import com.develhope.spring.User.Entities.Customer;
 import com.develhope.spring.User.Services.CustomerService;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/customer")

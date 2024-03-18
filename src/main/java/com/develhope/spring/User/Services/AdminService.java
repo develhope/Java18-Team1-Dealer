@@ -7,17 +7,10 @@ import com.develhope.spring.User.Repositories.CustomerRepository;
 import com.develhope.spring.User.Repositories.SalesmanRepository;
 import com.develhope.spring.Vehicle.Entities.Enums.*;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
-import com.develhope.spring.Vehicle.Entities.Enums.StatusType;
-import com.develhope.spring.Vehicle.Entities.Vehicle;
-import com.develhope.spring.Vehicle.Entities.Enums.StatusType;
-import com.develhope.spring.Vehicle.Entities.Vehicle;
-import com.develhope.spring.Vehicle.Repositories.VehicleRepository;
 import com.develhope.spring.Vehicle.Repositories.VehicleRepository;
 import com.develhope.spring.Purchase.Entities.Purchase;
-import com.develhope.spring.Purchase.Repositories.PurchaseRepository;
 import com.develhope.spring.Purchase.Repositories.PurchaseRepository;
 import com.develhope.spring.Purchase.Entities.DTO.AdminPurchaseCreationDTO;
-import com.develhope.spring.Purchase.Entities.Purchase;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -248,8 +241,8 @@ public class AdminService {
                     if(purchaseUpdated.getIsPaid() != null){
                         purchase.setIsPaid(purchaseUpdated.getIsPaid());
                     }
-                    if(purchaseUpdated.getOrderStatus() != null){
-                        purchase.setOrderStatus(purchaseUpdated.getOrderStatus());
+                    if(purchaseUpdated.getOrderStatusEnum() != null){
+                        purchase.setOrderStatusEnum(purchaseUpdated.getOrderStatusEnum());
                     }
                     if(purchaseUpdated.getSalesman() != null){
                         purchase.setSalesman(purchaseUpdated.getSalesman());
@@ -294,7 +287,7 @@ public class AdminService {
     }
     public Purchase createNewPurchase(AdminPurchaseCreationDTO dto){
         Vehicle vehicle = vehicleRepository.findById(dto.getIdVehicle()).orElseThrow(() -> new NoSuchElementException("Veicolo con id " + dto.getIdVehicle() + " non trovato"));
-        if(vehicle.getStatusType().equals(StatusType.PURCHASABLE)){
+        if(vehicle.getStatusTypeEnum().equals(StatusTypeEnum.PURCHASABLE)){
             Purchase purchase = new Purchase();
             purchase.setVehicle(vehicle);
             purchase.setSalesman(dto.getSalesman());
@@ -303,7 +296,7 @@ public class AdminService {
             purchase.setIsPaid(false);
             purchase.setVehicleStatusEnum(dto.getVehicleStatus());
 
-            vehicle.setStatusType(StatusType.SOLD);
+            vehicle.setStatusTypeEnum(StatusTypeEnum.SOLD);
             vehicleRepository.save(vehicle);
             return purchaseRepository.save(purchase);
         } else {

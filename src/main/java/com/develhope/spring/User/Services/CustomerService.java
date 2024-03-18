@@ -3,7 +3,7 @@ package com.develhope.spring.User.Services;
 import com.develhope.spring.Purchase.Entities.DTO.CustomerPurchaseCreationDTO;
 import com.develhope.spring.Purchase.Entities.Purchase;
 import com.develhope.spring.Purchase.Repositories.PurchaseRepository;
-import com.develhope.spring.Vehicle.Entities.Enums.StatusType;
+import com.develhope.spring.Vehicle.Entities.Enums.StatusTypeEnum;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
 import com.develhope.spring.Vehicle.Repositories.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class CustomerService {
     }
     public Purchase createNewPurchase(CustomerPurchaseCreationDTO dto){
         Vehicle vehicle = vehicleRepository.findById(dto.getIdVehicle()).orElseThrow(() -> new NoSuchElementException("Veicolo con id " + dto.getIdVehicle() + " non trovato"));
-        if(vehicle.getStatusType().equals(StatusType.PURCHASABLE)){
+        if(vehicle.getStatusTypeEnum().equals(StatusTypeEnum.PURCHASABLE)){
             Purchase purchase = new Purchase();
             purchase.setVehicle(vehicle);
             purchase.setCustomer(dto.getCustomer());
@@ -31,7 +31,7 @@ public class CustomerService {
             purchase.setIsPaid(false);
             purchase.setVehicleStatusEnum(dto.getVehicleStatus());
 
-            vehicle.setStatusType(StatusType.SOLD);
+            vehicle.setStatusTypeEnum(StatusTypeEnum.SOLD);
             vehicleRepository.save(vehicle);
             return purchaseRepository.save(purchase);
         } else {

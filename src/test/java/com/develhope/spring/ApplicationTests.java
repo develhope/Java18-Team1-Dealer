@@ -14,10 +14,10 @@ import com.develhope.spring.User.Repositories.SalesmanRepository;
 import com.develhope.spring.User.Services.AdminService;
 import com.develhope.spring.User.Services.CustomerService;
 import com.develhope.spring.User.Services.SalesmanService;
-import com.develhope.spring.Vehicle.Entities.Enums.EmissionType;
-import com.develhope.spring.Vehicle.Entities.Enums.FuelType;
-import com.develhope.spring.Vehicle.Entities.Enums.StatusType;
-import com.develhope.spring.Vehicle.Entities.Enums.VehiclesType;
+import com.develhope.spring.Vehicle.Entities.Enums.EmissionTypeEnum;
+import com.develhope.spring.Vehicle.Entities.Enums.FuelTypeEnum;
+import com.develhope.spring.Vehicle.Entities.Enums.StatusTypeEnum;
+import com.develhope.spring.Vehicle.Entities.Enums.VehiclesTypeEnum;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
 import com.develhope.spring.Vehicle.Entities.VehicleService;
 import com.develhope.spring.Vehicle.Repositories.VehicleRepository;
@@ -62,7 +62,7 @@ class ApplicationTests {
 
     private Vehicle createAVehicle() {
         Vehicle vehicle = new Vehicle();
-        vehicle.setVehiclesType(VehiclesType.SCOOTER);
+        vehicle.setVehiclesTypeEnum(VehiclesTypeEnum.SCOOTER);
         vehicle.setBrand("rfgsrf");
         vehicle.setModel("fdsgdrfsg");
         vehicle.setColour("fews");
@@ -70,16 +70,16 @@ class ApplicationTests {
         vehicle.setHP(324);
         vehicle.setKW(123.44);
         vehicle.setRegistrationYear(LocalDate.ofEpochDay(2024 / 4 / 4));
-        vehicle.setFuelType(FuelType.GASOLINE);
+        vehicle.setFuelTypeEnum(FuelTypeEnum.GASOLINE);
         vehicle.setPrice(BigDecimal.valueOf(4888));
         vehicle.setTradeDiscount(5.0);
         vehicle.setNewVehicle(false);
         vehicle.setMileage(1000.90);
         vehicle.setAgeLimit(17);
-        vehicle.setStatusType(StatusType.PURCHASABLE);
+        vehicle.setStatusTypeEnum(StatusTypeEnum.PURCHASABLE);
         vehicle.setCurrentLocation("Palermo");
         vehicle.setAvailableRental(true);
-        vehicle.setEmissionType(EmissionType.EURO4);
+        vehicle.setEmissionTypeEnum(EmissionTypeEnum.EURO4);
         vehicle.setPassengerNumber(1);
         vehicle.setWindShield(false);
         vehicle.setTailBag(false);
@@ -136,7 +136,7 @@ class ApplicationTests {
     void createVehicle() throws Exception {
         Vehicle vehicle = new Vehicle();
         vehicle.setId(1L);
-        vehicle.setVehiclesType(VehiclesType.SCOOTER);
+        vehicle.setVehiclesTypeEnum(VehiclesTypeEnum.SCOOTER);
         vehicle.setBrand("rfgsrf");
         vehicle.setModel("fdsgdrfsg");
         vehicle.setColour("fews");
@@ -144,21 +144,21 @@ class ApplicationTests {
         vehicle.setHP(324);
         vehicle.setKW(123.44);
         vehicle.setRegistrationYear(LocalDate.ofEpochDay(2024 / 4 / 4));
-        vehicle.setFuelType(FuelType.GASOLINE);
+        vehicle.setFuelTypeEnum(FuelTypeEnum.GASOLINE);
         vehicle.setPrice(BigDecimal.valueOf(4888));
         vehicle.setTradeDiscount(5.0);
         vehicle.setNewVehicle(false);
         vehicle.setMileage(1000.90);
         vehicle.setAgeLimit(17);
-        vehicle.setStatusType(StatusType.PURCHASABLE);
+        vehicle.setStatusTypeEnum(StatusTypeEnum.PURCHASABLE);
         vehicle.setCurrentLocation("Palermo");
         vehicle.setAvailableRental(true);
-        vehicle.setEmissionType(EmissionType.EURO4);
+        vehicle.setEmissionTypeEnum(EmissionTypeEnum.EURO4);
         vehicle.setPassengerNumber(1);
         vehicle.setWindShield(false);
         vehicle.setTailBag(false);
 
-        Vehicle newVehicle = vehicleService.newVehicle(vehicle);
+        Vehicle newVehicle = adminService.newVehicle(vehicle);
 
         assertThat(newVehicle.getId()).isEqualTo(vehicle.getId());
     }
@@ -171,7 +171,7 @@ class ApplicationTests {
         Vehicle vehicleFromService = salesmanService.getVehicleInfoByid(vehicle.getId());
         assertThat(vehicleFromService).isNotNull();
         assertEquals(vehicleFromService.getId(), vehicle.getId());
-        assertEquals(vehicleFromService.getVehiclesType(), vehicle.getVehiclesType());
+        assertEquals(vehicleFromService.getVehiclesTypeEnum(), vehicle.getVehiclesTypeEnum());
         assertEquals(vehicleFromService.getBrand(), vehicle.getBrand());
         assertEquals(vehicleFromService.getModel(), vehicle.getModel());
         assertEquals(vehicleFromService.getColour(), vehicle.getColour());
@@ -179,16 +179,16 @@ class ApplicationTests {
         assertEquals(vehicleFromService.getHP(), vehicle.getHP());
         assertEquals(vehicleFromService.getKW(), vehicle.getKW());
         assertEquals(vehicleFromService.getRegistrationYear(), vehicle.getRegistrationYear());
-        assertEquals(vehicleFromService.getFuelType(), vehicle.getFuelType());
+        assertEquals(vehicleFromService.getFuelTypeEnum(), vehicle.getFuelTypeEnum());
         assertEquals(0, vehicleFromService.getPrice().compareTo(vehicle.getPrice()));
         assertEquals(vehicleFromService.getTradeDiscount(), vehicle.getTradeDiscount());
         assertEquals(vehicleFromService.getNewVehicle(), vehicle.getNewVehicle());
         assertEquals(vehicleFromService.getMileage(), vehicle.getMileage());
         assertEquals(vehicleFromService.getAgeLimit(), vehicle.getAgeLimit());
-        assertEquals(vehicleFromService.getStatusType(), vehicle.getStatusType());
+        assertEquals(vehicleFromService.getStatusTypeEnum(), vehicle.getStatusTypeEnum());
         assertEquals(vehicleFromService.getCurrentLocation(), vehicle.getCurrentLocation());
         assertEquals(vehicleFromService.getAvailableRental(), vehicle.getAvailableRental());
-        assertEquals(vehicleFromService.getEmissionType(), vehicle.getEmissionType());
+        assertEquals(vehicleFromService.getEmissionTypeEnum(), vehicle.getEmissionTypeEnum());
         assertEquals(vehicleFromService.getPassengerNumber(), vehicle.getPassengerNumber());
         assertEquals(vehicleFromService.getWindShield(), vehicle.getWindShield());
         assertEquals(vehicleFromService.getTailBag(), vehicle.getTailBag());
@@ -342,7 +342,7 @@ class ApplicationTests {
     @Test
     void checkIfPurchaseIsCreatedByAdminForExistingVehicleButNotPurchasable() throws Exception {
         Vehicle vehicle = createAVehicle();
-        vehicle.setStatusType(StatusType.NOTAVAILABLE);
+        vehicle.setStatusTypeEnum(StatusTypeEnum.NOTAVAILABLE);
         vehicleRepository.save(vehicle);
         AdminPurchaseCreationDTO adminPurchase = new AdminPurchaseCreationDTO();
         adminPurchase.setIdVehicle(vehicle.getId());
@@ -361,7 +361,7 @@ class ApplicationTests {
         Vehicle vehicleFromService = customerService.getVehicleInfoByid(vehicle.getId());
         assertThat(vehicleFromService).isNotNull();
         assertEquals(vehicleFromService.getId(), vehicle.getId());
-        assertEquals(vehicleFromService.getVehiclesType(), vehicle.getVehiclesType());
+        assertEquals(vehicleFromService.getVehiclesTypeEnum(), vehicle.getVehiclesTypeEnum());
         assertEquals(vehicleFromService.getBrand(), vehicle.getBrand());
         assertEquals(vehicleFromService.getModel(), vehicle.getModel());
         assertEquals(vehicleFromService.getColour(), vehicle.getColour());
@@ -369,16 +369,16 @@ class ApplicationTests {
         assertEquals(vehicleFromService.getHP(), vehicle.getHP());
         assertEquals(vehicleFromService.getKW(), vehicle.getKW());
         assertEquals(vehicleFromService.getRegistrationYear(), vehicle.getRegistrationYear());
-        assertEquals(vehicleFromService.getFuelType(), vehicle.getFuelType());
+        assertEquals(vehicleFromService.getFuelTypeEnum(), vehicle.getFuelTypeEnum());
         assertEquals(0, vehicleFromService.getPrice().compareTo(vehicle.getPrice()));
         assertEquals(vehicleFromService.getTradeDiscount(), vehicle.getTradeDiscount());
         assertEquals(vehicleFromService.getNewVehicle(), vehicle.getNewVehicle());
         assertEquals(vehicleFromService.getMileage(), vehicle.getMileage());
         assertEquals(vehicleFromService.getAgeLimit(), vehicle.getAgeLimit());
-        assertEquals(vehicleFromService.getStatusType(), vehicle.getStatusType());
+        assertEquals(vehicleFromService.getStatusTypeEnum(), vehicle.getStatusTypeEnum());
         assertEquals(vehicleFromService.getCurrentLocation(), vehicle.getCurrentLocation());
         assertEquals(vehicleFromService.getAvailableRental(), vehicle.getAvailableRental());
-        assertEquals(vehicleFromService.getEmissionType(), vehicle.getEmissionType());
+        assertEquals(vehicleFromService.getEmissionTypeEnum(), vehicle.getEmissionTypeEnum());
         assertEquals(vehicleFromService.getPassengerNumber(), vehicle.getPassengerNumber());
         assertEquals(vehicleFromService.getWindShield(), vehicle.getWindShield());
         assertEquals(vehicleFromService.getTailBag(), vehicle.getTailBag());
@@ -424,7 +424,7 @@ class ApplicationTests {
     @Test
     void checkIfPurchaseIsCreatedByCustomerForExistingVehicleButNotPurchasable() throws Exception {
         Vehicle vehicle = createAVehicle();
-        vehicle.setStatusType(StatusType.NOTAVAILABLE);
+        vehicle.setStatusTypeEnum(StatusTypeEnum.NOTAVAILABLE);
         vehicleRepository.save(vehicle);
         CustomerPurchaseCreationDTO customerPurchase = new CustomerPurchaseCreationDTO();
         customerPurchase.setIdVehicle(vehicle.getId());

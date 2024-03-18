@@ -12,10 +12,10 @@ import com.develhope.spring.User.Entities.Customer;
 import com.develhope.spring.User.Entities.Salesman;
 import com.develhope.spring.User.Repositories.CustomerRepository;
 import com.develhope.spring.User.Repositories.SalesmanRepository;
-import com.develhope.spring.Vehicle.Entities.Enums.EmissionType;
-import com.develhope.spring.Vehicle.Entities.Enums.FuelType;
-import com.develhope.spring.Vehicle.Entities.Enums.StatusType;
-import com.develhope.spring.Vehicle.Entities.Enums.VehiclesType;
+import com.develhope.spring.Vehicle.Entities.Enums.EmissionTypeEnum;
+import com.develhope.spring.Vehicle.Entities.Enums.FuelTypeEnum;
+import com.develhope.spring.Vehicle.Entities.Enums.StatusTypeEnum;
+import com.develhope.spring.Vehicle.Entities.Enums.VehiclesTypeEnum;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
 import com.develhope.spring.Vehicle.Repositories.VehicleRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -64,7 +64,7 @@ class ControllerTests {
 
     private Vehicle createAVehicle() {
         Vehicle vehicle = new Vehicle();
-        vehicle.setVehiclesType(VehiclesType.SCOOTER);
+        vehicle.setVehiclesTypeEnum(VehiclesTypeEnum.SCOOTER);
         vehicle.setBrand("Audi");
         vehicle.setModel("A8");
         vehicle.setColour("Red");
@@ -72,16 +72,16 @@ class ControllerTests {
         vehicle.setHP(324);
         vehicle.setKW(123.44);
         vehicle.setRegistrationYear(LocalDate.ofEpochDay(2024 / 4 / 4));
-        vehicle.setFuelType(FuelType.GASOLINE);
+        vehicle.setFuelTypeEnum(FuelTypeEnum.GASOLINE);
         vehicle.setPrice(BigDecimal.valueOf(4888));
         vehicle.setTradeDiscount(5.0);
         vehicle.setNewVehicle(false);
         vehicle.setMileage(1000.90);
         vehicle.setAgeLimit(17);
-        vehicle.setStatusType(StatusType.PURCHASABLE);
+        vehicle.setStatusTypeEnum(StatusTypeEnum.PURCHASABLE);
         vehicle.setCurrentLocation("Palermo");
         vehicle.setAvailableRental(true);
-        vehicle.setEmissionType(EmissionType.EURO4);
+        vehicle.setEmissionTypeEnum(EmissionTypeEnum.EURO4);
         vehicle.setPassengerNumber(1);
         vehicle.setWindShield(false);
         vehicle.setTailBag(false);
@@ -158,7 +158,7 @@ class ControllerTests {
         adminPurchase.setVehicleStatus(VehicleStatusEnum.PURCHASED);
 
 
-        mockMvc.perform(post("/admin/post")
+        mockMvc.perform(post("/motorworld/admin/post")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(adminPurchase)))
                 .andExpect(status().isOk())
@@ -177,7 +177,7 @@ class ControllerTests {
                 .content(objectMapper.writeValueAsString(vehicle)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").exists())
-                .andExpect(jsonPath("$.vehiclesType").value(vehicle.getVehiclesType().toString()))
+                .andExpect(jsonPath("$.vehiclesTypeEnum").value(vehicle.getVehiclesTypeEnum().toString()))
                 .andExpect(jsonPath("$.brand").value(vehicle.getBrand()))
                 .andExpect(jsonPath("$.model").value(vehicle.getModel()))
                 .andExpect(jsonPath("$.colour").value(vehicle.getColour()))
@@ -185,16 +185,16 @@ class ControllerTests {
                 .andExpect(jsonPath("$.hp").value(vehicle.getHP()))
                 .andExpect(jsonPath("$.kw").value(vehicle.getKW()))
                 .andExpect(jsonPath("$.registrationYear").value(vehicle.getRegistrationYear().toString()))
-                .andExpect(jsonPath("$.fuelType").value(vehicle.getFuelType().toString()))
+                .andExpect(jsonPath("$.fuelTypeEnum").value(vehicle.getFuelTypeEnum().toString()))
                 .andExpect(jsonPath("$.price").value(vehicle.getPrice()))
                 .andExpect(jsonPath("$.tradeDiscount").value(vehicle.getTradeDiscount()))
                 .andExpect(jsonPath("$.newVehicle").value(vehicle.getNewVehicle()))
                 .andExpect(jsonPath("$.mileage").value(vehicle.getMileage()))
                 .andExpect(jsonPath("$.ageLimit").value(vehicle.getAgeLimit()))
-                .andExpect(jsonPath("$.statusType").value(vehicle.getStatusType().toString()))
+                .andExpect(jsonPath("$.statusTypeEnum").value(vehicle.getStatusTypeEnum().toString()))
                 .andExpect(jsonPath("$.currentLocation").value(vehicle.getCurrentLocation()))
                 .andExpect(jsonPath("$.availableRental").value(vehicle.getAvailableRental()))
-                .andExpect(jsonPath("$.emissionType").value(vehicle.getEmissionType().toString()))
+                .andExpect(jsonPath("$.emissionTypeEnum").value(vehicle.getEmissionTypeEnum().toString()))
                 .andExpect(jsonPath("$.passengerNumber").value(vehicle.getPassengerNumber()))
                 .andExpect(jsonPath("$.windShield").value(vehicle.getWindShield()))
                 .andExpect(jsonPath("$.tailBag").value(vehicle.getTailBag()));
@@ -228,7 +228,7 @@ class ControllerTests {
                         .content(objectMapper.writeValueAsString(vehicle)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").exists())
-                .andExpect(jsonPath("$.vehiclesType").value(vehicle.getVehiclesType().toString()))
+                .andExpect(jsonPath("$.vehiclesTypeEnum").value(vehicle.getVehiclesTypeEnum().toString()))
                 .andExpect(jsonPath("$.brand").value(vehicle.getBrand()))
                 .andExpect(jsonPath("$.model").value(vehicle.getModel()))
                 .andExpect(jsonPath("$.colour").value(vehicle.getColour()))
@@ -236,16 +236,16 @@ class ControllerTests {
                 .andExpect(jsonPath("$.hp").value(vehicle.getHP()))
                 .andExpect(jsonPath("$.kw").value(vehicle.getKW()))
                 .andExpect(jsonPath("$.registrationYear").value(vehicle.getRegistrationYear().toString()))
-                .andExpect(jsonPath("$.fuelType").value(vehicle.getFuelType().toString()))
+                .andExpect(jsonPath("$.fuelTypeEnum").value(vehicle.getFuelTypeEnum().toString()))
                 .andExpect(jsonPath("$.price").value(vehicle.getPrice()))
                 .andExpect(jsonPath("$.tradeDiscount").value(vehicle.getTradeDiscount()))
                 .andExpect(jsonPath("$.newVehicle").value(vehicle.getNewVehicle()))
                 .andExpect(jsonPath("$.mileage").value(vehicle.getMileage()))
                 .andExpect(jsonPath("$.ageLimit").value(vehicle.getAgeLimit()))
-                .andExpect(jsonPath("$.statusType").value(vehicle.getStatusType().toString()))
+                .andExpect(jsonPath("$.statusTypeEnum").value(vehicle.getStatusTypeEnum().toString()))
                 .andExpect(jsonPath("$.currentLocation").value(vehicle.getCurrentLocation()))
                 .andExpect(jsonPath("$.availableRental").value(vehicle.getAvailableRental()))
-                .andExpect(jsonPath("$.emissionType").value(vehicle.getEmissionType().toString()))
+                .andExpect(jsonPath("$.emissionTypeEnum").value(vehicle.getEmissionTypeEnum().toString()))
                 .andExpect(jsonPath("$.passengerNumber").value(vehicle.getPassengerNumber()))
                 .andExpect(jsonPath("$.windShield").value(vehicle.getWindShield()))
                 .andExpect(jsonPath("$.tailBag").value(vehicle.getTailBag()));

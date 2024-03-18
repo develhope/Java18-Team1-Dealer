@@ -1,6 +1,12 @@
 package com.develhope.spring.User.Controllers;
 
 import com.develhope.spring.Purchase.Entities.Purchase;
+import com.develhope.spring.User.DTO.AdminDTO;
+import com.develhope.spring.User.DTO.CustomerDTO;
+import com.develhope.spring.User.DTO.SalesmanDTO;
+import com.develhope.spring.User.Entities.Admin;
+import com.develhope.spring.User.Entities.Customer;
+import com.develhope.spring.User.Entities.Salesman;
 import com.develhope.spring.User.Services.AdminService;
 import com.develhope.spring.Vehicle.Entities.Enums.StatusTypeEnum;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
@@ -71,7 +77,58 @@ public class AdminController {
     }
 
     @PostMapping("/post")
-    public @ResponseBody Purchase createNewPurchase(@RequestBody AdminPurchaseCreationDTO purchaseCreation){
+    public @ResponseBody Purchase createNewPurchase(@RequestBody AdminPurchaseCreationDTO purchaseCreation) {
         return adminService.createNewPurchase(purchaseCreation);
     }
+
+    @GetMapping("/getAll/salesmen")
+    public List<SalesmanDTO> getAllSalesmen(){return adminService.getSalesmenList();}
+
+    @DeleteMapping("/delete-salesman/{id}")
+    public @ResponseStatus HttpEntity<String> deleteSalesman(@PathVariable Long id)
+    {
+
+        Boolean response = adminService.deleteASalesman(id);
+        if (response = true){
+
+            return ResponseEntity.ok().body("Salesman deleted");
+
+        }else{
+
+            return ResponseEntity.badRequest().body("Salesman not deleted");
+        }
+    }
+
+    @PutMapping("/update-salesman/{id}")
+    public @ResponseBody Salesman updateSalesman(@PathVariable Long id,
+                                                 @RequestBody Salesman salesman)
+    {
+        return adminService.modifySalesman(id, salesman);
+    }
+
+    @GetMapping("/getAll/customers")
+    public List<CustomerDTO> getAllCustomers(){return adminService.getCustomersList();}
+
+    @DeleteMapping("/delete-customer/{id}")
+    public @ResponseStatus HttpEntity<String> deleteCustomer(@PathVariable Long id)
+    {
+
+        Boolean response = adminService.deleteACustomer(id);
+        if (response = true){
+
+            return ResponseEntity.ok().body("Customer deleted");
+
+        }else{
+
+            return ResponseEntity.badRequest().body("Salesman not deleted");
+        }
+    }
+
+    @PutMapping("/update-customer/{id}")
+    public @ResponseBody Customer updateCustomer(@PathVariable Long id,
+                                                 @RequestBody Customer customer)
+    {
+        return adminService.modifyCustomer(id, customer);
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.develhope.spring.User.Services;
 
+import com.develhope.spring.User.DTO.CustomerDTO;
+import com.develhope.spring.User.DTO.SalesmanDTO;
 import com.develhope.spring.User.Entities.Customer;
 import com.develhope.spring.User.Entities.Salesman;
 import com.develhope.spring.User.Repositories.AdminRepository;
@@ -15,11 +17,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 
 @Service
@@ -36,60 +34,167 @@ public class AdminService {
     @Autowired
     private PurchaseRepository purchaseRepository;
 
+    private SalesmanDTO getSalesmanDTO(Salesman salesman){
+
+        SalesmanDTO salesmanDTO = new SalesmanDTO();
+
+        salesmanDTO.setId(salesman.getId());
+        salesmanDTO.setFirstName(salesman.getFirstName());
+        salesmanDTO.setLastName(salesman.getLastName());
+        salesmanDTO.setPhone(salesman.getPhone());
+        salesmanDTO.setAddress(salesman.getAddress());
+        salesmanDTO.setEmail(salesman.getEmail());
+        salesmanDTO.setSalesNumber(salesman.getSalesNumber());
+
+        return salesmanDTO;
+    }
+
+    private CustomerDTO getCustomerDTO(Customer customer){
+
+        CustomerDTO customerDTO = new CustomerDTO();
+
+        customerDTO.setId(customer.getId());
+        customerDTO.setFirstName(customer.getFirstName());
+        customerDTO.setLastName(customer.getLastName());
+        customerDTO.setEmail(customer.getEmail());
+        customerDTO.setPhone(customer.getPhone());
+        customerDTO.setAddress(customer.getAddress());
+        customerDTO.setCreditCard(customer.getCreditCard());
+        customerDTO.setTaxId(customer.getTaxId());
+
+        return customerDTO;
+    }
+
     //get lista salesman
-    public List<Salesman> getSalesmenList(){return salesmanRepository.findAll();}
+    public List<SalesmanDTO> getSalesmenList(){
+
+        List<Salesman> salesmen = salesmanRepository.findAll();
+        List<SalesmanDTO> salesmanDTOS = new ArrayList<>();
+
+        for (Salesman salesman : salesmen){
+
+            SalesmanDTO salesmanDTO = getSalesmanDTO(salesman);
+
+            salesmanDTOS.add(salesmanDTO);
+        }
+
+        return salesmanDTOS;
+    }
 
     //cancella account salesman
-    public Salesman deleteASalesman(Long id){
-        return salesmanRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Salesman not found by id " + id)
-                );
+    public Boolean deleteASalesman(Long id){
+        Salesman deletedSalesman = salesmanRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Salesman not found by id " + id));
+
+        salesmanRepository.deleteById(id);
+
+        if (salesmanRepository.findById(id).equals(null)){
+
+            return true;
+        } else {
+
+            return false;
+        }
+
     }
 
     //modifica account salesman
-    public Salesman modifySalesman(Long id,
-                                   String newName,
-                                   String newSurname,
-                                   String newAddress,
-                                   String newPhoneNumber){
+    public Salesman modifySalesman(Long id, Salesman salesman)
+    {
 
-        Salesman salesman = salesmanRepository.findById(id)
+        Salesman salesmanUpdated = salesmanRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Salesman not found by id " + id));
 
-        salesman.setFirstName(newName);
-        salesman.setLastName(newSurname);
-        salesman.setAddress(newAddress);
-        salesman.setPhone(newPhoneNumber);
+        if (salesman.getFirstName() != null && !salesman.getFirstName().isEmpty()){
 
-        return salesman;
+            salesmanUpdated.setFirstName(salesman.getFirstName());
+        }
+        if (salesman.getLastName() != null && !salesman.getLastName().isEmpty()){
+
+            salesmanUpdated.setLastName(salesman.getLastName());
+        }
+        if (salesman.getAddress() != null && !salesman.getAddress().isEmpty()){
+
+            salesmanUpdated.setAddress(salesman.getAddress());
+        }
+        if (salesman.getPhone() != null && !salesman.getPhone().isEmpty()){
+
+            salesmanUpdated.setPhone(salesman.getPhone());
+        }
+
+        salesmanUpdated.setFirstName(salesman.getFirstName());
+        salesmanUpdated.setLastName(salesman.getLastName());
+        salesmanUpdated.setAddress(salesman.getAddress());
+        salesmanUpdated.setPhone(salesman.getPhone());
+
+        return salesmanRepository.save(salesmanUpdated);
     }
 
     //get lista customer
-    public List<Customer> getCustomersList(){return customerRepository.findAll();}
+    public List<CustomerDTO> getCustomersList(){
+
+        List<Customer> customers = customerRepository.findAll();
+        List<CustomerDTO> customerDTOs = new ArrayList<>();
+
+        for (Customer customer : customers){
+
+            CustomerDTO customerDTO = getCustomerDTO(customer);
+
+            customerDTOs.add(customerDTO);
+        }
+
+        return customerDTOs;
+    }
 
     //cancella account customer
-    public Customer deleteACustomer(Long id){
+    public Boolean deleteACustomer(Long id){
 
-        return customerRepository.findById(id)
+        Customer deletedCustomer = customerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Customer not found by id " + id));
+
+        customerRepository.deleteById(id);
+
+        if (customerRepository.findById(id).equals(null)){
+
+            return true;
+
+        }else {
+
+            return false;
+        }
+
     }
 
     //modifica account customer
-    public Customer modifyCustomer(Long id,
-                                   String newName,
-                                   String newSurname,
-                                   String newAddress,
-                                   String newPhoneNumber){
+    public Customer modifyCustomer(Long id, Customer customer)
+    {
 
-        Customer customer = customerRepository.findById(id)
+        Customer customerUpdated = customerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Salesman not found by id " + id));
 
-        customer.setFirstName(newName);
-        customer.setLastName(newSurname);
-        customer.setAddress(newAddress);
-        customer.setPhone(newPhoneNumber);
+        if (customer.getFirstName() != null && !customer.getFirstName().isEmpty()){
 
-        return customer;
+            customerUpdated.setFirstName(customer.getFirstName());
+        }
+        if (customer.getLastName() != null && !customer.getLastName().isEmpty()){
+
+            customerUpdated.setLastName(customer.getLastName());
+        }
+        if (customer.getAddress() != null && !customer.getAddress().isEmpty()){
+
+            customerUpdated.setAddress(customer.getAddress());
+        }
+        if (customer.getPhone() != null && !customer.getPhone().isEmpty()){
+
+            customerUpdated.setPhone(customer.getPhone());
+        }
+
+        customerUpdated.setFirstName(customer.getFirstName());
+        customerUpdated.setLastName(customer.getLastName());
+        customerUpdated.setAddress(customer.getAddress());
+        customerUpdated.setPhone(customer.getPhone());
+
+        return customerRepository.save(customerUpdated);
     }
 
     //aggiungi veicolo

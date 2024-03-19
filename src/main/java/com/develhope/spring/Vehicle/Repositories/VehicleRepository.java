@@ -11,6 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
-    @Query(value = "SELECT * FROM VEHICLE WHERE status_type_enum = ?1", nativeQuery = true)
-    Optional<List<Vehicle>> vehiclesByStatusType(StatusTypeEnum status);
+    @Query(value = "SELECT * FROM VEHICLE WHERE status_type_enum LIKE :status", nativeQuery = true)
+    List<Vehicle> vehiclesByStatusType(String status);
 }

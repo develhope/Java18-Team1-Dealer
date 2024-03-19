@@ -387,7 +387,7 @@ public class AdminService {
     //ottieni VEICOLI filtrandoli per STATUSTYPE
     public List<Vehicle> vehiclesByStatusType(String statusType){
 
-        if(statusType != null && Arrays.asList(StatusTypeEnum.values()).toString().contains(statusType)) {
+        if(statusType != null && !statusType.isEmpty() && Arrays.asList(StatusTypeEnum.values()).toString().contains(statusType)) {
 
             return vehicleRepository.vehiclesByStatusType(statusType);
         }else {

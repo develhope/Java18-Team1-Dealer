@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/motorworld/admin")
+@RequestMapping("/motorworld/{idUser}")
 public class AdminController {
 
     @Autowired

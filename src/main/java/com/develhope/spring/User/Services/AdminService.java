@@ -385,11 +385,16 @@ public class AdminService {
 
 
     //ottieni VEICOLI filtrandoli per STATUSTYPE
-    public List<Vehicle> vehiclesByStatusType(String statusType){
+    public List<Vehicle> vehiclesByStatusType(StatusTypeEnum statusType){
 
-        if(statusType != null && !statusType.isEmpty() && Arrays.asList(StatusTypeEnum.values()).toString().contains(statusType)) {
-
-            return vehicleRepository.vehiclesByStatusType(statusType);
+        if(statusType != null && Arrays.asList(StatusTypeEnum.values()).contains(statusType)) {
+            List<Vehicle> vehiclesByStatusTypeEnum = new ArrayList<>();
+            for(Vehicle vehicle : vehicleRepository.findAll()){
+                if(vehicle.getStatusTypeEnum() == statusType){
+                    vehiclesByStatusTypeEnum.add(vehicle);
+                }
+            }
+            return vehiclesByStatusTypeEnum;
         }else {
             throw new RuntimeException("Vehicle status " + statusType + " not found");
         }

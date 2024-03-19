@@ -142,7 +142,7 @@ class ServiceLisaTest {
 		adminService.newVehicle(vehicle1);
 		adminService.newVehicle(vehicle2);
 
-		List<Vehicle> vehiclesByStatusTypeEnum = adminService.vehiclesByStatusType(StatusTypeEnum.PURCHASABLE.toString());
+		List<Vehicle> vehiclesByStatusTypeEnum = adminService.vehiclesByStatus(StatusTypeEnum.PURCHASABLE);
 		assertThat(vehiclesByStatusTypeEnum).contains(vehicle1,vehicle2);
 	}
 	@Transactional

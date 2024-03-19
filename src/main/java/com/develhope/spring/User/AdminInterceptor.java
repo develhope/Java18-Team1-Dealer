@@ -15,7 +15,7 @@ public class AdminInterceptor implements HandlerInterceptor {
     private AdminRepository adminRepository;
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         for(Admin admin : adminRepository.findAll()){
-            if(request.getRequestURL().toString().contains("/motorworld/"+admin.getId())){
+            if(request.getRequestURL().toString().contains("/motorworld"+admin.getId()+"/admin")){
             return true;
             }
         }

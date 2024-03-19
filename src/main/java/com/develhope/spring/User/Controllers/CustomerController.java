@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/motorworld/{idUser}")
+@RequestMapping("/motorworld/customer")
 public class CustomerController {
     @Autowired
     private CustomerService customerService;

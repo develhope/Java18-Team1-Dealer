@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/motorworld/{idUser}")
+@RequestMapping("/motorworld/admin")
 public class AdminController {
 
     @Autowired
@@ -89,7 +89,7 @@ public class AdminController {
             @ApiResponse(responseCode = "400", description = "Bad Request"),
             @ApiResponse(responseCode = "500", description = "Server Error")
     })
-    public ResponseEntity<List<Vehicle>> vehicleByStatusType(@RequestParam String statusType){
+    public ResponseEntity<List<Vehicle>> vehicleByStatusType(@PathVariable StatusTypeEnum statusType){
         List<Vehicle> vehiclesByStatusType = adminService.vehiclesByStatusType(statusType);
         if(vehiclesByStatusType != null) {
             return ResponseEntity.ok().body(vehiclesByStatusType);
@@ -107,9 +107,9 @@ public class AdminController {
     })
     public ResponseEntity<List<Purchase>> updatePurchase(
             @PathVariable Long idCustomer, @PathVariable Long idPurchase, @RequestBody Purchase purchase){
-        List<Purchase> customerPurcases = adminService.updatePurchaseById(idCustomer, idPurchase, purchase);
-        if(customerPurcases != null) {
-            return ResponseEntity.ok().body(customerPurcases);
+        List<Purchase> customerPurchases = adminService.updatePurchaseById(idCustomer, idPurchase, purchase);
+        if(customerPurchases != null) {
+            return ResponseEntity.ok().body(customerPurchases);
         }else{
             return ResponseEntity.notFound().build();
         }
@@ -125,9 +125,9 @@ public class AdminController {
     public @ResponseStatus HttpEntity<String> deletePurchase(@PathVariable Long idCustomer, @PathVariable Long idPurchase){
         Boolean response = adminService.deletePurchaseById(idCustomer, idPurchase);
         if(response = true){
-            return ResponseEntity.ok().body("Vehicle deleted");
+            return ResponseEntity.ok().body("Purchase deleted");
         }else{
-            return ResponseEntity.badRequest().body("Vehicle not deleted");
+            return ResponseEntity.badRequest().body("Purchase not deleted");
         }
     }
 

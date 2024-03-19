@@ -1,6 +1,7 @@
 package com.develhope.spring.User.Services;
 
 import com.develhope.spring.Purchase.Entities.DTO.CustomerPurchaseCreationDTO;
+import com.develhope.spring.Purchase.Entities.Enums.OrderStatusEnum;
 import com.develhope.spring.Purchase.Entities.Purchase;
 import com.develhope.spring.Purchase.Repositories.PurchaseRepository;
 import com.develhope.spring.Vehicle.Entities.Enums.StatusTypeEnum;
@@ -30,6 +31,7 @@ public class CustomerService {
             purchase.setAdvancePayment(vehicle.getPrice());
             purchase.setIsPaid(false);
             purchase.setVehicleStatusEnum(dto.getVehicleStatus());
+            purchase.setOrderStatusEnum(OrderStatusEnum.COMPLETED);
 
             vehicle.setStatusTypeEnum(StatusTypeEnum.SOLD);
             vehicleRepository.save(vehicle);

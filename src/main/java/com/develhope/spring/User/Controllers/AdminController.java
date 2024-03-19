@@ -52,22 +52,17 @@ public class AdminController {
     @PutMapping("/update-purchase/{idCustomer}/{idPurchase}")
     public ResponseEntity<List<Purchase>> updatePurchase(
             @PathVariable Long idCustomer, @PathVariable Long idPurchase, @RequestBody Purchase purchase){
-        List<Purchase> customerPurcases = adminService.updatePurchaseById(idCustomer, idPurchase, purchase);
-        if(customerPurcases != null) {
-            return ResponseEntity.ok().body(customerPurcases);
+        List<Purchase> customerPurchases = adminService.updatePurchaseById(idCustomer, idPurchase, purchase);
+        if(customerPurchases != null) {
+            return ResponseEntity.ok().body(customerPurchases);
         }else{
             return ResponseEntity.notFound().build();
         }
     }
 
     @GetMapping("/status-type/{statusType}")
-    public ResponseEntity<List<Vehicle>> vehicleByStatusType(@RequestParam StatusTypeEnum statusType){
-        List<Vehicle> vehiclesByStatusType = adminService.vehiclesByStatusType(statusType);
-        if(vehiclesByStatusType != null) {
-            return ResponseEntity.ok().body(vehiclesByStatusType);
-        }else{
-            return ResponseEntity.notFound().build();
-        }
+    public List<Vehicle> vehicleByStatusType(@PathVariable StatusTypeEnum statusType){
+        return adminService.vehiclesByStatusType(statusType);
     }
 
     @PostMapping("/post")

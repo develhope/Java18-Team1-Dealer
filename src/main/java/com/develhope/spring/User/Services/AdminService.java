@@ -1,5 +1,6 @@
 package com.develhope.spring.User.Services;
 
+import com.develhope.spring.Purchase.Entities.Enums.OrderStatusEnum;
 import com.develhope.spring.User.Entities.Customer;
 import com.develhope.spring.User.Entities.Salesman;
 import com.develhope.spring.User.Repositories.AdminRepository;
@@ -15,11 +16,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 
 @Service
@@ -102,7 +99,7 @@ public class AdminService {
     public Boolean deleteVehicle(Long id){
         Vehicle vehicleDeleted = vehicleRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Vehicle id " + id + " to delete not found"));
-
+        purchaseRepository.deleteById(id);
         vehicleRepository.deleteById(id);
         return true;
     }
@@ -244,9 +241,6 @@ public class AdminService {
                     if(purchaseUpdated.getOrderStatusEnum() != null){
                         purchase.setOrderStatusEnum(purchaseUpdated.getOrderStatusEnum());
                     }
-                    if(purchaseUpdated.getSalesman() != null){
-                        purchase.setSalesman(purchaseUpdated.getSalesman());
-                    }
                 }
                 purchaseRepository.save(purchase);
             }
@@ -277,24 +271,26 @@ public class AdminService {
 
     //ottieni VEICOLI filtrandoli per STATUSTYPE
     public List<Vehicle> vehiclesByStatusType(StatusTypeEnum statusType){
-
-        if(statusType != null && Arrays.asList(StatusTypeEnum.values()).contains(statusType)) {
-
-            return vehicleRepository.vehiclesByStatusType(statusType);
-        }else {
+        Optional<List<Vehicle>> optionalVehicles = vehicleRepository.vehiclesByStatusType(statusType);
+        if(optionalVehicles.isPresent()) {
+            return optionalVehicles.get();
+        } else {
             throw new RuntimeException("Vehicle status " + statusType + " not found");
         }
     }
     public Purchase createNewPurchase(AdminPurchaseCreationDTO dto){
         Vehicle vehicle = vehicleRepository.findById(dto.getIdVehicle()).orElseThrow(() -> new NoSuchElementException("Veicolo con id " + dto.getIdVehicle() + " non trovato"));
+        Salesman salesman = salesmanRepository.findById(dto.getSalesman().getId()).orElseThrow(() -> new NoSuchElementException("Venditore con id " + dto.getSalesman().getId() + " non trovato"));
+        Customer customer = customerRepository.findById(dto.getCustomer().getId()).orElseThrow(() -> new NoSuchElementException("Venditore con id " + dto.getCustomer().getId() + " non trovato"));
         if(vehicle.getStatusTypeEnum().equals(StatusTypeEnum.PURCHASABLE)){
             Purchase purchase = new Purchase();
             purchase.setVehicle(vehicle);
-            purchase.setSalesman(dto.getSalesman());
-            purchase.setCustomer(dto.getCustomer());
+            purchase.setSalesman(salesman);
+            purchase.setCustomer(customer);
             purchase.setAdvancePayment(vehicle.getPrice());
             purchase.setIsPaid(false);
             purchase.setVehicleStatusEnum(dto.getVehicleStatus());
+            purchase.setOrderStatusEnum(OrderStatusEnum.COMPLETED);
 
             vehicle.setStatusTypeEnum(StatusTypeEnum.SOLD);
             vehicleRepository.save(vehicle);

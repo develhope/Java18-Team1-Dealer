@@ -4,9 +4,14 @@ import com.develhope.spring.Purchase.Entities.Purchase;
 import com.develhope.spring.Rent.Entities.Rent;
 import com.develhope.spring.User.Entities.Customer;
 import com.develhope.spring.User.Repositories.CustomerRepository;
+import com.develhope.spring.Vehicle.Entities.Enums.*;
+import com.develhope.spring.Vehicle.Entities.Vehicle;
+import com.develhope.spring.Vehicle.Repositories.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -14,19 +19,22 @@ import java.util.NoSuchElementException;
 public class CustomerService {
     @Autowired
     CustomerRepository customerRepository;
-    public List<Purchase> myPurchase(Long id){
+    @Autowired
+    VehicleRepository vehicleRepository;
+
+    public List<Purchase> myPurchase(Long id) {
         return customerRepository.purchaseList(id);
     }
 
-    public List<Purchase> myOrder(Long id){
+    public List<Purchase> myOrder(Long id) {
         return customerRepository.orderList(id);
     }
 
-    public List<Rent> myRent(Long id){
+    public List<Rent> myRent(Long id) {
         return customerRepository.rentList(id);
     }
 
-    public void deleteAccount(Long id){ //id di accesso del cliente
+    public void deleteAccount(Long id) { //id di accesso del cliente
         customerRepository.deleteById(id);
     }
 
@@ -64,5 +72,48 @@ public class CustomerService {
 
         return customer;
 
+    }
+
+    public List<Vehicle> searchVehicleByAllCriteria(BigDecimal minPrice,
+                                                    BigDecimal maxPrice,
+                                                    String brand,
+                                                    String model,
+                                                    String colour,
+                                                    Double cubiCapacity,
+                                                    Integer hP,
+                                                    Double kW,
+                                                    LocalDate registrationYear,
+                                                    FuelType fuelType,
+                                                    BigDecimal price,
+                                                    Double tradeDiscount,
+                                                    Boolean newVehicle,
+                                                    Double mileage,
+                                                    Integer ageLimit,
+                                                    StatusType statusType,
+                                                    String currentLocation,
+                                                    Boolean availableRental,
+                                                    EmissionType emissionType,
+                                                    Integer passengerNumber,
+                                                    Boolean windShield,
+                                                    Boolean tailBag,
+                                                    Boolean passengerBackrest,
+                                                    TransmissionType transmissionType,
+                                                    CarType carType,
+                                                    TractionType tractionType,
+                                                    Boolean optionFullTraction,
+                                                    Integer doors,
+                                                    Boolean centralizedClosing,
+                                                    Boolean airConditioning,
+                                                    Boolean bluetooth,
+                                                    Boolean satNav,
+                                                    Boolean electricRoof,
+                                                    Boolean parkAssist,
+                                                    Boolean spareTire,
+                                                    Boolean antiTheft,
+                                                    Boolean passengerTransport,
+                                                    Boolean windowedBackDoor,
+                                                    Boolean slideSideDoor,
+                                                    Boolean antiCollisionSystem) {
+        return vehicleRepository.findByAllCriteria(minPrice, maxPrice, brand, model, colour, cubiCapacity, hP, kW, registrationYear, fuelType, price, tradeDiscount, newVehicle, mileage, ageLimit, statusType, currentLocation, availableRental, emissionType, passengerNumber, windShield, tailBag, passengerBackrest, transmissionType, carType, tractionType, optionFullTraction, doors, centralizedClosing, airConditioning, bluetooth, satNav, electricRoof, parkAssist, spareTire, antiTheft, passengerTransport, windowedBackDoor, slideSideDoor, antiCollisionSystem);
     }
 }

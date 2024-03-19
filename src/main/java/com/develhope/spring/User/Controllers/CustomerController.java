@@ -4,39 +4,97 @@ import com.develhope.spring.Purchase.Entities.Purchase;
 import com.develhope.spring.Rent.Entities.Rent;
 import com.develhope.spring.User.Entities.Customer;
 import com.develhope.spring.User.Services.CustomerService;
+import com.develhope.spring.Vehicle.Entities.Enums.*;
+import com.develhope.spring.Vehicle.Entities.Vehicle;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 @RequestMapping("/v1")
 public class CustomerController {
     @Autowired
-     CustomerService customerService;
+    CustomerService customerService;
 
     @GetMapping("/purchaseCList")
-    public List<Purchase> purchaseList (@PathVariable Long id){
+    public List<Purchase> purchaseList(@PathVariable Long id) {
         return customerService.myPurchase(id);
     }
 
     @GetMapping("/orderCList")
-    public List<Purchase> orderList (@PathVariable Long id){
+    public List<Purchase> orderList(@PathVariable Long id) {
         return customerService.myOrder(id);
     }
 
     @GetMapping("/rentCList")
-    public List<Rent> rentList (@PathVariable Long id){
+    public List<Rent> rentList(@PathVariable Long id) {
         return customerService.myRent(id);
     }
 
     @PutMapping("/updateC")
-    public Customer updateC(@PathVariable Long id, @RequestBody Customer customer){
+    public Customer updateC(@PathVariable Long id, @RequestBody Customer customer) {
         return customerService.updateCustomer(id, customer);
     }
 
     @DeleteMapping("/deleteCAccount/{id}")
-    public void deleteCAccount(@PathVariable Long id){
+    public void deleteCAccount(@PathVariable Long id) {
         customerService.deleteAccount(id);
+    }
+
+    @GetMapping("/search")
+    public List<Vehicle> searchVehicles(
+            @RequestParam(required = false) BigDecimal minPrice,
+            @RequestParam(required = false) BigDecimal maxPrice,
+            @RequestParam(required = false) String brand,
+            @RequestParam(required = false) String model,
+            @RequestParam(required = false) String colour,
+            @RequestParam(required = false) Double cubiCapacity,
+            @RequestParam(required = false) Integer hP,
+            @RequestParam(required = false) Double kW,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate registrationYear,
+            @RequestParam(required = false) FuelType fuelType,
+            @RequestParam(required = false) BigDecimal price,
+            @RequestParam(required = false) Double tradeDiscount,
+            @RequestParam(required = false) Boolean newVehicle,
+            @RequestParam(required = false) Double mileage,
+            @RequestParam(required = false) Integer ageLimit,
+            @RequestParam(required = false) StatusType statusType,
+            @RequestParam(required = false) String currentLocation,
+            @RequestParam(required = false) Boolean availableRental,
+            @RequestParam(required = false) EmissionType emissionType,
+            @RequestParam(required = false) Integer passengerNumber,
+            @RequestParam(required = false) Boolean windShield,
+            @RequestParam(required = false) Boolean tailBag,
+            @RequestParam(required = false) Boolean passengerBackrest,
+            @RequestParam(required = false) TransmissionType transmissionType,
+            @RequestParam(required = false) CarType carType,
+            @RequestParam(required = false) TractionType tractionType,
+            @RequestParam(required = false) Boolean optionFullTraction,
+            @RequestParam(required = false) Integer doors,
+            @RequestParam(required = false) Boolean centralizedClosing,
+            @RequestParam(required = false) Boolean airConditioning,
+            @RequestParam(required = false) Boolean bluetooth,
+            @RequestParam(required = false) Boolean satNav,
+            @RequestParam(required = false) Boolean electricRoof,
+            @RequestParam(required = false) Boolean parkAssist,
+            @RequestParam(required = false) Boolean spareTire,
+            @RequestParam(required = false) Boolean antiTheft,
+            @RequestParam(required = false) Boolean passengerTransport,
+            @RequestParam(required = false) Boolean windowedBackDoor,
+            @RequestParam(required = false) Boolean slideSideDoor,
+            @RequestParam(required = false) Boolean antiCollisionSystem
+    ) {
+        return customerService.searchVehicleByAllCriteria(
+                minPrice, maxPrice, brand, model, colour, cubiCapacity, hP, kW, registrationYear,
+                fuelType,price, tradeDiscount, newVehicle, mileage, ageLimit, statusType, currentLocation,
+                availableRental, emissionType, passengerNumber, windShield, tailBag, passengerBackrest,
+                transmissionType, carType, tractionType,optionFullTraction, doors, centralizedClosing, airConditioning, bluetooth,
+                satNav, electricRoof, parkAssist, spareTire, antiTheft, passengerTransport, windowedBackDoor,
+                slideSideDoor, antiCollisionSystem
+        );
     }
 }

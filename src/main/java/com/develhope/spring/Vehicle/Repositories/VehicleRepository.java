@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
     @Query(value = "SELECT * FROM VEHICLE WHERE status_type_enum LIKE :status", nativeQuery = true)
-    List<Vehicle> vehiclesByStatusType(StatusTypeEnum status);
+    List<Vehicle> vehiclesByStatusType(String status);
 }

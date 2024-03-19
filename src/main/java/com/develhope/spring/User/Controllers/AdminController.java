@@ -10,6 +10,9 @@ import com.develhope.spring.User.Entities.Salesman;
 import com.develhope.spring.User.Services.AdminService;
 import com.develhope.spring.Vehicle.Entities.Enums.StatusTypeEnum;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -30,32 +33,78 @@ public class AdminController {
     private AdminService adminService;
 
     @PostMapping("/newvehicle")
+    @Operation(summary = "Creazione nuovo veicolo")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
     public @ResponseBody Vehicle newVehicle(@RequestBody Vehicle vehicle){
 
         return adminService.newVehicle(vehicle);
     }
 
     @DeleteMapping("/delete-vehicle/{id}")
+    @Operation(summary = "Eliminazione di un veicolo tramite ID")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
     public @ResponseStatus HttpEntity<String> deleteVehicle(@PathVariable Long id){
         Boolean response = adminService.deleteVehicle(id);
         if(response = true){
             return ResponseEntity.ok().body("Vehicle deleted");
         }else{
-            return ResponseEntity.badRequest().body("Vehicle not deleted");
+            return ResponseEntity.badRequest().body("Vehicle sold or not available");
         }
     }
 
     @PutMapping("/update-vehicle/{id}")
+    @Operation(summary = "Modifica dei valori del veicolo tramite ID")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
     public @ResponseBody Vehicle updateVehicle(@PathVariable Long id, @RequestBody Vehicle vehicle){
         return adminService.updateVehicle(id, vehicle);
     }
 
     @PatchMapping("/update-vehiclestatus/{id}")
+    @Operation(summary = "Modifica dello statusType di un veicolo tramite ID")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
     public @ResponseBody Vehicle updateStatusVehicle(@PathVariable Long id, @RequestParam (value = "statusType") StatusTypeEnum statusTypeEnum){
         return adminService.updateStatusType(id, statusTypeEnum);
     }
 
+    @GetMapping("/status-type/{statusType}")
+    @Operation(summary = "Lista dei veicoli filtrati attraverso statusType")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
+    public ResponseEntity<List<Vehicle>> vehicleByStatusType(@RequestParam String statusType){
+        List<Vehicle> vehiclesByStatusType = adminService.vehiclesByStatusType(statusType);
+        if(vehiclesByStatusType != null) {
+            return ResponseEntity.ok().body(vehiclesByStatusType);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PutMapping("/update-purchase/{idCustomer}/{idPurchase}")
+    @Operation(summary = "Modifica di un acquisto tramite ID cliente e ID acquisto")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
     public ResponseEntity<List<Purchase>> updatePurchase(
             @PathVariable Long idCustomer, @PathVariable Long idPurchase, @RequestBody Purchase purchase){
         List<Purchase> customerPurcases = adminService.updatePurchaseById(idCustomer, idPurchase, purchase);
@@ -66,13 +115,19 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/status-type/{statusType}")
-    public ResponseEntity<List<Vehicle>> vehicleByStatusType(@RequestParam StatusTypeEnum statusType){
-        List<Vehicle> vehiclesByStatusType = adminService.vehiclesByStatusType(statusType);
-        if(vehiclesByStatusType != null) {
-            return ResponseEntity.ok().body(vehiclesByStatusType);
+    @DeleteMapping("/delete-purchase/{idCustomer}/{idPurchase}")
+    @Operation(summary = "Elimina un acquisto attraverso ID purchase")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
+    public @ResponseStatus HttpEntity<String> deletePurchase(@PathVariable Long idCustomer, @PathVariable Long idPurchase){
+        Boolean response = adminService.deletePurchaseById(idCustomer, idPurchase);
+        if(response = true){
+            return ResponseEntity.ok().body("Vehicle deleted");
         }else{
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body("Vehicle not deleted");
         }
     }
 

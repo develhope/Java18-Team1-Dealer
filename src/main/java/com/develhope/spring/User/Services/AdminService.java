@@ -208,8 +208,12 @@ public class AdminService {
         Vehicle vehicleDeleted = vehicleRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Vehicle id " + id + " to delete not found"));
 
-        vehicleRepository.deleteById(id);
-        return true;
+        if(vehicleDeleted.getStatusTypeEnum().equals(StatusTypeEnum.PURCHASABLE) || vehicleDeleted.getStatusTypeEnum().equals(StatusTypeEnum.ORDERABLE)){
+            vehicleRepository.deleteById(id);
+            return true;
+        }else{
+            return false;
+        }
     }
 
     //modifica veicolo
@@ -381,9 +385,9 @@ public class AdminService {
 
 
     //ottieni VEICOLI filtrandoli per STATUSTYPE
-    public List<Vehicle> vehiclesByStatusType(StatusTypeEnum statusType){
+    public List<Vehicle> vehiclesByStatusType(String statusType){
 
-        if(statusType != null && Arrays.asList(StatusTypeEnum.values()).contains(statusType)) {
+        if(statusType != null && Arrays.asList(StatusTypeEnum.values()).toString().contains(statusType)) {
 
             return vehicleRepository.vehiclesByStatusType(statusType);
         }else {

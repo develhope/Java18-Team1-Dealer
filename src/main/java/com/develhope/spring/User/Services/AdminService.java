@@ -17,6 +17,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 
@@ -416,6 +417,20 @@ public class AdminService {
         } else {
             throw new IllegalStateException("Il veicolo non è acquistabile.");
         }
+    }
+    public Vehicle mostExpensiveVehicleSold(){
+        List<Vehicle> vehicleList = vehiclesByStatusType(StatusTypeEnum.SOLD);
+
+        Vehicle mostExpensiveVehicleSold = null;
+        BigDecimal maxPrice = BigDecimal.ZERO;
+
+        for (Vehicle vehicle : vehicleList){
+            if(vehicle.getPrice().compareTo(maxPrice) > 0){
+                maxPrice = vehicle.getPrice();
+                mostExpensiveVehicleSold = vehicle;
+            }
+        }
+        return mostExpensiveVehicleSold;
     }
 }
 

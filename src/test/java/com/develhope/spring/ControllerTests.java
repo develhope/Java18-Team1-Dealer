@@ -87,6 +87,7 @@ class ControllerTests {
         vehicle.setTailBag(false);
         return vehicleRepository.save(vehicle);
     }
+
     private Salesman createASalesman() {
         Salesman salesman = new Salesman();
         salesman.setPhone("12111313");
@@ -123,6 +124,7 @@ class ControllerTests {
         purchase.setCustomer(createACustomer());
         return purchaseRepository.save(purchase);
     }
+
     private String getRandomString() {
         Random random = new Random();
         return random.ints(97, 122)
@@ -167,6 +169,7 @@ class ControllerTests {
                 .andExpect(jsonPath("$.customer").value(adminPurchase.getCustomer()))
                 .andExpect(jsonPath("$.vehicleStatusEnum").value(adminPurchase.getVehicleStatus().toString()));
     }
+
     @Transactional
     @Test
     void customerCheckIfVehicleExist() throws Exception {
@@ -200,6 +203,7 @@ class ControllerTests {
                 .andExpect(jsonPath("$.tailBag").value(vehicle.getTailBag()));
 
     }
+
     @Transactional
     @Test
     void testCreateNewCustomerPurchase() throws Exception {
@@ -218,6 +222,7 @@ class ControllerTests {
                 .andExpect(jsonPath("$.customer").value(adminPurchase.getCustomer()))
                 .andExpect(jsonPath("$.vehicleStatusEnum").value(adminPurchase.getVehicleStatus().toString()));
     }
+
     @Transactional
     @Test
     void salesmanCheckIfVehicleExist() throws Exception {
@@ -251,6 +256,7 @@ class ControllerTests {
                 .andExpect(jsonPath("$.tailBag").value(vehicle.getTailBag()));
 
     }
+
     @Transactional
     @Test
     void checkIfOrderStatusIsCorrect() throws Exception {
@@ -266,6 +272,7 @@ class ControllerTests {
         String responseContent = result.getResponse().getContentAsString();
         System.out.println("Response content: " + responseContent);
     }
+
     @Transactional
     @Test
     void checkIfOrderListIsPopulated() throws Exception {
@@ -292,6 +299,7 @@ class ControllerTests {
         assertThat(responsePurchaseList).isNotEmpty();
         assertThat(responsePurchaseList.size()).isEqualTo(1);
     }
+
     @Transactional
     @Test
     void checkIfOrderStatusIsUpdated() throws Exception{
@@ -307,5 +315,31 @@ class ControllerTests {
 
         String responseContent = result.getResponse().getContentAsString();
         System.out.println("Response content: " + responseContent);
+    }
+
+    @Transactional
+    @Test
+    public void adminDeleteASalesmanTest() throws Exception {
+
+        Salesman fakeSalesman = createASalesman();
+
+        mockMvc.perform(delete("/motorworld/admin/delete-salesman/" + fakeSalesman.getId())
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Salesman deleted"));
+
+    }
+
+    @Transactional
+    @Test
+    public void adminDeleteACustomerTest() throws Exception {
+
+        Customer fakeCustomer = createACustomer();
+
+        mockMvc.perform(delete("/motorworld/admin/delete-customer/" + fakeCustomer.getId())
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Customer deleted"));
+
     }
 }

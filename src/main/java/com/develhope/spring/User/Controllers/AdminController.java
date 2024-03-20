@@ -45,7 +45,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/delete-vehicle/{id}")
-    @Operation(summary = "Eliminazione di un veicolo tramite ID")
+    @Operation(summary = "Eliminazione di un veicolo attraverso ID")
     @ApiResponses(value ={
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "400", description = "Bad Request"),
@@ -61,7 +61,7 @@ public class AdminController {
     }
 
     @PutMapping("/update-vehicle/{id}")
-    @Operation(summary = "Modifica dei valori del veicolo tramite ID")
+    @Operation(summary = "Modifica dei valori del veicolo attraverso ID")
     @ApiResponses(value ={
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "400", description = "Bad Request"),
@@ -72,7 +72,7 @@ public class AdminController {
     }
 
     @PatchMapping("/update-vehiclestatus/{id}")
-    @Operation(summary = "Modifica dello statusType di un veicolo tramite ID")
+    @Operation(summary = "Modifica dello statusType di un veicolo attraverso ID")
     @ApiResponses(value ={
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "400", description = "Bad Request"),
@@ -99,7 +99,7 @@ public class AdminController {
     }
 
     @PutMapping("/update-purchase/{idCustomer}/{idPurchase}")
-    @Operation(summary = "Modifica di un acquisto tramite ID cliente e ID acquisto")
+    @Operation(summary = "Modifica di un acquisto attraverso ID cliente e ID acquisto")
     @ApiResponses(value ={
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "400", description = "Bad Request"),
@@ -131,15 +131,33 @@ public class AdminController {
         }
     }
 
-    @PostMapping("/post")
+    @PostMapping("/newpurchase")
+    @Operation(summary = "Crea nuovo Purchase")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
     public @ResponseBody Purchase createNewPurchase(@RequestBody AdminPurchaseCreationDTO purchaseCreation) {
         return adminService.createNewPurchase(purchaseCreation);
     }
 
     @GetMapping("/getAll/salesmen")
+    @Operation(summary = "Ottiene la lista dei venditori")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
     public List<SalesmanDTO> getAllSalesmen(){return adminService.getSalesmenList();}
 
     @DeleteMapping("/delete-salesman/{id}")
+    @Operation(summary = "Elimina un venditore attraverso ID")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
     public @ResponseStatus HttpEntity<String> deleteSalesman(@PathVariable Long id)
     {
 
@@ -155,6 +173,12 @@ public class AdminController {
     }
 
     @PutMapping("/update-salesman/{id}")
+    @Operation(summary = "Modifica un venditore tramite ID")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
     public @ResponseBody Salesman updateSalesman(@PathVariable Long id,
                                                  @RequestBody Salesman salesman)
     {
@@ -162,9 +186,21 @@ public class AdminController {
     }
 
     @GetMapping("/getAll/customers")
+    @Operation(summary = "Ottiene la lista dei clienti")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
     public List<CustomerDTO> getAllCustomers(){return adminService.getCustomersList();}
 
     @DeleteMapping("/delete-customer/{id}")
+    @Operation(summary = "Elimina un cliente attraverso ID")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
     public @ResponseStatus HttpEntity<String> deleteCustomer(@PathVariable Long id)
     {
 
@@ -180,6 +216,12 @@ public class AdminController {
     }
 
     @PutMapping("/update-customer/{id}")
+    @Operation(summary = "Modifica un cliente attraverso ID")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
     public @ResponseBody Customer updateCustomer(@PathVariable Long id,
                                                  @RequestBody Customer customer)
     {

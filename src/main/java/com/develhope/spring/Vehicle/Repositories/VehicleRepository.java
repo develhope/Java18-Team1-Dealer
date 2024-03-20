@@ -15,8 +15,7 @@ import java.util.List;
 public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
 
     @Query("SELECT v FROM Vehicle v WHERE " +
-            "(:minPrice IS NULL OR v.price >= :minPrice) AND " +
-            "(:maxPrice IS NULL OR v.price <= :maxPrice) AND " +
+            "(:vehiclesTypeEnum IS NULL OR v.vehiclesTypeEnum = :vehiclesTypeEnum) AND " +
             "(:brand IS NULL OR v.brand = :brand) AND " +
             "(:model IS NULL OR v.model = :model) AND " +
             "(:colour IS NULL OR v.colour = :colour) AND " +
@@ -24,23 +23,23 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
             "(:hP IS NULL OR v.hP = :hP) AND " +
             "(:kW IS NULL OR v.kW = :kW) AND " +
             "(:registrationYear IS NULL OR v.registrationYear = :registrationYear) AND " +
-            "(:fuelType IS NULL OR v.fuelType = :fuelType) AND " +
+            "(:fuelTypeEnum IS NULL OR v.fuelTypeEnum = :fuelTypeEnum) AND " +
             "(:price IS NULL OR v.price = :price) AND " +
             "(:tradeDiscount IS NULL OR v.tradeDiscount = :tradeDiscount) AND " +
             "(:newVehicle IS NULL OR v.newVehicle = :newVehicle) AND " +
             "(:mileage IS NULL OR v.mileage = :mileage) AND " +
             "(:ageLimit IS NULL OR v.ageLimit = :ageLimit) AND " +
-            "(:statusType IS NULL OR v.statusType = :statusType) AND " +
+            "(:statusTypeEnum IS NULL OR v.statusTypeEnum = :statusTypeEnum) AND " +
             "(:currentLocation IS NULL OR v.currentLocation = :currentLocation) AND " +
             "(:availableRental IS NULL OR v.availableRental = :availableRental) AND " +
-            "(:emissionType IS NULL OR v.emissionType = :emissionType) AND " +
+            "(:emissionTypeEnum IS NULL OR v.emissionTypeEnum = :emissionTypeEnum) AND " +
             "(:passengerNumber IS NULL OR v.passengerNumber = :passengerNumber) AND " +
             "(:windShield IS NULL OR v.windShield = :windShield) AND " +
             "(:tailBag IS NULL OR v.tailBag = :tailBag) AND " +
             "(:passengerBackrest IS NULL OR v.passengerBackrest = :passengerBackrest) AND " +
-            "(:transmissionType IS NULL OR v.transmissionType = :transmissionType) AND " +
-            "(:carType IS NULL OR v.carType = :carType) AND " +
-            "(:tractionType IS NULL OR v.tractionType = :tractionType) AND " +
+            "(:transmissionTypeEnum IS NULL OR v.transmissionTypeEnum = :transmissionTypeEnum) AND " +
+            "(:carTypeEnum IS NULL OR v.carTypeEnum = :carTypeEnum) AND " +
+            "(:tractionTypeEnum IS NULL OR v.tractionTypeEnum = :tractionTypeEnum) AND " +
             "(:optionFullTraction IS NULL OR v.optionFullTraction = :optionFullTraction) AND " +
             "(:doors IS NULL OR v.doors = :doors) AND " +
             "(:centralizedClosing IS NULL OR v.centralizedClosing = :centralizedClosing) AND " +
@@ -55,8 +54,7 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
             "(:windowedBackDoor IS NULL OR v.windowedBackDoor = :windowedBackDoor) AND " +
             "(:slideSideDoor IS NULL OR v.slideSideDoor = :slideSideDoor) AND " +
             "(:antiCollisionSystem IS NULL OR v.antiCollisionSystem = :antiCollisionSystem)")
-    List<Vehicle> findByAllCriteria(BigDecimal minPrice,
-                                    BigDecimal maxPrice,
+    List<Vehicle> findByAllCriteria(VehiclesTypeEnum vehiclesTypeEnum,
                                     String brand,
                                     String model,
                                     String colour,
@@ -64,23 +62,23 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
                                     Integer hP,
                                     Double kW,
                                     LocalDate registrationYear,
-                                    FuelType fuelType,
+                                    FuelTypeEnum fuelTypeEnum,
                                     BigDecimal price,
                                     Double tradeDiscount,
                                     Boolean newVehicle,
                                     Double mileage,
                                     Integer ageLimit,
-                                    StatusType statusType,
+                                    StatusTypeEnum statusTypeEnum,
                                     String currentLocation,
                                     Boolean availableRental,
-                                    EmissionType emissionType,
+                                    EmissionTypeEnum emissionTypeEnum,
                                     Integer passengerNumber,
                                     Boolean windShield,
                                     Boolean tailBag,
                                     Boolean passengerBackrest,
-                                    TransmissionType transmissionType,
-                                    CarType carType,
-                                    TractionType tractionType,
+                                    TransmissionTypeEnum transmissionType,
+                                    CarTypeEnum carType,
+                                    TractionTypeEnum tractionTypeEnum,
                                     Boolean optionFullTraction,
                                     Integer doors,
                                     Boolean centralizedClosing,

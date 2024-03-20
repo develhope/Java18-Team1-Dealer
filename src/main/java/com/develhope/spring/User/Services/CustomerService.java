@@ -74,8 +74,7 @@ public class CustomerService {
 
     }
 
-    public List<Vehicle> searchVehicleByAllCriteria(BigDecimal minPrice,
-                                                    BigDecimal maxPrice,
+    public List<Vehicle> searchVehicleByAllCriteria(VehiclesTypeEnum vehiclesTypeEnum,
                                                     String brand,
                                                     String model,
                                                     String colour,
@@ -83,23 +82,23 @@ public class CustomerService {
                                                     Integer hP,
                                                     Double kW,
                                                     LocalDate registrationYear,
-                                                    FuelType fuelType,
+                                                    FuelTypeEnum fuelTypeEnum,
                                                     BigDecimal price,
                                                     Double tradeDiscount,
                                                     Boolean newVehicle,
                                                     Double mileage,
                                                     Integer ageLimit,
-                                                    StatusType statusType,
+                                                    StatusTypeEnum statusTypeEnum,
                                                     String currentLocation,
                                                     Boolean availableRental,
-                                                    EmissionType emissionType,
+                                                    EmissionTypeEnum emissionTypeEnum,
                                                     Integer passengerNumber,
                                                     Boolean windShield,
                                                     Boolean tailBag,
                                                     Boolean passengerBackrest,
-                                                    TransmissionType transmissionType,
-                                                    CarType carType,
-                                                    TractionType tractionType,
+                                                    TransmissionTypeEnum transmissionTypeEnum,
+                                                    CarTypeEnum carTypeEnum,
+                                                    TractionTypeEnum tractionTypeEnum,
                                                     Boolean optionFullTraction,
                                                     Integer doors,
                                                     Boolean centralizedClosing,
@@ -114,6 +113,6 @@ public class CustomerService {
                                                     Boolean windowedBackDoor,
                                                     Boolean slideSideDoor,
                                                     Boolean antiCollisionSystem) {
-        return vehicleRepository.findByAllCriteria(minPrice, maxPrice, brand, model, colour, cubiCapacity, hP, kW, registrationYear, fuelType, price, tradeDiscount, newVehicle, mileage, ageLimit, statusType, currentLocation, availableRental, emissionType, passengerNumber, windShield, tailBag, passengerBackrest, transmissionType, carType, tractionType, optionFullTraction, doors, centralizedClosing, airConditioning, bluetooth, satNav, electricRoof, parkAssist, spareTire, antiTheft, passengerTransport, windowedBackDoor, slideSideDoor, antiCollisionSystem);
+        return vehicleRepository.findByAllCriteria(vehiclesTypeEnum, brand, model, colour, cubiCapacity, hP, kW, registrationYear, fuelTypeEnum, price, tradeDiscount, newVehicle, mileage, ageLimit, statusTypeEnum, currentLocation, availableRental, emissionTypeEnum, passengerNumber, windShield, tailBag, passengerBackrest, transmissionTypeEnum, carTypeEnum, tractionTypeEnum, optionFullTraction, doors, centralizedClosing, airConditioning, bluetooth, satNav, electricRoof, parkAssist, spareTire, antiTheft, passengerTransport, windowedBackDoor, slideSideDoor, antiCollisionSystem);
     }
 }

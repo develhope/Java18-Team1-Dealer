@@ -47,8 +47,7 @@ public class CustomerController {
 
     @GetMapping("/search")
     public List<Vehicle> searchVehicles(
-            @RequestParam(required = false) BigDecimal minPrice,
-            @RequestParam(required = false) BigDecimal maxPrice,
+            @RequestParam(required = false) VehiclesTypeEnum vehiclesTypeEnum,
             @RequestParam(required = false) String brand,
             @RequestParam(required = false) String model,
             @RequestParam(required = false) String colour,
@@ -56,23 +55,23 @@ public class CustomerController {
             @RequestParam(required = false) Integer hP,
             @RequestParam(required = false) Double kW,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate registrationYear,
-            @RequestParam(required = false) FuelType fuelType,
+            @RequestParam(required = false) FuelTypeEnum fuelTypeEnum,
             @RequestParam(required = false) BigDecimal price,
             @RequestParam(required = false) Double tradeDiscount,
             @RequestParam(required = false) Boolean newVehicle,
             @RequestParam(required = false) Double mileage,
             @RequestParam(required = false) Integer ageLimit,
-            @RequestParam(required = false) StatusType statusType,
+            @RequestParam(required = false) StatusTypeEnum statusTypeEnum,
             @RequestParam(required = false) String currentLocation,
             @RequestParam(required = false) Boolean availableRental,
-            @RequestParam(required = false) EmissionType emissionType,
+            @RequestParam(required = false) EmissionTypeEnum emissionType,
             @RequestParam(required = false) Integer passengerNumber,
             @RequestParam(required = false) Boolean windShield,
             @RequestParam(required = false) Boolean tailBag,
             @RequestParam(required = false) Boolean passengerBackrest,
-            @RequestParam(required = false) TransmissionType transmissionType,
-            @RequestParam(required = false) CarType carType,
-            @RequestParam(required = false) TractionType tractionType,
+            @RequestParam(required = false) TransmissionTypeEnum transmissionTypeEnum,
+            @RequestParam(required = false) CarTypeEnum carTypeEnum,
+            @RequestParam(required = false) TractionTypeEnum tractionTypeEnum,
             @RequestParam(required = false) Boolean optionFullTraction,
             @RequestParam(required = false) Integer doors,
             @RequestParam(required = false) Boolean centralizedClosing,
@@ -89,10 +88,10 @@ public class CustomerController {
             @RequestParam(required = false) Boolean antiCollisionSystem
     ) {
         return customerService.searchVehicleByAllCriteria(
-                minPrice, maxPrice, brand, model, colour, cubiCapacity, hP, kW, registrationYear,
-                fuelType,price, tradeDiscount, newVehicle, mileage, ageLimit, statusType, currentLocation,
+                vehiclesTypeEnum, brand, model, colour, cubiCapacity, hP, kW, registrationYear,
+                fuelTypeEnum,price, tradeDiscount, newVehicle, mileage, ageLimit, statusTypeEnum, currentLocation,
                 availableRental, emissionType, passengerNumber, windShield, tailBag, passengerBackrest,
-                transmissionType, carType, tractionType,optionFullTraction, doors, centralizedClosing, airConditioning, bluetooth,
+                transmissionTypeEnum, carTypeEnum, tractionTypeEnum,optionFullTraction, doors, centralizedClosing, airConditioning, bluetooth,
                 satNav, electricRoof, parkAssist, spareTire, antiTheft, passengerTransport, windowedBackDoor,
                 slideSideDoor, antiCollisionSystem
         );

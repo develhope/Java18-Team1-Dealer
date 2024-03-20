@@ -158,7 +158,7 @@ class ControllerTests {
         adminPurchase.setVehicleStatus(VehicleStatusEnum.PURCHASED);
 
 
-        mockMvc.perform(post("/motorworld/admin/post")
+        mockMvc.perform(post("/motorworld/admin/newpurchase")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(adminPurchase)))
                 .andExpect(status().isOk())
@@ -172,7 +172,7 @@ class ControllerTests {
     void customerCheckIfVehicleExist() throws Exception {
         Vehicle vehicle = createAVehicle();
 
-        mockMvc.perform(get("/customer/get/info/" + vehicle.getId())
+        mockMvc.perform(get("/motorworld/customer/info-vehicle/" + vehicle.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(vehicle)))
                 .andExpect(status().isOk())
@@ -210,7 +210,7 @@ class ControllerTests {
         adminPurchase.setVehicleStatus(VehicleStatusEnum.PURCHASED);
 
 
-        mockMvc.perform(post("/customer/post")
+        mockMvc.perform(post("/motorworld/customer/newpurchase")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(adminPurchase)))
                 .andExpect(status().isOk())
@@ -223,7 +223,7 @@ class ControllerTests {
     void salesmanCheckIfVehicleExist() throws Exception {
         Vehicle vehicle = createAVehicle();
 
-        mockMvc.perform(get("/salesman/get/info/" + vehicle.getId())
+        mockMvc.perform(get("/motorworld/salesman/info-vehicle/" + vehicle.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vehicle)))
                 .andExpect(status().isOk())
@@ -256,7 +256,7 @@ class ControllerTests {
     void checkIfOrderStatusIsCorrect() throws Exception {
         Purchase purchase = createAPurchase();
 
-        MvcResult result = mockMvc.perform(get("/salesman/get/orderstatus/" + purchase.getId())
+        MvcResult result = mockMvc.perform(get("/motorworld/salesman/status-purchase/" + purchase.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(purchase.getOrderStatusEnum())))
                 .andExpect(status().isOk())
@@ -279,7 +279,7 @@ class ControllerTests {
 
         OrderStatusEnum orderStatus = OrderStatusEnum.COMPLETED;
 
-        MvcResult result = mockMvc.perform(get("/salesman/get/orderslist/" + orderStatus)
+        MvcResult result = mockMvc.perform(get("/motorworld/salesman/purchases-status/" + orderStatus)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(purchaseList)))
                 .andExpect(status().isOk())
@@ -298,7 +298,7 @@ class ControllerTests {
         Purchase purchase = createAPurchase();
         OrderStatusEnum orderStatusUpdated = OrderStatusEnum.FAILED;
 
-        MvcResult result = mockMvc.perform(patch("/salesman/patch/orderstatus/" + purchase.getId() + "?orderStatus=" + orderStatusUpdated)
+        MvcResult result = mockMvc.perform(patch("/motorworld/salesman/update-orderstatus/" + purchase.getId() + "?orderStatus=" + orderStatusUpdated)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(purchase.getOrderStatusEnum())))
                 .andExpect(status().isOk())

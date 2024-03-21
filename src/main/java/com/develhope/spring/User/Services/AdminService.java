@@ -422,19 +422,6 @@ public class AdminService {
             throw new IllegalStateException("Il veicolo non è acquistabile.");
         }
     }
-    public Vehicle mostExpensiveVehicleSold(){
-        List<Vehicle> vehicleList = vehiclesByStatusType(StatusTypeEnum.SOLD);
-
-        Vehicle mostExpensiveVehicleSold = null;
-        BigDecimal maxPrice = BigDecimal.ZERO;
-
-        for (Vehicle vehicle : vehicleList){
-            if(vehicle.getPrice().compareTo(maxPrice) > 0){
-                maxPrice = vehicle.getPrice();
-                mostExpensiveVehicleSold = vehicle;
-            }
-        }
-        return mostExpensiveVehicleSold;
 
     public Purchase createNewOrder(Long id, Purchase Order) {
         Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Vehicle with id " + id + " not found."));
@@ -456,29 +443,30 @@ public class AdminService {
 
     public Purchase updateOrder(Long id, Purchase order) {
         Purchase orderUpdated = purchaseRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Order with id " + id + " not found."));
-        if (order.getIsPaid() != null){
+        if (order.getIsPaid() != null) {
             orderUpdated.setIsPaid(order.getIsPaid());
         }
-        if (order.getOrderStatusEnum() != null){
+        if (order.getOrderStatusEnum() != null) {
             orderUpdated.setOrderStatusEnum(order.getOrderStatusEnum());
         }
-        if (order.getAdvancePayment() != null){
+        if (order.getAdvancePayment() != null) {
             orderUpdated.setAdvancePayment(order.getAdvancePayment());
         }
-        if (order.getVehicle() != null){
+        if (order.getVehicle() != null) {
             orderUpdated.setVehicle(order.getVehicle());
         }
-        if (order.getCustomer() != null){
+        if (order.getCustomer() != null) {
             orderUpdated.setCustomer(order.getCustomer());
         }
-        if (order.getSalesman() != null){
+        if (order.getSalesman() != null) {
             orderUpdated.setSalesman(order.getSalesman());
         }
-        if (order.getVehicle() != null){
+        if (order.getVehicle() != null) {
             orderUpdated.setVehicle(order.getVehicle());
         }
         return orderUpdated;
     }
+
     public Boolean deleteOrder(Long id){
         Purchase orderToDelete = purchaseRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Order with id " + id + " not found."));
         purchaseRepository.deleteById(id);
@@ -550,6 +538,20 @@ public class AdminService {
         Rent rentToDelete = rentRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Order with id " + id + " not found"));
         rentRepository.deleteById(id);
         return true;
+    }
+    public Vehicle mostExpensiveVehicleSold() {
+        List<Vehicle> vehicleList = vehiclesByStatusType(StatusTypeEnum.SOLD);
+
+        Vehicle mostExpensiveVehicleSold = null;
+        BigDecimal maxPrice = BigDecimal.ZERO;
+
+        for (Vehicle vehicle : vehicleList) {
+            if (vehicle.getPrice().compareTo(maxPrice) > 0) {
+                maxPrice = vehicle.getPrice();
+                mostExpensiveVehicleSold = vehicle;
+            }
+        }
+        return mostExpensiveVehicleSold;
     }
 }
 

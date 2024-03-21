@@ -1,5 +1,6 @@
 package com.develhope.spring.Rent.Entities;
 
+import com.develhope.spring.ShowroomProfit.ShowroomProfit;
 import com.develhope.spring.User.Entities.Customer;
 import com.develhope.spring.User.Entities.Salesman;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
@@ -45,4 +46,6 @@ public class Rent {
     private Customer customer;
     @OneToOne
     private Vehicle vehicle;
+    @OneToOne
+    private ShowroomProfit showroomProfit;
 }

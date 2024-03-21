@@ -422,6 +422,19 @@ public class AdminService {
             throw new IllegalStateException("Il veicolo non è acquistabile.");
         }
     }
+    public Vehicle mostExpensiveVehicleSold(){
+        List<Vehicle> vehicleList = vehiclesByStatusType(StatusTypeEnum.SOLD);
+
+        Vehicle mostExpensiveVehicleSold = null;
+        BigDecimal maxPrice = BigDecimal.ZERO;
+
+        for (Vehicle vehicle : vehicleList){
+            if(vehicle.getPrice().compareTo(maxPrice) > 0){
+                maxPrice = vehicle.getPrice();
+                mostExpensiveVehicleSold = vehicle;
+            }
+        }
+        return mostExpensiveVehicleSold;
 
     public Purchase createNewOrder(Long id, Purchase Order) {
         Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Vehicle with id " + id + " not found."));

@@ -2,6 +2,7 @@ package com.develhope.spring.Purchase.Entities;
 
 import com.develhope.spring.Purchase.Entities.Enums.OrderStatusEnum;
 import com.develhope.spring.Purchase.Entities.Enums.VehicleStatusEnum;
+import com.develhope.spring.ShowroomProfit.ShowroomProfit;
 import com.develhope.spring.User.Entities.Customer;
 import com.develhope.spring.User.Entities.Salesman;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
@@ -37,5 +38,6 @@ public class Purchase {
     private Customer customer;
     @OneToOne
     private Vehicle vehicle;
-    
+    @OneToOne
+    private ShowroomProfit showroomProfit;
 }

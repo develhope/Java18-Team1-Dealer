@@ -222,6 +222,16 @@ public class AdminController {
     {
         return adminService.modifyCustomer(id, customer);
     }
+    @GetMapping("/most-expsold-vehicle")
+    @Operation(summary = "Ottieni il veicolo più costoso venduto fino a questo momento")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
+    public @ResponseBody Vehicle mostExpSoldVehicle(){
+        return adminService.mostExpensiveVehicleSold();
+    }
 
     @PostMapping("/neworder")
     @Operation(summary = "Crea nuovo Purchase(ordine)")

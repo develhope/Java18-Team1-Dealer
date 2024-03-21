@@ -1,10 +1,9 @@
 package com.develhope.spring.User.Controllers;
 
 import com.develhope.spring.Purchase.Entities.Purchase;
-import com.develhope.spring.User.DTO.AdminDTO;
+import com.develhope.spring.Rent.Entities.Rent;
 import com.develhope.spring.User.DTO.CustomerDTO;
 import com.develhope.spring.User.DTO.SalesmanDTO;
-import com.develhope.spring.User.Entities.Admin;
 import com.develhope.spring.User.Entities.Customer;
 import com.develhope.spring.User.Entities.Salesman;
 import com.develhope.spring.User.Services.AdminService;
@@ -18,10 +17,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.develhope.spring.Purchase.Entities.DTO.AdminPurchaseCreationDTO;
-import com.develhope.spring.Purchase.Entities.Purchase;
-import com.develhope.spring.User.Services.AdminService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -236,6 +231,72 @@ public class AdminController {
     })
     public @ResponseBody Vehicle mostExpSoldVehicle(){
         return adminService.mostExpensiveVehicleSold();
+    }
+
+    @PostMapping("/neworder")
+    @Operation(summary = "Crea nuovo Purchase(ordine)")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
+    public ResponseEntity<Purchase> createOrder(@RequestParam Long id, @RequestBody Purchase order) {
+        return ResponseEntity.ok(adminService.createNewOrder(id, order));
+    }
+
+    @PutMapping("/update-order/{id}")
+    @Operation(summary = "Modifica un Purchase(ordine) attraverso ID")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
+    public ResponseEntity<Purchase> updateOrder(@PathVariable Long id, @RequestBody Purchase order) {
+        return ResponseEntity.ok(adminService.updateOrder(id, order));
+    }
+
+    @DeleteMapping("/delete-order/{id}")
+    @Operation(summary = "Elimina un Purchase(ordine) attraverso ID")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
+    public ResponseEntity<Boolean> deleteOrder(@PathVariable Long id) {
+        return ResponseEntity.ok(adminService.deleteOrder(id));
+    }
+
+    @PostMapping("/newrent")
+    @Operation(summary = "Crea nuovo Rent(noleggio)")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
+    public ResponseEntity<Rent> createRent(@RequestParam Long id, @RequestBody Rent rent) {
+        return ResponseEntity.ok(adminService.createNewRent(id, rent));
+    }
+
+    @PutMapping("/update-rent/{id}")
+    @Operation(summary = "Modifica un Rent(noleggio) attraverso ID")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
+    public ResponseEntity<Rent> updateRent(@PathVariable Long id, @RequestBody Rent rent) {
+        return ResponseEntity.ok(adminService.updateRent(id, rent));
+    }
+
+    @DeleteMapping("/delete-rent/{id}")
+    @Operation(summary = "Elimina un Rent(noleggio) attraverso ID")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
+    public ResponseEntity<Boolean> deleteRent(@PathVariable Long id) {
+        return ResponseEntity.ok(adminService.deleteRent(id));
     }
 
 }

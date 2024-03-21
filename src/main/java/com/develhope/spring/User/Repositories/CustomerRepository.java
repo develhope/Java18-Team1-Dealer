@@ -12,11 +12,5 @@ import java.util.List;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
-    @Query(value = "SELECT * FROM PURCHASE WHERE ID= :id AND  VEHICLESTATUSENUM='PURCHASED'")
-    List<Purchase> purchaseList(@Param("id")Long id);
-    @Query(value = "SELECT * FROM PURCHASE WHERE ID= :id AND VEHICLESTATUSENUM='ORDERED'")
-    List<Purchase> orderList(@Param("id")Long id);
 
-    @Query(value = "SELECT * FROM RENT WHERE ID= :id")
-    List<Rent> rentList(@Param("id")Long id);
 }

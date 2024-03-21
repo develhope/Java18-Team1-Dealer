@@ -3,14 +3,21 @@ package com.develhope.spring.User.Controllers;
 import com.develhope.spring.Purchase.Entities.DTO.CustomerPurchaseCreationDTO;
 import com.develhope.spring.Purchase.Entities.Purchase;
 import com.develhope.spring.Rent.Entities.Rent;
+import com.develhope.spring.User.Entities.Customer;
 import com.develhope.spring.User.Services.CustomerService;
+import com.develhope.spring.Vehicle.Entities.Enums.*;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
 
 
 @RestController
@@ -80,8 +87,6 @@ public class CustomerController {
     public ResponseEntity<Boolean> deleteRent(@PathVariable Long id) {
         return ResponseEntity.ok(customerService.deleteRent(id));
     }
-    @Autowired
-    CustomerService customerService;
 
     @GetMapping("/purchaseCList")
     public List<Purchase> purchaseList(@PathVariable Long id) {

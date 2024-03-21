@@ -6,14 +6,19 @@ import com.develhope.spring.Purchase.Entities.Purchase;
 import com.develhope.spring.Purchase.Repositories.PurchaseRepository;
 import com.develhope.spring.Rent.Entities.Rent;
 import com.develhope.spring.Rent.Repositories.RentRepository;
-import com.develhope.spring.Vehicle.Entities.Enums.StatusTypeEnum;
+import com.develhope.spring.User.Entities.Customer;
+import com.develhope.spring.User.Repositories.CustomerRepository;
+import com.develhope.spring.Vehicle.Entities.Enums.*;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
 import com.develhope.spring.Vehicle.Repositories.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -99,18 +104,26 @@ public class CustomerService {
         return true;
     }
 
-
-
-    public List<Purchase> myPurchase(Long id) {
-        return customerRepository.purchaseList(id);
+public List<Purchase> myPurchase(Long id) throws NoSuchElementException{
+    Optional<List<Purchase>> optionalPurchases = purchaseRepository.purchaseList(id);
+    if(optionalPurchases.isPresent()) {
+        return optionalPurchases.get();
+    } else {
+        throw new NoSuchElementException("Nessun purchase presente");
     }
+}
 
-    public List<Purchase> myOrder(Long id) {
-        return customerRepository.orderList(id);
+public List<Purchase> myOrder(Long id) throws NoSuchElementException{
+    Optional<List<Purchase>> optionalOrder = purchaseRepository.purchaseList(id);
+    if(optionalOrder.isPresent()) {
+        return optionalOrder.get();
+    } else {
+        throw new NoSuchElementException("Nessun order presente");
     }
+}
 
     public List<Rent> myRent(Long id) {
-        return customerRepository.rentList(id);
+        return rentRepository.rentList(id);
     }
 
     public void deleteAccount(Long id) { //id di accesso del cliente

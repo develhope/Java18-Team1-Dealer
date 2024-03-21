@@ -206,7 +206,7 @@ public class AdminController {
 
         }else{
 
-            return ResponseEntity.badRequest().body("Salesman not deleted");
+            return ResponseEntity.badRequest().body("Customer not deleted");
         }
     }
 

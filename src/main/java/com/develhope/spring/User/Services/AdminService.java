@@ -88,19 +88,13 @@ public class AdminService {
 
     //cancella account salesman
     public Boolean deleteASalesman(Long id){
+
         Salesman deletedSalesman = salesmanRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Salesman not found by id " + id));
 
         salesmanRepository.deleteById(id);
 
-        if (salesmanRepository.findById(id).equals(null)){
-
-            return true;
-        } else {
-
-            return false;
-        }
-
+        return true;
     }
 
     //modifica account salesman
@@ -159,15 +153,7 @@ public class AdminService {
 
         customerRepository.deleteById(id);
 
-        if (customerRepository.findById(id).equals(null)){
-
-            return true;
-
-        }else {
-
-            return false;
-        }
-
+        return true;
     }
 
     //modifica account customer
@@ -226,7 +212,8 @@ public class AdminService {
         Vehicle vehicleUpdated = vehicleRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Vehicle id " + id + " to update not found"));
 
-        if(vehicle.getVehiclesTypeEnum() != null && Arrays.asList(VehiclesTypeEnum.values()).contains(vehicle.getVehiclesTypeEnum())){
+        if(vehicle.getVehiclesTypeEnum() != null && Arrays.asList(VehiclesTypeEnum.values())
+                .contains(vehicle.getVehiclesTypeEnum())){
             vehicleUpdated.setVehiclesTypeEnum(vehicle.getVehiclesTypeEnum());
         }
         if(vehicle.getBrand() != null && !vehicle.getBrand().isEmpty()){
@@ -250,7 +237,8 @@ public class AdminService {
         if(vehicle.getRegistrationYear() != null){
             vehicleUpdated.setRegistrationYear(vehicle.getRegistrationYear());
         }
-        if(vehicle.getFuelTypeEnum() != null && Arrays.asList(FuelTypeEnum.values()).contains(vehicle.getFuelTypeEnum())){
+        if(vehicle.getFuelTypeEnum() != null && Arrays.asList(FuelTypeEnum.values())
+                .contains(vehicle.getFuelTypeEnum())){
             vehicleUpdated.setFuelTypeEnum(vehicle.getFuelTypeEnum());
         }
         if(vehicle.getPrice() != null){
@@ -268,7 +256,8 @@ public class AdminService {
         if(vehicle.getAgeLimit() != null){
             vehicleUpdated.setAgeLimit(vehicle.getAgeLimit());
         }
-        if(vehicle.getStatusTypeEnum() != null && Arrays.asList(StatusTypeEnum.values()).contains(vehicle.getStatusTypeEnum())){
+        if(vehicle.getStatusTypeEnum() != null && Arrays.asList(StatusTypeEnum.values())
+                .contains(vehicle.getStatusTypeEnum())){
             vehicleUpdated.setStatusTypeEnum(vehicle.getStatusTypeEnum());
         }
         //nullable column
@@ -277,7 +266,8 @@ public class AdminService {
         if(vehicle.getAvailableRental() != null){
             vehicleUpdated.setAvailableRental(vehicle.getAvailableRental());
         }
-        if(vehicle.getEmissionTypeEnum() != null && Arrays.asList(EmissionTypeEnum.values()).contains(vehicle.getEmissionTypeEnum())){
+        if(vehicle.getEmissionTypeEnum() != null && Arrays.asList(EmissionTypeEnum.values())
+                .contains(vehicle.getEmissionTypeEnum())){
             vehicleUpdated.setEmissionTypeEnum(vehicle.getEmissionTypeEnum());
         }
         if(vehicle.getPassengerNumber() != null){
@@ -405,8 +395,11 @@ public class AdminService {
         }
     }
     public Purchase createNewPurchase(AdminPurchaseCreationDTO dto){
-        Vehicle vehicle = vehicleRepository.findById(dto.getIdVehicle()).orElseThrow(() -> new NoSuchElementException("Veicolo con id " + dto.getIdVehicle() + " non trovato"));
+        Vehicle vehicle = vehicleRepository.findById(dto.getIdVehicle())
+                .orElseThrow(() -> new NoSuchElementException("Veicolo con id " + dto.getIdVehicle() + " non trovato"));
+
         if(vehicle.getStatusTypeEnum().equals(StatusTypeEnum.PURCHASABLE)){
+
             Purchase purchase = new Purchase();
             purchase.setVehicle(vehicle);
             purchase.setSalesman(dto.getSalesman());
@@ -417,6 +410,7 @@ public class AdminService {
 
             vehicle.setStatusTypeEnum(StatusTypeEnum.SOLD);
             vehicleRepository.save(vehicle);
+
             return purchaseRepository.save(purchase);
         } else {
             throw new IllegalStateException("Il veicolo non è acquistabile.");

@@ -33,6 +33,7 @@ class ServiceLisaTest {
 	private VehicleService vehicleService;
 	@Autowired
 	private AdminService adminService;
+
 	private Vehicle fakeVehicle(){
 		Vehicle vehicle = new Vehicle();
 		vehicle.setId(1l);
@@ -60,6 +61,7 @@ class ServiceLisaTest {
 		vehicle.setPassengerBackrest(false);
 		return vehicle;
 	}
+
 	private Vehicle fakeVehicle2(){
 		Vehicle vehicle = new Vehicle();
 		vehicle.setId(2l);
@@ -87,6 +89,7 @@ class ServiceLisaTest {
 		vehicle.setPassengerBackrest(false);
 		return vehicle;
 	}
+
 	@Transactional
 	@Test
 	public void createVehicle() throws Exception{
@@ -96,6 +99,7 @@ class ServiceLisaTest {
 		assertThat(vehicleRepository).isNotNull();
 		assertThat(newVehicle.getId()).isEqualTo(vehicle.getId());
 	}
+
 	@Transactional
 	@Test
 	public void deleteVehicle(){
@@ -107,6 +111,7 @@ class ServiceLisaTest {
 		Boolean result = adminService.deleteVehicle(vehicle.getId());
 		assertThat(result).isTrue();
 	}
+
 	@Transactional
 	@Test
 	public void updateVehicle() throws Exception{
@@ -119,6 +124,7 @@ class ServiceLisaTest {
 
 		assertThat(vehicleUpdated.getPassengerNumber()).isEqualTo(vehicle2.getPassengerNumber());
 	}
+
 	@Transactional
 	@Test
 	public void updateStatusTypeEnumOfVehicle(){
@@ -128,12 +134,15 @@ class ServiceLisaTest {
 		Vehicle vehicleUpdated = adminService.updateStatusType(vehicleToUpdate.getId(), StatusTypeEnum.SOLD);
 		assertThat(vehicleUpdated.getStatusTypeEnum()).isEqualTo(StatusTypeEnum.SOLD);
 	}
+
 	@Transactional
 	@Test
 	public void updatePurchaseById(){}
+
 	@Transactional
 	@Test
 	public void deletePurchaseById(){}
+
 	@Transactional
 	@Test
 	public void getVehiclesByStatusTypeEnum(){
@@ -145,6 +154,7 @@ class ServiceLisaTest {
 		List<Vehicle> vehiclesByStatusTypeEnum = adminService.vehiclesByStatusType(StatusTypeEnum.PURCHASABLE);
 		assertThat(vehiclesByStatusTypeEnum).contains(vehicle1,vehicle2);
 	}
+
 	@Transactional
 	@Test
 	public void createVehicleDTO() throws Exception{

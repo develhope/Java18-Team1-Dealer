@@ -2,22 +2,27 @@ package com.develhope.spring.User.Controllers;
 
 import com.develhope.spring.Purchase.Entities.Purchase;
 import com.develhope.spring.Rent.Entities.Rent;
+import com.develhope.spring.ShowroomProfit.ShowroomProfitRepository;
 import com.develhope.spring.User.DTO.CustomerDTO;
 import com.develhope.spring.User.DTO.SalesmanDTO;
 import com.develhope.spring.User.Entities.Customer;
 import com.develhope.spring.User.Entities.Salesman;
 import com.develhope.spring.User.Services.AdminService;
+import com.develhope.spring.Vehicle.DTO.VehicleMostSoldDTO;
 import com.develhope.spring.Vehicle.Entities.Enums.StatusTypeEnum;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
+import com.develhope.spring.Vehicle.Repositories.VehicleRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.develhope.spring.Purchase.Entities.DTO.AdminPurchaseCreationDTO;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -26,6 +31,10 @@ public class AdminController {
 
     @Autowired
     private AdminService adminService;
+    @Autowired
+    private ShowroomProfitRepository showroomProfitRepository;
+    @Autowired
+    private VehicleRepository vehicleRepository;
 
     @PostMapping("/newvehicle")
     @Operation(summary = "Creazione nuovo veicolo")
@@ -222,16 +231,6 @@ public class AdminController {
     {
         return adminService.modifyCustomer(id, customer);
     }
-    @GetMapping("/most-expsold-vehicle")
-    @Operation(summary = "Ottieni il veicolo più costoso venduto fino a questo momento")
-    @ApiResponses(value ={
-            @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-            @ApiResponse(responseCode = "500", description = "Server Error")
-    })
-    public @ResponseBody Vehicle mostExpSoldVehicle(){
-        return adminService.mostExpensiveVehicleSold();
-    }
 
     @PostMapping("/neworder")
     @Operation(summary = "Crea nuovo Purchase(ordine)")
@@ -298,5 +297,77 @@ public class AdminController {
     public ResponseEntity<Boolean> deleteRent(@PathVariable Long id) {
         return ResponseEntity.ok(adminService.deleteRent(id));
     }
+    @GetMapping("/most-expsold-vehicle")
+    @Operation(summary = "Ottieni il veicolo più costoso venduto fino a questo momento")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
+    public @ResponseBody Vehicle mostExpSoldVehicle(){
+        return adminService.mostExpensiveVehicleSold();
+    }
 
+    @GetMapping("/count-purchase/{id}")
+    @Operation(summary = "Numero di vendite in un dato periodo attraverso ID salesman")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
+    public ResponseEntity<Object> countPurchasesSalesman(@PathVariable Long id, @RequestParam LocalDate startDate,
+                                                     @RequestParam LocalDate endDate){
+        if(id != null && startDate !=null && endDate != null){
+            Long result = showroomProfitRepository.countPurchaseForSalesman(id, startDate, endDate);
+            return ResponseEntity.ok(result);
+        }else{
+            return ResponseEntity.badRequest().body("Something went wrong");
+        }
+    }
+    @GetMapping("/profit-bysalesman/{id}")
+    @Operation(summary = "Guadagno di un venditore in un certo periodo di tempo tramite ID salesman")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
+    public ResponseEntity<Object> profitsBySalesman(@PathVariable Long id, @RequestParam LocalDate startDate,
+                                               @RequestParam LocalDate endDate){
+        if(id != null && startDate !=null && endDate != null){
+            Double profitBySalesman = showroomProfitRepository.profitBySalesman(id, startDate, endDate);
+            return ResponseEntity.ok(profitBySalesman);
+        }else{
+            return ResponseEntity.badRequest().body("Something went wrong");
+        }
+    }
+    @GetMapping("/profit")
+    @Operation(summary = "Guadagno complessivo autosalone in un certo periodo di tempo")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
+    public ResponseEntity<Object> allProfits(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate){
+        if(startDate !=null && endDate != null){
+            Double profits = showroomProfitRepository.profitShowroom(startDate, endDate);
+            return ResponseEntity.ok(profits);
+        }else{
+            return ResponseEntity.badRequest().body("Insert valid dates");
+        }
+    }
+    @GetMapping("/most-sold")
+    @Operation(summary = "Veicolo più venduto nell'autosalone in un certo periodo di tempo")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
+    public ResponseEntity<Object> mostPurchaseVehicle(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate){
+        if(startDate !=null && endDate != null){
+            VehicleMostSoldDTO vehicleMostSoldDTO = vehicleRepository.mostPurchasesVehicle(startDate, endDate).getFirst();
+            return ResponseEntity.ok(vehicleMostSoldDTO);
+        }else{
+            return ResponseEntity.badRequest().body("Insert valid dates");
+        }
+    }
 }

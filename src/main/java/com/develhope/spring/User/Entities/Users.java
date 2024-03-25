@@ -1,5 +1,6 @@
 package com.develhope.spring.User.Entities;
 
+import com.develhope.spring.User.Enum.UserTypeEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,8 @@ public class Users {
     @Column(nullable = false)
     private String password;
 
-
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserTypeEnum role;
 }
 

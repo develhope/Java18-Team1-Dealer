@@ -12,6 +12,7 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table
@@ -118,6 +119,4 @@ public class Vehicle {
     private Purchase purchase;
     @OneToOne
     private  Rent rent;
-
-
 }

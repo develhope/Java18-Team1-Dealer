@@ -3,8 +3,7 @@ package com.develhope.spring.Purchase.Entities;
 import com.develhope.spring.Purchase.Entities.Enums.OrderStatusEnum;
 import com.develhope.spring.Purchase.Entities.Enums.VehicleStatusEnum;
 import com.develhope.spring.ShowroomProfit.ShowroomProfit;
-import com.develhope.spring.User.Entities.Customer;
-import com.develhope.spring.User.Entities.Salesman;
+import com.develhope.spring.User.Entities.Users;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
 import jakarta.persistence.*;
 import lombok.*;
@@ -33,9 +32,8 @@ public class Purchase {
     private VehicleStatusEnum vehicleStatusEnum;
 
     @ManyToOne
-    private Salesman salesman;
-    @ManyToOne
-    private Customer customer;
+    private Users users;
+
     @OneToOne
     private Vehicle vehicle;
     @OneToOne

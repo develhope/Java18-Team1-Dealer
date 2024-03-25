@@ -29,26 +29,26 @@ public class CustomerController {
     public Vehicle getInfoById(@PathVariable Long id) {
         return customerService.getVehicleInfoByid(id);
     }
-    @PostMapping("/newpurchase")
-    @Operation(summary = "Crea nuovo Purchase")
-    @ApiResponses(value ={
-            @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-            @ApiResponse(responseCode = "500", description = "Server Error")
-    })
-    public @ResponseBody Purchase createNewPurchase(@RequestBody CustomerPurchaseCreationDTO purchaseCreation){
-        return customerService.createNewPurchase(purchaseCreation);
-    }
-    @PostMapping("/neworder")
-    @Operation(summary = "Crea nuovo Purchase(ordine)")
-    @ApiResponses(value ={
-            @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-            @ApiResponse(responseCode = "500", description = "Server Error")
-    })
-    public ResponseEntity<Purchase> createNewOrder(@RequestParam Long id, @RequestBody Purchase order) {
-        return ResponseEntity.ok(customerService.createNewOrder(id, order));
-    }
+//    @PostMapping("/newpurchase")
+//    @Operation(summary = "Crea nuovo Purchase")
+//    @ApiResponses(value ={
+//            @ApiResponse(responseCode = "200", description = "OK"),
+//            @ApiResponse(responseCode = "400", description = "Bad Request"),
+//            @ApiResponse(responseCode = "500", description = "Server Error")
+//    })
+//    public @ResponseBody Purchase createNewPurchase(@RequestBody CustomerPurchaseCreationDTO purchaseCreation){
+//        return customerService.createNewPurchase(purchaseCreation);
+//    }
+//    @PostMapping("/neworder")
+//    @Operation(summary = "Crea nuovo Purchase(ordine)")
+//    @ApiResponses(value ={
+//            @ApiResponse(responseCode = "200", description = "OK"),
+//            @ApiResponse(responseCode = "400", description = "Bad Request"),
+//            @ApiResponse(responseCode = "500", description = "Server Error")
+//    })
+//    public ResponseEntity<Purchase> createNewOrder(@RequestParam Long id, @RequestBody Purchase order) {
+//        return ResponseEntity.ok(customerService.createNewOrder(id, order));
+//    }
 
     @DeleteMapping("/delete-order/{id}")
     @Operation(summary = "Elimina un Purchase(ordine) attraverso ID")
@@ -60,16 +60,16 @@ public class CustomerController {
     public ResponseEntity<Boolean> deleteOrder(@PathVariable Long id) {
         return ResponseEntity.ok(customerService.deleteOrder(id));
     }
-    @PostMapping("/newrent")
-    @Operation(summary = "Crea nuovo Rent(noleggio)")
-    @ApiResponses(value ={
-            @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-            @ApiResponse(responseCode = "500", description = "Server Error")
-    })
-    public ResponseEntity<Rent> createRent(@RequestParam Long id, @RequestBody Rent rent) {
-        return ResponseEntity.ok(customerService.createNewRent(id, rent));
-    }
+//    @PostMapping("/newrent")
+//    @Operation(summary = "Crea nuovo Rent(noleggio)")
+//    @ApiResponses(value ={
+//            @ApiResponse(responseCode = "200", description = "OK"),
+//            @ApiResponse(responseCode = "400", description = "Bad Request"),
+//            @ApiResponse(responseCode = "500", description = "Server Error")
+//    })
+//    public ResponseEntity<Rent> createRent(@RequestParam Long id, @RequestBody Rent rent) {
+//        return ResponseEntity.ok(customerService.createNewRent(id, rent));
+//    }
     @DeleteMapping("/delete-rent/{id}")
     @Operation(summary = "Elimina un Rent(noleggio) attraverso ID")
     @ApiResponses(value ={

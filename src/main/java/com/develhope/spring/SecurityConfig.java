@@ -11,6 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import javax.sql.DataSource;
 
+
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
@@ -32,6 +33,7 @@ public class SecurityConfig {
     }
     @Autowired
     private DataSource dataSource;
+
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
@@ -40,5 +42,4 @@ public class SecurityConfig {
                 .authoritiesByUsernameQuery("SELECT first_name, CONCAT('ROLE_', role) FROM users WHERE first_name=?")
                 .passwordEncoder(NoOpPasswordEncoder.getInstance());
     }
-    //TODO: non funziona con 3 tabelle la query
 }

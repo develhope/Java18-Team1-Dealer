@@ -5,8 +5,8 @@ import com.develhope.spring.Purchase.Entities.Purchase;
 import com.develhope.spring.Purchase.Repositories.PurchaseRepository;
 import com.develhope.spring.Rent.Entities.Rent;
 import com.develhope.spring.Rent.Repositories.RentRepository;
-import com.develhope.spring.User.Entities.Salesman;
-import com.develhope.spring.User.Repositories.SalesmanRepository;
+import com.develhope.spring.User.Entities.Users;
+import com.develhope.spring.User.Repositories.UsersRepository;
 import com.develhope.spring.Vehicle.Entities.Enums.StatusTypeEnum;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
 import com.develhope.spring.Vehicle.Repositories.VehicleRepository;
@@ -21,7 +21,7 @@ import java.util.Optional;
 @Service
 public class SalesmanService {
     @Autowired
-    private SalesmanRepository salesmanRepository;
+    private UsersRepository usersRepository;
     @Autowired
     private PurchaseRepository purchaseRepository;
     @Autowired
@@ -51,8 +51,8 @@ public class SalesmanService {
             throw new NoSuchElementException("Ordini con stato " + orderStatus + " non trovati");
         }
     }
-    public Salesman updateSalesmanInfo(Long idSalesman,Salesman updateSalesman){
-        Salesman salesman = salesmanRepository.findById(idSalesman).orElseThrow(() -> new NoSuchElementException("Venditore con id " + idSalesman + " non trovato"));
+    public Users updateSalesmanInfo(Long idSalesman, Users updateSalesman){
+        Users salesman = usersRepository.findById(idSalesman).orElseThrow(() -> new NoSuchElementException("Venditore con id " + idSalesman + " non trovato"));
         boolean isSalesManUpdated = false;
 
         if(updateSalesman.getFirstName() != null && !updateSalesman.getFirstName().isEmpty()){
@@ -84,28 +84,28 @@ public class SalesmanService {
             isSalesManUpdated = true;
         }
         if(isSalesManUpdated){
-            salesman = salesmanRepository.save(salesman);
+            salesman = usersRepository.save(salesman);
         }
         return salesman;
 
     }
-    public Purchase createNewOrder(Long id, Purchase Order) {
-        Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Vehicle with id " + id + " not found."));
-        if (!vehicle.getStatusTypeEnum().equals(StatusTypeEnum.ORDERABLE) || !vehicle.getAvailableRental()) {
-            throw new IllegalStateException("Vehicle not orderable.");
-        }
-        Purchase newOrder = new Purchase();
-        newOrder.setVehicle(vehicle);
-        newOrder.setCustomer(Order.getCustomer());
-        newOrder.setSalesman(Order.getSalesman());
-        newOrder.setAdvancePayment(Order.getAdvancePayment());
-        newOrder.setIsPaid(Order.getIsPaid());
-        newOrder.setOrderStatusEnum(Order.getOrderStatusEnum());
-
-        vehicle.setStatusTypeEnum(StatusTypeEnum.SOLD);
-        vehicleRepository.save(vehicle);
-        return purchaseRepository.save(newOrder);
-    }
+//    public Purchase createNewOrder(Long id, Purchase Order) {
+//        Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Vehicle with id " + id + " not found."));
+//        if (!vehicle.getStatusTypeEnum().equals(StatusTypeEnum.ORDERABLE) || !vehicle.getAvailableRental()) {
+//            throw new IllegalStateException("Vehicle not orderable.");
+//        }
+//        Purchase newOrder = new Purchase();
+//        newOrder.setVehicle(vehicle);
+//        newOrder.setUsers(Order.getUsers());
+//        newOrder.setSalesman(Order.getSalesman());
+//        newOrder.setAdvancePayment(Order.getAdvancePayment());
+//        newOrder.setIsPaid(Order.getIsPaid());
+//        newOrder.setOrderStatusEnum(Order.getOrderStatusEnum());
+//
+//        vehicle.setStatusTypeEnum(StatusTypeEnum.SOLD);
+//        vehicleRepository.save(vehicle);
+//        return purchaseRepository.save(newOrder);
+//    }
     public Purchase updateOrder(Long id, Purchase order) {
         Purchase orderUpdated = purchaseRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Order with id " + id + " not found."));
         if (order.getOrderStatusEnum() != null){
@@ -118,30 +118,30 @@ public class SalesmanService {
         purchaseRepository.deleteById(id);
         return true;
     }
-    public Rent createNewRent(Long id, Rent rent) {
-        Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Vehicle with id " + id + " not found."));
-        if (!vehicle.getStatusTypeEnum().equals(StatusTypeEnum.PURCHASABLE) || !vehicle.getAvailableRental()) {
-            throw new IllegalStateException("Vehicle not rentable.");
-        }
-        long rentalDays = rent.getDateStart().until(rent.getDateEnd()).getDays() + 1;
-        BigDecimal totalAmount = rent.getDailyRate().multiply(BigDecimal.valueOf(rentalDays));
-
-        Rent newRent = new Rent();
-        newRent.setVehicle(vehicle);
-        newRent.setCustomer(rent.getCustomer());
-        newRent.setAdvancePayment(rent.getAdvancePayment());
-        newRent.setDateStart(rent.getDateStart());
-        newRent.setDateEnd(rent.getDateEnd());
-        newRent.setDailyRate(rent.getDailyRate());
-        newRent.setTotalPrice(totalAmount);
-        newRent.setPickUpLocation(vehicle.getCurrentLocation());
-        newRent.setDeliveryPlace(rent.getDeliveryPlace());
-        newRent.setIsPaid(rent.getIsPaid());
-
-        vehicle.setStatusTypeEnum(StatusTypeEnum.NOTAVAILABLE);
-        vehicleRepository.save(vehicle);
-        return rentRepository.save(newRent);
-    }
+//    public Rent createNewRent(Long id, Rent rent) {
+//        Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Vehicle with id " + id + " not found."));
+//        if (!vehicle.getStatusTypeEnum().equals(StatusTypeEnum.PURCHASABLE) || !vehicle.getAvailableRental()) {
+//            throw new IllegalStateException("Vehicle not rentable.");
+//        }
+//        long rentalDays = rent.getDateStart().until(rent.getDateEnd()).getDays() + 1;
+//        BigDecimal totalAmount = rent.getDailyRate().multiply(BigDecimal.valueOf(rentalDays));
+//
+//        Rent newRent = new Rent();
+//        newRent.setVehicle(vehicle);
+//        newRent.setCustomer(rent.getCustomer());
+//        newRent.setAdvancePayment(rent.getAdvancePayment());
+//        newRent.setDateStart(rent.getDateStart());
+//        newRent.setDateEnd(rent.getDateEnd());
+//        newRent.setDailyRate(rent.getDailyRate());
+//        newRent.setTotalPrice(totalAmount);
+//        newRent.setPickUpLocation(vehicle.getCurrentLocation());
+//        newRent.setDeliveryPlace(rent.getDeliveryPlace());
+//        newRent.setIsPaid(rent.getIsPaid());
+//
+//        vehicle.setStatusTypeEnum(StatusTypeEnum.NOTAVAILABLE);
+//        vehicleRepository.save(vehicle);
+//        return rentRepository.save(newRent);
+//    }
     public Rent updateRent(Long id, Rent rent) {
         Rent rentUpdated = rentRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Rent with id " + id + " not found."));
         if (rent.getDateStart() != null){

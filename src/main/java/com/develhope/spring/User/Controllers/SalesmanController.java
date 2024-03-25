@@ -63,16 +63,16 @@ public class SalesmanController {
     public OrderStatusEnum updateOrderStatus(@PathVariable Long id, @RequestParam OrderStatusEnum orderStatus){
         return salesmanService.updateOrderStatus(id,orderStatus);
     }
-    @PostMapping("/neworder")
-    @Operation(summary = "Crea nuovo Purchase(ordine)")
-    @ApiResponses(value ={
-            @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-            @ApiResponse(responseCode = "500", description = "Server Error")
-    })
-    public ResponseEntity<Purchase> createNewOrder(@RequestParam Long id, @RequestBody Purchase order) {
-        return ResponseEntity.ok(salesmanService.createNewOrder(id, order));
-    }
+//    @PostMapping("/neworder")
+//    @Operation(summary = "Crea nuovo Purchase(ordine)")
+//    @ApiResponses(value ={
+//            @ApiResponse(responseCode = "200", description = "OK"),
+//            @ApiResponse(responseCode = "400", description = "Bad Request"),
+//            @ApiResponse(responseCode = "500", description = "Server Error")
+//    })
+//    public ResponseEntity<Purchase> createNewOrder(@RequestParam Long id, @RequestBody Purchase order) {
+//        return ResponseEntity.ok(salesmanService.createNewOrder(id, order));
+//    }
 
     @PutMapping("/update-order/{id}")
     @Operation(summary = "Modifica un Purchase(ordine) attraverso ID")
@@ -96,16 +96,16 @@ public class SalesmanController {
         return ResponseEntity.ok(salesmanService.deleteOrder(id));
     }
 
-    @PostMapping("/newrent")
-    @Operation(summary = "Crea nuovo Rent(noleggio)")
-    @ApiResponses(value ={
-            @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-            @ApiResponse(responseCode = "500", description = "Server Error")
-    })
-    public ResponseEntity<Rent> createNewRent(@RequestParam Long id, @RequestBody Rent rent) {
-        return ResponseEntity.ok(salesmanService.createNewRent(id, rent));
-    }
+//    @PostMapping("/newrent")
+//    @Operation(summary = "Crea nuovo Rent(noleggio)")
+//    @ApiResponses(value ={
+//            @ApiResponse(responseCode = "200", description = "OK"),
+//            @ApiResponse(responseCode = "400", description = "Bad Request"),
+//            @ApiResponse(responseCode = "500", description = "Server Error")
+//    })
+//    public ResponseEntity<Rent> createNewRent(@RequestParam Long id, @RequestBody Rent rent) {
+//        return ResponseEntity.ok(salesmanService.createNewRent(id, rent));
+//    }
 
     @PutMapping("/update-rent/{id}")
     @Operation(summary = "Modifica un Rent(noleggio) attraverso ID")

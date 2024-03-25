@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
-    @Query(value = "SELECT p.* FROM PURCHASE p INNER JOIN CUSTOMER c ON p.CUSTOMER_ID = c.ID WHERE c.ID = :idCustomer", nativeQuery = true)
+    @Query(value = "SELECT p.* FROM PURCHASE p INNER JOIN USERS c ON p.USERS_ID = c.ID WHERE c.ID = :idCustomer", nativeQuery = true)
     List<Purchase> purchasesByCustomer(Long idCustomer);
 
     @Query( value = "SELECT * FROM purchase WHERE order_status_enum = ?1", nativeQuery = true)

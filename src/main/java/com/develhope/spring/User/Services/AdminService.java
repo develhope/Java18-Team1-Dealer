@@ -5,6 +5,7 @@ import com.develhope.spring.Rent.Repositories.RentRepository;
 import com.develhope.spring.User.DTO.CustomerDTO;
 import com.develhope.spring.User.DTO.SalesmanDTO;
 import com.develhope.spring.User.Entities.Users;
+import com.develhope.spring.User.Enum.UserTypeEnum;
 import com.develhope.spring.User.Repositories.UsersRepository;
 import com.develhope.spring.Vehicle.Entities.Enums.*;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
@@ -324,34 +325,35 @@ public class AdminService {
     }
 
     //modifica ACQUISTO per un CUSTOMER
-//    public List<Purchase> updatePurchaseById(Long idCustomer, Long idPurchase, Purchase purchaseUpdated){
-//        if(idCustomer != null && idPurchase != null && usersRepository.findById(idCustomer).isPresent()
-//                && purchaseRepository.findById(idPurchase).isPresent()) {
-//
-//            List<Purchase> purchaseListByCustomer = purchaseRepository.purchasesByCustomer(idCustomer);
-//
-//            for (Purchase purchase : purchaseListByCustomer){
-//                if (Objects.equals(purchase.getId(), idPurchase)){
-//                    if(purchaseUpdated.getAdvancePayment() != null) {
-//                        purchase.setAdvancePayment(purchaseUpdated.getAdvancePayment());
-//                    }
-//                    if(purchaseUpdated.getIsPaid() != null){
-//                        purchase.setIsPaid(purchaseUpdated.getIsPaid());
-//                    }
-//                    if(purchaseUpdated.getOrderStatusEnum() != null){
-//                        purchase.setOrderStatusEnum(purchaseUpdated.getOrderStatusEnum());
-//                    }
-//                    if(purchaseUpdated.getSalesman() != null){
-//                        purchase.setSalesman(purchaseUpdated.getSalesman());
-//                    }
-//                }
-//                purchaseRepository.save(purchase);
-//            }
-//            return purchaseListByCustomer;
-//        }else{
-//            throw new RuntimeException("Something went wrong");
-//        }
-//    }
+    public List<Purchase> updatePurchaseById(Long idCustomer, Long idPurchase, Purchase purchaseUpdated){
+        if(idCustomer != null && idPurchase != null && usersRepository.findById(idCustomer).isPresent()
+                && purchaseRepository.findById(idPurchase).isPresent()) {
+            Users customer = usersRepository.findById(idCustomer).orElse(null);
+            if(customer.getRole().equals(UserTypeEnum.CUSTOMER)){
+                List<Purchase> purchaseListByCustomer = purchaseRepository.purchasesByCustomer(idCustomer);
+                for (Purchase purchase : purchaseListByCustomer){
+                    if (Objects.equals(purchase.getId(), idPurchase)){
+                    if(purchaseUpdated.getAdvancePayment() != null) {
+                        purchase.setAdvancePayment(purchaseUpdated.getAdvancePayment());
+                    }
+                    if(purchaseUpdated.getIsPaid() != null){
+                        purchase.setIsPaid(purchaseUpdated.getIsPaid());
+                    }
+                    if(purchaseUpdated.getOrderStatusEnum() != null){
+                        purchase.setOrderStatusEnum(purchaseUpdated.getOrderStatusEnum());
+                    }
+                    if(purchaseUpdated.getUsers() != null){
+                        purchase.setUsers(purchaseUpdated.getUsers());
+                    }
+                }
+                purchaseRepository.save(purchase);
+            }
+            return purchaseListByCustomer;
+            }
+        }else{
+            throw new RuntimeException("Something went wrong");
+        }
+    }
 
     //cancella ACQUISTO per un CUSTOMER
     public Boolean deletePurchaseById(Long idCustomer, Long idPurchase){

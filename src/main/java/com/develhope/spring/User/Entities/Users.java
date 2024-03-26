@@ -53,7 +53,6 @@ public class Users {
     @Column
     private String taxId;
 
-
     @ManyToMany
     private List<Rent> rent;
 

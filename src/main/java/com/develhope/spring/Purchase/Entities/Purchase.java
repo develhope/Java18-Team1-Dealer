@@ -32,9 +32,8 @@ public class Purchase {
     @Column(nullable = false)
     private VehicleStatusEnum vehicleStatusEnum;
 
-    @ManyToOne
-    private Users users;
-
+    @ManyToMany
+    private List<Users> users;
     @OneToOne
     private Vehicle vehicle;
     @OneToOne

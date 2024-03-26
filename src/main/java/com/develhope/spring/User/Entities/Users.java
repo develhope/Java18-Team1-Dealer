@@ -38,10 +38,10 @@ public class Users {
     @Column(nullable = false)
     private UserTypeEnum role;
 
-    @Column(nullable = false)
+    @Column
     private String phone;
 
-    @Column(nullable = false)
+    @Column
     private  String address;
 
     @Column
@@ -50,14 +50,14 @@ public class Users {
     @Column
     private String creditCard;
 
-    @Column(nullable = false, unique = true, updatable = false)
+    @Column
     private String taxId;
 
 
-    @OneToMany
+    @ManyToMany
     private List<Rent> rent;
 
-    @OneToMany
+    @ManyToMany
     private List<Purchase> purchase;
 }
 

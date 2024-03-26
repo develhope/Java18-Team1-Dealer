@@ -3,7 +3,8 @@ package com.develhope.spring.User.Controllers;
 import com.develhope.spring.Purchase.Entities.DTO.CustomerPurchaseCreationDTO;
 import com.develhope.spring.Purchase.Entities.Purchase;
 import com.develhope.spring.Rent.Entities.Rent;
-import com.develhope.spring.User.Entities.Customer;
+import com.develhope.spring.User.Entities.Users;
+import com.develhope.spring.User.Repositories.UsersRepository;
 import com.develhope.spring.User.Services.CustomerService;
 import com.develhope.spring.Vehicle.Entities.Enums.*;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
@@ -24,7 +25,10 @@ import java.util.List;
 @RequestMapping("/motorworld/customer")
 public class CustomerController {
     @Autowired
+    private UsersRepository usersRepository;
+    @Autowired
     private CustomerService customerService;
+
 
     @GetMapping("/info-vehicle/{id}")
     @Operation(summary = "Ottieni informazioni veicoli attraverso ID")
@@ -104,7 +108,7 @@ public class CustomerController {
     }
 
     @PutMapping("/updateC")
-    public Customer updateC(@PathVariable Long id, @RequestBody Customer customer) {
+    public Users updateC(@PathVariable Long id, @RequestBody Users customer) {
         return customerService.updateCustomer(id, customer);
     }
 

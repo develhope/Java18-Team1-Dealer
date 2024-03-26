@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Entity
@@ -39,8 +40,8 @@ public class Rent {
     private String deliveryPlace;
     @Column(nullable = false)
     private Boolean isPaid;
-    @ManyToOne
-    private Users users;
+    @ManyToMany
+    private List<Users> users;
     @OneToOne
     private Vehicle vehicle;
     @OneToOne

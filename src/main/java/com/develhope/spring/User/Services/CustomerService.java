@@ -6,8 +6,8 @@ import com.develhope.spring.Purchase.Entities.Purchase;
 import com.develhope.spring.Purchase.Repositories.PurchaseRepository;
 import com.develhope.spring.Rent.Entities.Rent;
 import com.develhope.spring.Rent.Repositories.RentRepository;
-import com.develhope.spring.User.Entities.Customer;
-import com.develhope.spring.User.Repositories.CustomerRepository;
+import com.develhope.spring.User.Entities.Users;
+import com.develhope.spring.User.Repositories.UsersRepository;
 import com.develhope.spring.Vehicle.Entities.Enums.*;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
 import com.develhope.spring.Vehicle.Repositories.VehicleRepository;
@@ -29,7 +29,7 @@ public class CustomerService {
     @Autowired
     private RentRepository rentRepository;
     @Autowired
-    CustomerRepository customerRepository;
+    private UsersRepository usersRepository;
 
     public Vehicle getVehicleInfoByid(Long idVehicle){
         return vehicleRepository.findById(idVehicle).orElseThrow(() -> new NoSuchElementException("Veicolo con id " + idVehicle + " non trovato"));
@@ -127,12 +127,12 @@ public List<Purchase> myOrder(Long id) throws NoSuchElementException{
     }
 
     public void deleteAccount(Long id) { //id di accesso del cliente
-        customerRepository.deleteById(id);
+        usersRepository.deleteById(id);
     }
 
-    public Customer updateCustomer(Long id, Customer updateCustomer) {
+    public Users updateCustomer(Long id, Users updateCustomer) {
 
-        Customer customer = customerRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User con id: " + id + " non trovato!"));
+        Users customer = usersRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User con id: " + id + " non trovato!"));
 
         if (updateCustomer.getFirstName() != null && !updateCustomer.getFirstName().isEmpty()) {
             customer.setFirstName(updateCustomer.getFirstName());
@@ -159,7 +159,7 @@ public List<Purchase> myOrder(Long id) throws NoSuchElementException{
             customer.setTaxId(updateCustomer.getTaxId());
         }
         if (!customer.equals(updateCustomer)) {
-            customer = customerRepository.save(customer);
+            customer = usersRepository.save(customer);
         }
 
         return customer;

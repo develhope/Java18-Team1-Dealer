@@ -9,12 +9,12 @@ import java.time.LocalDate;
 @Repository
 public interface ShowroomProfitRepository extends JpaRepository<ShowroomProfit, Long> {
     //Verificare un venditore quante vendite ha fatto in un determinato periodo di tempo
-    @Query(value = "SELECT COUNT * FROM showroom_profit WHERE purchase.salesman_id = :idsalesman AND profit_type_enum LIKE PURCHASE " +
+    @Query(value = "SELECT COUNT * FROM showroom_profit WHERE salesman_id = :idsalesman AND profit_type_enum LIKE PURCHASE " +
             "AND pay_date BETWEEN :paydate1 AND :paydate2", nativeQuery = true)
     Long countPurchaseForSalesman(Long idsalesman, LocalDate paydate1, LocalDate paydate2);
 
     //Verificare un venditore quanti soldi ha generato in un determinato periodo di tempo
-    @Query(value = "SELECT SUM(profit) FROM showroom_profit WHERE purchase.salesman_id = :idsalesman " +
+    @Query(value = "SELECT SUM(profit) FROM showroom_profit WHERE salesman_id = :idsalesman " +
             "AND pay_date BETWEEN :paydate1 AND :paydate2", nativeQuery = true)
     Double profitBySalesman(Long idsalesman,LocalDate paydate1, LocalDate paydate2);
 

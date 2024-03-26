@@ -34,7 +34,6 @@ public class SecurityConfig {
     }
     @Autowired
     private DataSource dataSource;
-
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()

@@ -11,6 +11,8 @@ import com.develhope.spring.User.Repositories.UsersRepository;
 import com.develhope.spring.Vehicle.Entities.Enums.*;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
 import com.develhope.spring.Vehicle.Repositories.VehicleRepository;
+import com.develhope.spring.Vehicle.Specifications.SearchCriteria;
+import com.develhope.spring.Vehicle.Specifications.VehicleSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -166,45 +168,7 @@ public List<Purchase> myOrder(Long id) throws NoSuchElementException{
 
     }
 
-    public List<Vehicle> searchVehicleByAllCriteria(VehiclesTypeEnum vehiclesTypeEnum,
-                                                    String brand,
-                                                    String model,
-                                                    String colour,
-                                                    Double cubiCapacity,
-                                                    Integer hP,
-                                                    Double kW,
-                                                    LocalDate registrationYear,
-                                                    FuelTypeEnum fuelTypeEnum,
-                                                    BigDecimal price,
-                                                    Double tradeDiscount,
-                                                    Boolean newVehicle,
-                                                    Double mileage,
-                                                    Integer ageLimit,
-                                                    StatusTypeEnum statusTypeEnum,
-                                                    String currentLocation,
-                                                    Boolean availableRental,
-                                                    EmissionTypeEnum emissionTypeEnum,
-                                                    Integer passengerNumber,
-                                                    Boolean windShield,
-                                                    Boolean tailBag,
-                                                    Boolean passengerBackrest,
-                                                    TransmissionTypeEnum transmissionTypeEnum,
-                                                    CarTypeEnum carTypeEnum,
-                                                    TractionTypeEnum tractionTypeEnum,
-                                                    Boolean optionFullTraction,
-                                                    Integer doors,
-                                                    Boolean centralizedClosing,
-                                                    Boolean airConditioning,
-                                                    Boolean bluetooth,
-                                                    Boolean satNav,
-                                                    Boolean electricRoof,
-                                                    Boolean parkAssist,
-                                                    Boolean spareTire,
-                                                    Boolean antiTheft,
-                                                    Boolean passengerTransport,
-                                                    Boolean windowedBackDoor,
-                                                    Boolean slideSideDoor,
-                                                    Boolean antiCollisionSystem) {
-        return vehicleRepository.findByAllCriteria(vehiclesTypeEnum, brand, model, colour, cubiCapacity, hP, kW, registrationYear, fuelTypeEnum, price, tradeDiscount, newVehicle, mileage, ageLimit, statusTypeEnum, currentLocation, availableRental, emissionTypeEnum, passengerNumber, windShield, tailBag, passengerBackrest, transmissionTypeEnum, carTypeEnum, tractionTypeEnum, optionFullTraction, doors, centralizedClosing, airConditioning, bluetooth, satNav, electricRoof, parkAssist, spareTire, antiTheft, passengerTransport, windowedBackDoor, slideSideDoor, antiCollisionSystem);
+    public List<Vehicle> vehicleListForParams(String key, Object value) {
+        return vehicleRepository.findAll(new VehicleSpecification(new SearchCriteria(key, value)));
     }
 }

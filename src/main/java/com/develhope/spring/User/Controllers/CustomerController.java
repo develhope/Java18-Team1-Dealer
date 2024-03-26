@@ -93,79 +93,69 @@ public class CustomerController {
     }
 
     @GetMapping("/purchaseCList")
+    @Operation(summary = "Ottieni lista di acquisti del cliente")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
     public List<Purchase> purchaseList(@PathVariable Long id) {
         return customerService.myPurchase(id);
     }
 
     @GetMapping("/orderCList")
+    @Operation(summary = "Ottieni lista di ordini del cliente")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
     public List<Purchase> orderList(@PathVariable Long id) {
         return customerService.myOrder(id);
     }
 
     @GetMapping("/rentCList")
+    @Operation(summary = "Ottieni lista di noleggi del cliente")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
     public List<Rent> rentList(@PathVariable Long id) {
         return customerService.myRent(id);
     }
 
     @PutMapping("/updateC")
-    public Users updateC(@PathVariable Long id, @RequestBody Users customer) {
+    @Operation(summary = "Aggiorna dati e profilo del cliente")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
+    public Users updateC(@PathVariable Long id, @RequestBody Customer customer) {
         return customerService.updateCustomer(id, customer);
     }
 
     @DeleteMapping("/deleteCAccount/{id}")
+    @Operation(summary = "Elimina account del cliente")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
     public void deleteCAccount(@PathVariable Long id) {
         customerService.deleteAccount(id);
     }
 
     @GetMapping("/search")
-    public List<Vehicle> searchVehicles(
-            @RequestParam(required = false) VehiclesTypeEnum vehiclesTypeEnum,
-            @RequestParam(required = false) String brand,
-            @RequestParam(required = false) String model,
-            @RequestParam(required = false) String colour,
-            @RequestParam(required = false) Double cubiCapacity,
-            @RequestParam(required = false) Integer hP,
-            @RequestParam(required = false) Double kW,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate registrationYear,
-            @RequestParam(required = false) FuelTypeEnum fuelTypeEnum,
-            @RequestParam(required = false) BigDecimal price,
-            @RequestParam(required = false) Double tradeDiscount,
-            @RequestParam(required = false) Boolean newVehicle,
-            @RequestParam(required = false) Double mileage,
-            @RequestParam(required = false) Integer ageLimit,
-            @RequestParam(required = false) StatusTypeEnum statusTypeEnum,
-            @RequestParam(required = false) String currentLocation,
-            @RequestParam(required = false) Boolean availableRental,
-            @RequestParam(required = false) EmissionTypeEnum emissionType,
-            @RequestParam(required = false) Integer passengerNumber,
-            @RequestParam(required = false) Boolean windShield,
-            @RequestParam(required = false) Boolean tailBag,
-            @RequestParam(required = false) Boolean passengerBackrest,
-            @RequestParam(required = false) TransmissionTypeEnum transmissionTypeEnum,
-            @RequestParam(required = false) CarTypeEnum carTypeEnum,
-            @RequestParam(required = false) TractionTypeEnum tractionTypeEnum,
-            @RequestParam(required = false) Boolean optionFullTraction,
-            @RequestParam(required = false) Integer doors,
-            @RequestParam(required = false) Boolean centralizedClosing,
-            @RequestParam(required = false) Boolean airConditioning,
-            @RequestParam(required = false) Boolean bluetooth,
-            @RequestParam(required = false) Boolean satNav,
-            @RequestParam(required = false) Boolean electricRoof,
-            @RequestParam(required = false) Boolean parkAssist,
-            @RequestParam(required = false) Boolean spareTire,
-            @RequestParam(required = false) Boolean antiTheft,
-            @RequestParam(required = false) Boolean passengerTransport,
-            @RequestParam(required = false) Boolean windowedBackDoor,
-            @RequestParam(required = false) Boolean slideSideDoor,
-            @RequestParam(required = false) Boolean antiCollisionSystem
-    ) {
-        return customerService.searchVehicleByAllCriteria(
-                vehiclesTypeEnum, brand, model, colour, cubiCapacity, hP, kW, registrationYear,
-                fuelTypeEnum,price, tradeDiscount, newVehicle, mileage, ageLimit, statusTypeEnum, currentLocation,
-                availableRental, emissionType, passengerNumber, windShield, tailBag, passengerBackrest,
-                transmissionTypeEnum, carTypeEnum, tractionTypeEnum,optionFullTraction, doors, centralizedClosing, airConditioning, bluetooth,
-                satNav, electricRoof, parkAssist, spareTire, antiTheft, passengerTransport, windowedBackDoor,
-                slideSideDoor, antiCollisionSystem
-        );
+    @Operation(summary = "Ottieni una lista di veicoli scegliendo un parametro di ricerca")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
+    public List<Vehicle> searchVehiclesByAttribute(@RequestParam String key, @RequestParam String value){
+        return customerService.vehicleListForParams(key, value);
+
     }
 }

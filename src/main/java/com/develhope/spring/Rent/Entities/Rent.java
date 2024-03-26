@@ -40,8 +40,14 @@ public class Rent {
     private String deliveryPlace;
     @Column(nullable = false)
     private Boolean isPaid;
-    @ManyToMany
-    private List<Users> users;
+
+    @ManyToOne
+    @JoinColumn(name = "salesman_id")
+    private Users salesman;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Users customer;
+
     @OneToOne
     private Vehicle vehicle;
     @OneToOne

@@ -9,10 +9,11 @@ import java.util.List;
 
 @Repository
 public interface UsersRepository extends JpaRepository<Users, Long> {
-    @Query(value = "SELECT * FROM users WHERE role = ADMIN")
-    List<Users> findAllAdmins();
-    @Query(value = "SELECT * FROM users WHERE role = SALESMAN")
-    List<Users> findAllSalesmen();
-    @Query(value = "SELECT * FROM users WHERE role = CUSTOMER")
-    List<Users> findAllCustomers();
+//    @Query(value = "SELECT * FROM users WHERE role = ADMIN")
+//    List<Users> findAllAdmins();
+//    @Query(value = "SELECT * FROM users WHERE role = SALESMAN")
+//    List<Users> findAllSalesmen();
+//    @Query(value = "SELECT * FROM users WHERE role = CUSTOMER")
+//    List<Users> findAllCustomers();
+    List<Users> findByRole(String role);
 }

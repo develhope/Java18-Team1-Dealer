@@ -1,5 +1,6 @@
 package com.develhope.spring;
 
+import com.develhope.spring.User.Enum.UserTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,8 +23,8 @@ public class SecurityConfig {
         http
                 .authorizeRequests((authz) -> authz
                         .requestMatchers("/motorworld/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/motorworld/salesman/**").hasRole("SALESMAN")
-                        .requestMatchers("/motorworld/customer/**").hasRole("CUSTOMER")
+                        .requestMatchers("/motorworld/salesman/**").hasAnyRole("ADMIN","SALESMAN")
+                        .requestMatchers("/motorworld/customer/**").hasAnyRole("ADMIN","CUSTOMER")
                         .anyRequest().authenticated()
                 )
                 .formLogin(withDefaults())

@@ -100,22 +100,22 @@ public class AdminController {
         }
     }
 
-//    @PutMapping("/update-purchase/{idCustomer}/{idPurchase}")
-//    @Operation(summary = "Modifica di un acquisto attraverso ID cliente e ID acquisto")
-//    @ApiResponses(value ={
-//            @ApiResponse(responseCode = "200", description = "OK"),
-//            @ApiResponse(responseCode = "400", description = "Bad Request"),
-//            @ApiResponse(responseCode = "500", description = "Server Error")
-//    })
-//    public ResponseEntity<List<Purchase>> updatePurchase(
-//            @PathVariable Long idCustomer, @PathVariable Long idPurchase, @RequestBody Purchase purchase){
-//        List<Purchase> customerPurchases = adminService.updatePurchaseById(idCustomer, idPurchase, purchase);
-//        if(customerPurchases != null) {
-//            return ResponseEntity.ok().body(customerPurchases);
-//        }else{
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
+    @PutMapping("/update-purchase/{idCustomer}/{idPurchase}")
+    @Operation(summary = "Modifica di un acquisto attraverso ID cliente e ID acquisto")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
+    public ResponseEntity<List<Purchase>> updatePurchase(
+            @PathVariable Long idCustomer, @PathVariable Long idPurchase, @RequestBody Purchase purchase){
+        List<Purchase> customerPurchases = adminService.updatePurchaseById(idCustomer, idPurchase, purchase);
+        if(customerPurchases != null) {
+            return ResponseEntity.ok().body(customerPurchases);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @DeleteMapping("/delete-purchase/{idCustomer}/{idPurchase}")
     @Operation(summary = "Elimina un acquisto attraverso ID purchase")
@@ -133,16 +133,16 @@ public class AdminController {
         }
     }
 
-//    @PostMapping("/newpurchase")
-//    @Operation(summary = "Crea nuovo Purchase")
-//    @ApiResponses(value ={
-//            @ApiResponse(responseCode = "200", description = "OK"),
-//            @ApiResponse(responseCode = "400", description = "Bad Request"),
-//            @ApiResponse(responseCode = "500", description = "Server Error")
-//    })
-//    public @ResponseBody Purchase createNewPurchase(@RequestBody AdminPurchaseCreationDTO purchaseCreation) {
-//        return adminService.createNewPurchase(purchaseCreation);
-//    }
+    @PostMapping("/newpurchase")
+    @Operation(summary = "Crea nuovo Purchase")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
+    public @ResponseBody Purchase createNewPurchase(@RequestBody AdminPurchaseCreationDTO purchaseCreation) {
+        return adminService.createNewPurchase(purchaseCreation);
+    }
 
     @GetMapping("/getAll/salesmen")
     @Operation(summary = "Ottiene la lista dei venditori")
@@ -230,27 +230,27 @@ public class AdminController {
         return adminService.modifyCustomer(id, customer);
     }
 
-//    @PostMapping("/neworder")
-//    @Operation(summary = "Crea nuovo Purchase(ordine)")
-//    @ApiResponses(value ={
-//            @ApiResponse(responseCode = "200", description = "OK"),
-//            @ApiResponse(responseCode = "400", description = "Bad Request"),
-//            @ApiResponse(responseCode = "500", description = "Server Error")
-//    })
-//    public ResponseEntity<Purchase> createOrder(@RequestParam Long id, @RequestBody Purchase order) {
-//        return ResponseEntity.ok(adminService.createNewOrder(id, order));
-//    }
+    @PostMapping("/neworder")
+    @Operation(summary = "Crea nuovo Purchase(ordine)")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
+    public ResponseEntity<Purchase> createOrder(@RequestParam Long id, @RequestBody Purchase order) {
+        return ResponseEntity.ok(adminService.createNewOrder(id, order));
+    }
 
-//    @PutMapping("/update-order/{id}")
-//    @Operation(summary = "Modifica un Purchase(ordine) attraverso ID")
-//    @ApiResponses(value ={
-//            @ApiResponse(responseCode = "200", description = "OK"),
-//            @ApiResponse(responseCode = "400", description = "Bad Request"),
-//            @ApiResponse(responseCode = "500", description = "Server Error")
-//    })
-//    public ResponseEntity<Purchase> updateOrder(@PathVariable Long id, @RequestBody Purchase order) {
-//        return ResponseEntity.ok(adminService.updateOrder(id, order));
-//    }
+    @PutMapping("/update-order/{id}")
+    @Operation(summary = "Modifica un Purchase(ordine) attraverso ID")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
+    public ResponseEntity<Purchase> updateOrder(@PathVariable Long id, @RequestBody Purchase order) {
+        return ResponseEntity.ok(adminService.updateOrder(id, order));
+    }
 
     @DeleteMapping("/delete-order/{id}")
     @Operation(summary = "Elimina un Purchase(ordine) attraverso ID")
@@ -263,27 +263,27 @@ public class AdminController {
         return ResponseEntity.ok(adminService.deleteOrder(id));
     }
 
-//    @PostMapping("/newrent")
-//    @Operation(summary = "Crea nuovo Rent(noleggio)")
-//    @ApiResponses(value ={
-//            @ApiResponse(responseCode = "200", description = "OK"),
-//            @ApiResponse(responseCode = "400", description = "Bad Request"),
-//            @ApiResponse(responseCode = "500", description = "Server Error")
-//    })
-//    public ResponseEntity<Rent> createRent(@RequestParam Long id, @RequestBody Rent rent) {
-//        return ResponseEntity.ok(adminService.createNewRent(id, rent));
-//    }
+    @PostMapping("/newrent")
+    @Operation(summary = "Crea nuovo Rent(noleggio)")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
+    public ResponseEntity<Rent> createRent(@RequestParam Long id, @RequestBody Rent rent) {
+        return ResponseEntity.ok(adminService.createNewRent(id, rent));
+    }
 
-//    @PutMapping("/update-rent/{id}")
-//    @Operation(summary = "Modifica un Rent(noleggio) attraverso ID")
-//    @ApiResponses(value ={
-//            @ApiResponse(responseCode = "200", description = "OK"),
-//            @ApiResponse(responseCode = "400", description = "Bad Request"),
-//            @ApiResponse(responseCode = "500", description = "Server Error")
-//    })
-//    public ResponseEntity<Rent> updateRent(@PathVariable Long id, @RequestBody Rent rent) {
-//        return ResponseEntity.ok(adminService.updateRent(id, rent));
-//    }
+    @PutMapping("/update-rent/{id}")
+    @Operation(summary = "Modifica un Rent(noleggio) attraverso ID")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "500", description = "Server Error")
+    })
+    public ResponseEntity<Rent> updateRent(@PathVariable Long id, @RequestBody Rent rent) {
+        return ResponseEntity.ok(adminService.updateRent(id, rent));
+    }
 
     @DeleteMapping("/delete-rent/{id}")
     @Operation(summary = "Elimina un Rent(noleggio) attraverso ID")

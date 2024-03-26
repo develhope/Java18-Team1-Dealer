@@ -92,8 +92,8 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.deleteRent(id));
     }
 
-    @GetMapping("/purchaseCList")
-    @Operation(summary = "Ottieni lista di acquisti del cliente")
+    @GetMapping("/purchases/{id}")
+    @Operation(summary = "Ottieni lista di acquisti del cliente attraverso ID acquisto(Purchase)")
     @ApiResponses(value ={
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "400", description = "Bad Request"),
@@ -103,8 +103,8 @@ public class CustomerController {
         return customerService.myPurchase(id);
     }
 
-    @GetMapping("/orderCList")
-    @Operation(summary = "Ottieni lista di ordini del cliente")
+    @GetMapping("/orders/{id}")
+    @Operation(summary = "Ottieni lista di ordini del cliente attraverso ID")
     @ApiResponses(value ={
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "400", description = "Bad Request"),
@@ -114,8 +114,8 @@ public class CustomerController {
         return customerService.myOrder(id);
     }
 
-    @GetMapping("/rentCList")
-    @Operation(summary = "Ottieni lista di noleggi del cliente")
+    @GetMapping("/rents/{id}")
+    @Operation(summary = "Ottieni lista di noleggi del cliente attraverso ID")
     @ApiResponses(value ={
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "400", description = "Bad Request"),
@@ -125,19 +125,19 @@ public class CustomerController {
         return customerService.myRent(id);
     }
 
-    @PutMapping("/updateC")
-    @Operation(summary = "Aggiorna dati e profilo del cliente")
+    @PutMapping("/update-customer/{id}")
+    @Operation(summary = "Aggiorna dati e profilo del cliente attraverso ID")
     @ApiResponses(value ={
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "400", description = "Bad Request"),
             @ApiResponse(responseCode = "500", description = "Server Error")
     })
-    public Users updateC(@PathVariable Long id, @RequestBody Customer customer) {
+    public Users updateC(@PathVariable Long id, @RequestBody Users customer) {
         return customerService.updateCustomer(id, customer);
     }
 
-    @DeleteMapping("/deleteCAccount/{id}")
-    @Operation(summary = "Elimina account del cliente")
+    @DeleteMapping("/delete-customer/{id}")
+    @Operation(summary = "Elimina account del cliente attraverso ID cliente")
     @ApiResponses(value ={
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "400", description = "Bad Request"),

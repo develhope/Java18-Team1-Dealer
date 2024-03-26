@@ -67,7 +67,7 @@ public class AdminService {
     //get lista salesman
     public List<SalesmanDTO> getSalesmenList(){
 
-        List<Users> salesmen = usersRepository.findAll();
+        List<Users> salesmen = usersRepository.findAllSalesman();
         List<SalesmanDTO> salesmanDTOS = new ArrayList<>();
 
         for (Users salesman : salesmen){
@@ -126,7 +126,7 @@ public class AdminService {
     //get lista customer
     public List<CustomerDTO> getCustomersList(){
 
-        List<Users> customers = usersRepository.findAll();
+        List<Users> customers = usersRepository.findAllCustomer();
         List<CustomerDTO> customerDTOs = new ArrayList<>();
 
         for (Users customer : customers){

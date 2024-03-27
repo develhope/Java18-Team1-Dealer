@@ -11,13 +11,17 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
   application:
     name: spring-authentication
   config:
     activate:
       on-profile: prod
+token:
+  signing:
+    #This key is used as base to generate tokens for authentication
+    key: 413F4428472B4B6250655368566D5970337336763979244226452948404D6351
 name: prod-YAML
 server:
   port: 8080

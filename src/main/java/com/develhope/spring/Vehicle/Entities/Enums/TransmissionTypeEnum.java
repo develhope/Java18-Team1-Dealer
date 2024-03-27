@@ -1,6 +1,6 @@
 package com.develhope.spring.Vehicle.Entities.Enums;
 
-public enum TransmissionType {
+public enum TransmissionTypeEnum {
     MANUAL,
     SEQUENTIAL,
     AUTOMATIC

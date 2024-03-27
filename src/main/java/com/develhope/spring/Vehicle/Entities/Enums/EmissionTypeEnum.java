@@ -1,6 +1,6 @@
 package com.develhope.spring.Vehicle.Entities.Enums;
 
-public enum EmissionType {
+public enum EmissionTypeEnum {
     EURO0,
     EURO1,
     EURO2,

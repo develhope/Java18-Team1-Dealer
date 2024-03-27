@@ -1,6 +1,6 @@
 package com.develhope.spring.Vehicle.Entities.Enums;
 
-    public enum FuelType {
+    public enum FuelTypeEnum {
         GASOLINE,
         DIESEL,
         GPL,

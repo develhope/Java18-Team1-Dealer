@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import com.develhope.spring.Purchase.Entities.DTO.AdminPurchaseCreationDTO;
 
@@ -41,8 +42,8 @@ public class AdminController {
             @ApiResponse(responseCode = "400", description = "Bad Request"),
             @ApiResponse(responseCode = "500", description = "Server Error")
     })
-    public @ResponseBody Vehicle newVehicle(@RequestBody Vehicle vehicle){
-
+    public @ResponseBody Vehicle newVehicle(@AuthenticationPrincipal Users users, @RequestBody Vehicle vehicle){
+        System.out.println(users);
         return adminService.newVehicle(vehicle);
     }
 

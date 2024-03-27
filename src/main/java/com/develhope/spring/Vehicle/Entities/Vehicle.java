@@ -112,11 +112,8 @@ public class Vehicle {
     @Column
     private Boolean antiCollisionSystem;
 
-
-
-
-    @OneToOne
-    private Purchase purchase;
-    @OneToOne
-    private  Rent rent;
+//    @OneToOne
+//    private Purchase purchase;
+//    @OneToOne
+//    private  Rent rent;
 }

@@ -6,17 +6,22 @@ import com.develhope.spring.User.Enum.UserTypeEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Data
 @Table
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Users {
+public class Users implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -53,10 +58,40 @@ public class Users {
     @Column
     private String taxId;
 
-    @ManyToMany
-    private List<Rent> rent;
+//    @ManyToMany
+//    private List<Rent> rent;
+//
+//    @ManyToMany
+//    private List<Purchase> purchase;
 
-    @ManyToMany
-    private List<Purchase> purchase;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getUsername() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
 }
 

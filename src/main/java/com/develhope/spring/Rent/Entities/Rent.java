@@ -1,8 +1,7 @@
 package com.develhope.spring.Rent.Entities;
 
 import com.develhope.spring.ShowroomProfit.ShowroomProfit;
-import com.develhope.spring.User.Entities.Customer;
-import com.develhope.spring.User.Entities.Salesman;
+import com.develhope.spring.User.Entities.Users;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Entity
@@ -40,10 +40,14 @@ public class Rent {
     private String deliveryPlace;
     @Column(nullable = false)
     private Boolean isPaid;
+
     @ManyToOne
-    private Salesman salesman;
+    @JoinColumn(name = "salesman_id")
+    private Users salesman;
     @ManyToOne
-    private Customer customer;
+    @JoinColumn(name = "customer_id")
+    private Users customer;
+
     @OneToOne
     private Vehicle vehicle;
     @OneToOne

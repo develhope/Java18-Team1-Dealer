@@ -5,8 +5,8 @@ import com.develhope.spring.Purchase.Entities.Purchase;
 import com.develhope.spring.Purchase.Repositories.PurchaseRepository;
 import com.develhope.spring.Rent.Entities.Rent;
 import com.develhope.spring.Rent.Repositories.RentRepository;
-import com.develhope.spring.User.Entities.Salesman;
-import com.develhope.spring.User.Repositories.SalesmanRepository;
+import com.develhope.spring.User.Entities.Users;
+import com.develhope.spring.User.Repositories.UsersRepository;
 import com.develhope.spring.Vehicle.Entities.Enums.StatusTypeEnum;
 import com.develhope.spring.Vehicle.Entities.Vehicle;
 import com.develhope.spring.Vehicle.Repositories.VehicleRepository;
@@ -21,7 +21,7 @@ import java.util.Optional;
 @Service
 public class SalesmanService {
     @Autowired
-    private SalesmanRepository salesmanRepository;
+    private UsersRepository usersRepository;
     @Autowired
     private PurchaseRepository purchaseRepository;
     @Autowired
@@ -51,8 +51,8 @@ public class SalesmanService {
             throw new NoSuchElementException("Ordini con stato " + orderStatus + " non trovati");
         }
     }
-    public Salesman updateSalesmanInfo(Long idSalesman,Salesman updateSalesman){
-        Salesman salesman = salesmanRepository.findById(idSalesman).orElseThrow(() -> new NoSuchElementException("Venditore con id " + idSalesman + " non trovato"));
+    public Users updateSalesmanInfo(Long idSalesman, Users updateSalesman){
+        Users salesman = usersRepository.findById(idSalesman).orElseThrow(() -> new NoSuchElementException("Venditore con id " + idSalesman + " non trovato"));
         boolean isSalesManUpdated = false;
 
         if(updateSalesman.getFirstName() != null && !updateSalesman.getFirstName().isEmpty()){
@@ -84,7 +84,7 @@ public class SalesmanService {
             isSalesManUpdated = true;
         }
         if(isSalesManUpdated){
-            salesman = salesmanRepository.save(salesman);
+            salesman = usersRepository.save(salesman);
         }
         return salesman;
 

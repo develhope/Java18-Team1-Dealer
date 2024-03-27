@@ -1,17 +1,25 @@
 package com.develhope.spring.User.Entities;
 
+import com.develhope.spring.Purchase.Entities.Purchase;
+import com.develhope.spring.Rent.Entities.Rent;
+import com.develhope.spring.User.Enum.UserTypeEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
+@Entity
 @Data
+@Table
 @AllArgsConstructor
 @NoArgsConstructor
-@MappedSuperclass
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Users {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
     private String firstName;
@@ -26,6 +34,29 @@ public class Users {
     @Column(nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserTypeEnum role;
 
+    @Column
+    private String phone;
+
+    @Column
+    private  String address;
+
+    @Column
+    private Integer salesNumber;
+
+    @Column
+    private String creditCard;
+
+    @Column
+    private String taxId;
+
+    @ManyToMany
+    private List<Rent> rent;
+
+    @ManyToMany
+    private List<Purchase> purchase;
 }
 

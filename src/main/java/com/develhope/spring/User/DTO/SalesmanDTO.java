@@ -1,6 +1,6 @@
 package com.develhope.spring.User.DTO;
 
-import com.develhope.spring.User.Entities.Salesman;
+import com.develhope.spring.User.Enum.UserTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,9 +15,10 @@ public class SalesmanDTO {
     private Long id;
     private String firstName;
     private String lastName;
+    private String email;
+    private UserTypeEnum role;
     private String phone;
     private String address;
-    private String email;
     private Integer salesNumber;
 
 }
